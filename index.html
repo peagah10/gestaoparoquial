@@ -1,0 +1,2757 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento Paroquial - Paróquia São Cristóvão</title>
+    
+    <!-- Open Graph para Instagram, WhatsApp e Facebook -->
+<meta property="og:title" content="Gerenciamento Paroquial - Paróquia São Cristóvão">
+<meta property="og:description" content="Sistema moderno para gestão de sacramentos, eventos e membros da Paróquia São Cristóvão. Acesse agora!">
+<meta property="og:image" content="https://gestaoparoquial.netlify.app/images/logo.png">
+<meta property="og:url" content="https://gestaoparoquial.netlify.app"> 
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Paróquia São Cristóvão">
+
+<!-- Meta para WhatsApp -->
+<meta name="description" content="Acesse o sistema de gerenciamento paroquial.">
+    
+    <style>
+        :root {
+            --primary: #8B0000;
+            --secondary: #DC143C;
+            --accent: #CD853F;
+            --light: #f8fafc;
+            --dark: #2d1b1b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #17a2b8;
+            --gold: #FFD700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(139, 0, 0, 0.1), rgba(139, 0, 0, 0.05)), 
+                        url("images/igreja.jpg") center/cover;
+            background-attachment: fixed;
+            color: var(--dark);
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Novos estilos para botões vermelhos */
+        .btn-red {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: 2px solid var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+            margin: 0 5px;
+        }
+
+        .btn-red:hover {
+            background: linear-gradient(135deg, #A00000, #E6144C);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 0, 0, 0.4);
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* LOGIN PAGE */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.95), rgba(220, 20, 60, 0.9));
+            backdrop-filter: blur(8px);
+        }
+
+        .login-card {
+            background-color: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(139, 0, 0, 0.4);
+            width: 100%;
+            max-width: 480px;
+            padding: 60px;
+            backdrop-filter: blur(20px);
+            border: 3px solid rgba(139, 0, 0, 0.2);
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .login-header .church-logo {
+            width: 140px;
+            height: 140px;
+            margin-bottom: 25px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.4);
+            border: 4px solid var(--gold);
+        }
+
+        .login-header h1 {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .login-header p {
+            color: #64748b;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 18px 22px;
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 6px rgba(139, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 18px 30px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 350px;
+            height: 350px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #A00000, #E6144C);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(139, 0, 0, 0.4);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .alert {
+            padding: 18px 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            font-size: 15px;
+            border-left: 5px solid;
+            font-weight: 500;
+        }
+
+        .alert-danger {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            border-left-color: #ef4444;
+        }
+
+        /* DASHBOARD */
+        .dashboard {
+            display: none;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px 0;
+            box-shadow: 0 6px 25px rgba(139, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo .church-logo {
+            width: 65px;
+            height: 65px;
+            margin-right: 18px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+            border: 3px solid var(--gold);
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 600px;
+            margin: 0 40px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 15px 50px 15px 25px;
+            border: none;
+            border-radius: 30px;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 16px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            font-weight: 500;
+        }
+
+        .search-bar::after {
+            content: '';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background-image: url("images/igreja1.jpg");
+            background-size: contain;
+            opacity: 0.7;
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-menu .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+            box-shadow: 0 6px 18px rgba(255, 215, 0, 0.4);
+            border: 2px solid var(--gold);
+        }
+
+        .user-menu .user-name {
+            font-size: 17px;
+            margin-right: 20px;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background-color: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-1px);
+        }
+
+        main {
+            padding: 50px 0;
+        }
+
+        .welcome-section {
+            margin-bottom: 50px;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(139, 0, 0, 0.15);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(139, 0, 0, 0.1);
+        }
+
+        .welcome-section h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .welcome-section p {
+            color: #64748b;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .folder-card {
+            background-color: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.15);
+            padding: 35px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(139, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .folder-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 0, 0, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .folder-card:hover::before {
+            left: 100%;
+        }
+
+        .folder-card:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(139, 0, 0, 0.25);
+            background-color: rgba(255, 255, 255, 1);
+            border-color: var(--primary);
+        }
+
+        .folder-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 25px;
+            border-radius: 15px;
+            object-fit: cover;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(139, 0, 0, 0.1);
+        }
+
+        .folder-card:hover .folder-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .folder-card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .folder-card p {
+            font-size: 15px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* DOCUMENT TYPES VIEW */
+        .document-types {
+            display: none;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.1);
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .breadcrumb .separator {
+            margin: 0 18px;
+            color: #94a3b8;
+            font-weight: bold;
+        }
+
+        .breadcrumb .current {
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px 35px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 25px rgba(139, 0, 0, 0.15);
+        }
+
+        .section-header h2 {
+            font-size: 32px;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        /* DOCUMENTS LIST VIEW */
+        .documents-list {
+            display: none;
+        }
+
+        .table-container {
+            background-color: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(139, 0, 0, 0.15);
+            overflow: hidden;
+            margin-bottom: 40px;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(139, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        th, td {
+            padding: 20px 25px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        td {
+            font-size: 15px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        tr:hover {
+            background-color: rgba(139, 0, 0, 0.05);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-sm {
+            padding: 10px 18px;
+            font-size: 14px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #17a2b8, #20c997);
+        }
+
+        .btn-info:hover {
+            background: linear-gradient(135deg, #138496, #1e7e34);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffc107, #fd7e14);
+        }
+
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #e0a800, #e55a00);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #c82333, #a02622);
+        }
+
+        /* PERSON FORM */
+        .person-form {
+            display: none;
+            background-color: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(139, 0, 0, 0.15);
+            padding: 50px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(139, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(139, 0, 0, 0.02);
+            border-radius: 15px;
+            border: 2px solid rgba(139, 0, 0, 0.1);
+        }
+
+        .form-section h3 {
+            color: var(--primary);
+            font-size: 22px;
+            margin-bottom: 25px;
+            font-weight: 700;
+            padding-bottom: 15px;
+            border-bottom: 3px solid rgba(139, 0, 0, 0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 3px solid rgba(139, 0, 0, 0.1);
+        }
+
+        .file-upload {
+            margin-top: 30px;
+            border: 4px dashed rgba(139, 0, 0, 0.3);
+            padding: 40px;
+            text-align: center;
+            border-radius: 20px;
+            background: rgba(139, 0, 0, 0.02);
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: rgba(139, 0, 0, 0.05);
+        }
+
+        .file-upload p {
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .file-list {
+            margin-top: 30px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 25px;
+            background: rgba(139, 0, 0, 0.05);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(139, 0, 0, 0.1);
+        }
+
+        .file-name {
+            font-size: 15px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .file-preview {
+            max-width: 300px;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        /* SEARCH RESULTS */
+        .search-results {
+            display: none;
+            margin-top: 25px;
+        }
+
+        .search-header {
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px 35px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 25px rgba(139, 0, 0, 0.15);
+        }
+
+        .search-header h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .search-header p {
+            color: #64748b;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 80px 0;
+            color: #64748b;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(139, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal {
+            background-color: rgba(255, 255, 255, 0.98);
+            border-radius: 25px;
+            box-shadow: 0 25px 75px rgba(139, 0, 0, 0.4);
+            width: 100%;
+            max-width: 600px;
+            padding: 50px;
+            position: relative;
+            backdrop-filter: blur(20px);
+            border: 3px solid rgba(139, 0, 0, 0.1);
+            animation: modalSlideIn 0.5s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: scale(0.8) translateY(50px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 3px solid rgba(139, 0, 0, 0.1);
+        }
+
+        .modal-header h2 {
+            font-size: 26px;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 35px;
+            color: #94a3b8;
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background-color: rgba(139, 0, 0, 0.1);
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            margin-bottom: 35px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            padding-top: 25px;
+            border-top: 3px solid rgba(139, 0, 0, 0.1);
+        }
+
+        /* Campos específicos por tipo de documento */
+        .document-fields {
+            display: none;
+        }
+
+        .document-fields.active {
+            display: block;
+        }
+
+        /* Lista para seleção de itens para remover */
+        .remove-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 2px solid rgba(139, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .remove-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(139, 0, 0, 0.05);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-item:hover {
+            background: rgba(139, 0, 0, 0.1);
+        }
+
+        .remove-item input[type="checkbox"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .remove-item label {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark);
+            flex: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .search-bar {
+                max-width: 100%;
+                margin: 25px 0;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            .card-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+
+            .folder-card {
+                padding: 25px;
+            }
+
+            .folder-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .welcome-section {
+                padding: 25px;
+            }
+
+            .welcome-section h2 {
+                font-size: 28px;
+            }
+
+            .person-form, .modal {
+                padding: 30px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+
+            .section-actions {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="images/igreja1.jpg" alt="Logo Paróquia" class="church-logo">
+                <h1>Gerenciamento Paroquial</h1>
+                <p>Sistema Profissional de Gestão</p>
+            </div>
+            <div id="loginError" class="alert alert-danger" style="display: none;">
+                Email ou senha incorretos. Por favor, tente novamente.
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">E-mail ou nome de usuário</label>
+                    <input type="text" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Acessar Sistema</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div class="dashboard" id="dashboardPage">
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <img src="images/igreja1.jpg" alt="Logo Paróquia" class="church-logo">
+                        <h1>Gerenciamento Paroquial</h1>
+                    </div>
+                    <div class="search-bar">
+                        <input type="text" id="globalSearch" placeholder="Buscar por nome ou data de nascimento...">
+                    </div>
+                    <div class="user-menu">
+                        <img src="images/igreja1.jpg" alt="Avatar" class="avatar" id="userAvatar">
+                        <span class="user-name" id="userName">Administrador</span>
+                        <button class="logout-btn" id="logoutBtn">Sair</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            <section class="welcome-section">
+                <h2>Bem-vindo, <span id="welcomeUserName">Administrador</span>!</h2>
+                <p>Sistema Profissional de Gerenciamento Paroquial - Organize todos os registros da comunidade</p>
+            </section>
+
+            <section>
+                <div class="section-header">
+                    <h2>Arquivos por Ano</h2>
+                    <div class="section-actions">
+                        <button class="btn-red" id="addYearBtnHeader">Adicionar</button>
+                        <button class="btn-red" id="removeYearBtnHeader">Remover</button>
+                    </div>
+                </div>
+                <div class="card-grid" id="yearsGrid">
+                    <!-- Years will be dynamically added here -->
+                </div>
+            </section>
+
+            <!-- Search Results Section -->
+            <section class="search-results" id="searchResultsSection">
+                <div class="search-header">
+                    <h2>Resultados da Busca</h2>
+                    <p>Exibindo resultados para: <strong id="searchTerm"></strong></p>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Tipo de Documento</th>
+                                <th>Data de Nascimento</th>
+                                <th>Data do Registro</th>
+                                <th>Ano</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="searchResultsTable">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="no-results" id="noResults" style="display: none;">
+                    <p>Nenhum resultado encontrado para a sua busca.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Document Types Page -->
+    <div class="document-types" id="documentTypesPage">
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <img src="images/igreja1.jpg" alt="Logo Paróquia" class="church-logo">
+                        <h1>Gerenciamento Paroquial</h1>
+                    </div>
+                    <div class="search-bar">
+                        <input type="text" id="globalSearch2" placeholder="Buscar por nome ou data de nascimento...">
+                    </div>
+                    <div class="user-menu">
+                        <img src="images/igreja1.jpg" alt="Avatar" class="avatar" id="userAvatar2">
+                        <span class="user-name" id="userName2">Administrador</span>
+                        <button class="logout-btn" id="logoutBtn2">Sair</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            <div class="breadcrumb">
+                <a href="#" id="backToDashboard">Dashboard</a>
+                <span class="separator">›</span>
+                <span class="current" id="yearTitle">2023</span>
+            </div>
+
+            <section>
+                <div class="section-header">
+                    <h2>Tipos de Documentos - <span id="yearHeaderTitle">2023</span></h2>
+                    <div class="section-actions">
+                        <button class="btn-red" id="addDocTypeBtnHeader">Adicionar</button>
+                        <button class="btn-red" id="removeDocTypeBtnHeader">Remover</button>
+                    </div>
+                </div>
+                <div class="card-grid" id="documentTypesGrid">
+                    <!-- Document types will be dynamically added here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Documents List Page -->
+    <div class="documents-list" id="documentsListPage">
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <img src="images/igreja1.jpg" alt="Logo Paróquia" class="church-logo">
+                        <h1>Gerenciamento Paroquial</h1>
+                    </div>
+                    <div class="search-bar">
+                        <input type="text" id="globalSearch3" placeholder="Buscar por nome ou data de nascimento...">
+                    </div>
+                    <div class="user-menu">
+                        <img src="images/igreja1.jpg" alt="Avatar" class="avatar" id="userAvatar3">
+                        <span class="user-name" id="userName3">Administrador</span>
+                        <button class="logout-btn" id="logoutBtn3">Sair</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            <div class="breadcrumb">
+                <a href="#" id="backToDashboard2">Dashboard</a>
+                <span class="separator">›</span>
+                <a href="#" id="backToDocTypes">2023</a>
+                <span class="separator">›</span>
+                <span class="current" id="docTypeTitle">Batismo</span>
+            </div>
+
+            <section>
+                <div class="section-header">
+                    <h2><span id="docTypeHeaderTitle">Batismo</span> - <span id="yearHeaderTitle2">2023</span></h2>
+                    <button class="btn btn-primary" id="addPersonBtn">Adicionar Pessoa</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Data de Nascimento</th>
+                                <th>Data do Registro</th>
+                                <th>Arquivos</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="documentsTable">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Person Form -->
+    <div class="person-form" id="personFormContainer">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="#" id="backToDashboard3">Dashboard</a>
+                <span class="separator">›</span>
+                <a href="#" id="backToDocTypes2">2023</a>
+                <span class="separator">›</span>
+                <a href="#" id="backToDocList">Batismo</a>
+                <span class="separator">›</span>
+                <span class="current" id="formTitle">Novo Registro</span>
+            </div>
+
+            <div class="section-header">
+                <h2 id="formHeaderTitle">Adicionar Registro de Batismo</h2>
+            </div>
+
+            <form id="personForm">
+                <!-- Dados Básicos -->
+                <div class="form-section">
+                    <h3>Dados Básicos da Pessoa</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fullName">Nome Completo *</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthDate">Data de Nascimento *</label>
+                            <input type="date" id="birthDate" name="birthDate" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campos específicos para Batismo -->
+                <div class="document-fields active" id="batismoFields">
+                    <div class="form-section">
+                        <h3>Dados do Batismo</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="baptismDate">Data do Batismo *</label>
+                                <input type="date" id="baptismDate" name="baptismDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="baptismPlace">Local do Batismo *</label>
+                                <input type="text" id="baptismPlace" name="baptismPlace" placeholder="Ex: Paróquia São Cristóvão">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="celebrant">Nome do Celebrante *</label>
+                                <input type="text" id="celebrant" name="celebrant" placeholder="Ex: Pe. João Paulo">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Dados dos Pais</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="parentName1">Nome do Pai</label>
+                                <input type="text" id="parentName1" name="parentName1">
+                            </div>
+                            <div class="form-group">
+                                <label for="parentName2">Nome da Mãe</label>
+                                <input type="text" id="parentName2" name="parentName2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Padrinhos</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="godparent1">Nome do Padrinho</label>
+                                <input type="text" id="godparent1" name="godparent1">
+                            </div>
+                            <div class="form-group">
+                                <label for="godparent2">Nome da Madrinha</label>
+                                <input type="text" id="godparent2" name="godparent2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campos específicos para Crisma -->
+                <div class="document-fields" id="crismaFields">
+                    <div class="form-section">
+                        <h3>Dados da Crisma</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="confirmationDate">Data da Crisma *</label>
+                                <input type="date" id="confirmationDate" name="confirmationDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmationPlace">Local da Crisma *</label>
+                                <input type="text" id="confirmationPlace" name="confirmationPlace">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bishop">Nome do Bispo/Celebrante *</label>
+                                <input type="text" id="bishop" name="bishop">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmationGodparent">Padrinho/Madrinha de Crisma</label>
+                                <input type="text" id="confirmationGodparent" name="confirmationGodparent">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Dados dos Pais</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="crismaParentName1">Nome do Pai</label>
+                                <input type="text" id="crismaParentName1" name="crismaParentName1">
+                            </div>
+                            <div class="form-group">
+                                <label for="crismaParentName2">Nome da Mãe</label>
+                                <input type="text" id="crismaParentName2" name="crismaParentName2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campos específicos para Primeira Comunhão -->
+                <div class="document-fields" id="comunhaoFields">
+                    <div class="form-section">
+                        <h3>Dados da Primeira Comunhão</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="communionDate">Data da Primeira Comunhão *</label>
+                                <input type="date" id="communionDate" name="communionDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="communionPlace">Local da Celebração *</label>
+                                <input type="text" id="communionPlace" name="communionPlace">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="communionPriest">Nome do Sacerdote Responsável *</label>
+                            <input type="text" id="communionPriest" name="communionPriest">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campos específicos para Casamento -->
+                <div class="document-fields" id="casamentoFields">
+                    <div class="form-section">
+                        <h3>Dados do Casamento</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="marriageDate">Data do Casamento *</label>
+                                <input type="date" id="marriageDate" name="marriageDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="marriagePlace">Local do Casamento *</label>
+                                <input type="text" id="marriagePlace" name="marriagePlace">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="marriageCelebrant">Nome do Celebrante *</label>
+                            <input type="text" id="marriageCelebrant" name="marriageCelebrant">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Dados dos Noivos</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="groomName">Nome Completo do Noivo *</label>
+                                <input type="text" id="groomName" name="groomName">
+                            </div>
+                            <div class="form-group">
+                                <label for="groomBirthDate">Data de Nascimento do Noivo</label>
+                                <input type="date" id="groomBirthDate" name="groomBirthDate">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="brideName">Nome Completo da Noiva *</label>
+                                <input type="text" id="brideName" name="brideName">
+                            </div>
+                            <div class="form-group">
+                                <label for="brideBirthDate">Data de Nascimento da Noiva</label>
+                                <input type="date" id="brideBirthDate" name="brideBirthDate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Dados dos Pais dos Noivos</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="groomFather">Nome do Pai do Noivo</label>
+                                <input type="text" id="groomFather" name="groomFather">
+                            </div>
+                            <div class="form-group">
+                                <label for="groomMother">Nome da Mãe do Noivo</label>
+                                <input type="text" id="groomMother" name="groomMother">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="brideFather">Nome do Pai da Noiva</label>
+                                <input type="text" id="brideFather" name="brideFather">
+                            </div>
+                            <div class="form-group">
+                                <label for="brideMother">Nome da Mãe da Noiva</label>
+                                <input type="text" id="brideMother" name="brideMother">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Testemunhas (Padrinhos)</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="witness1">1ª Testemunha</label>
+                                <input type="text" id="witness1" name="witness1">
+                            </div>
+                            <div class="form-group">
+                                <label for="witness2">2ª Testemunha</label>
+                                <input type="text" id="witness2" name="witness2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campos específicos para Óbito -->
+                <div class="document-fields" id="obitoFields">
+                    <div class="form-section">
+                        <h3>Dados do Falecimento</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="deathDate">Data do Falecimento *</label>
+                                <input type="date" id="deathDate" name="deathDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="burialPlace">Local do Sepultamento *</label>
+                                <input type="text" id="burialPlace" name="burialPlace">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ritesPerformed">Ritos Realizados</label>
+                            <textarea id="ritesPerformed" name="ritesPerformed" placeholder="Ex: Missa de corpo presente, encomendação..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campos específicos para Admissão de Membros -->
+                <div class="document-fields" id="admissaoFields">
+                    <div class="form-section">
+                        <h3>Dados de Admissão</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="admissionDate">Data de Ingresso *</label>
+                                <input type="date" id="admissionDate" name="admissionDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Endereço</label>
+                                <input type="text" id="address" name="address">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ministries">Ministérios ou Funções Exercidas</label>
+                            <textarea id="ministries" name="ministries" placeholder="Ex: Ministro Extraordinário da Eucaristia, Catequista..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Observações gerais -->
+                <div class="form-section">
+                    <h3>Observações Gerais</h3>
+                    <div class="form-group">
+                        <label for="observations">Observações</label>
+                        <textarea id="observations" name="observations" placeholder="Informações adicionais relevantes..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Upload de arquivos -->
+                <div class="file-upload" id="fileUploadArea">
+                    <p>Arraste arquivos aqui ou clique para fazer upload</p>
+                    <input type="file" id="fileUpload" name="fileUpload" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                </div>
+
+                <div class="file-list" id="fileList">
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-danger" id="cancelFormBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Registro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="addYearModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Adicionar Novo Ano</h2>
+                <button class="modal-close" id="closeYearModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newYear">Ano</label>
+                    <input type="number" id="newYear" name="newYear" min="1900" max="2100" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" id="cancelYearBtn">Cancelar</button>
+                <button class="btn btn-primary" id="saveYearBtn">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="addDocTypeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Adicionar Novo Tipo de Documento</h2>
+                <button class="modal-close" id="closeDocTypeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newDocType">Nome do Tipo de Documento</label>
+                    <input type="text" id="newDocType" name="newDocType" required>
+                </div>
+                <div class="form-group">
+                    <label for="docTypeDescription">Descrição</label>
+                    <input type="text" id="docTypeDescription" name="docTypeDescription">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" id="cancelDocTypeBtn">Cancelar</button>
+                <button class="btn btn-primary" id="saveDocTypeBtn">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para remover anos -->
+    <div class="modal-overlay" id="removeYearModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Remover Anos</h2>
+                <button class="modal-close" id="closeRemoveYearModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Selecione os anos que deseja remover:</p>
+                <div class="remove-list" id="removeYearList">
+                    <!-- Anos para remoção serão listados aqui -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" id="cancelRemoveYearBtn">Cancelar</button>
+                <button class="btn btn-primary" id="confirmRemoveYearBtn">Remover Selecionados</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para remover tipos de documento -->
+    <div class="modal-overlay" id="removeDocTypeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Remover Tipos de Documento</h2>
+                <button class="modal-close" id="closeRemoveDocTypeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Selecione os tipos de documento que deseja remover:</p>
+                <div class="remove-list" id="removeDocTypeList">
+                    <!-- Tipos de documento para remoção serão listados aqui -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" id="cancelRemoveDocTypeBtn">Cancelar</button>
+                <button class="btn btn-primary" id="confirmRemoveDocTypeBtn">Remover Selecionados</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="deleteConfirmModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Confirmar Exclusão</h2>
+                <button class="modal-close" id="closeDeleteModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir este registro? Esta ação não pode ser desfeita.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="cancelDeleteBtn">Cancelar</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para visualizar arquivo -->
+    <div class="modal-overlay" id="fileViewModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="fileViewTitle">Visualizar Arquivo</h2>
+                <button class="modal-close" id="closeFileViewModal">&times;</button>
+            </div>
+            <div class="modal-body" id="fileViewContent">
+                <!-- Conteúdo do arquivo será exibido aqui -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="downloadFileBtn">Download</button>
+                <button class="btn btn-danger" id="closeFileViewBtn">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock database com campos específicos e URLs de arquivo
+        const db = {
+            users: [
+                { id: 1, name: 'Administrador', email: 'admin@paroquia.com', password: 'admin123', initials: 'AD' }
+            ],
+            years: [2020, 2021, 2022, 2023, 2024, 2025],
+            documentTypes: [
+                { 
+                    id: 1, 
+                    name: 'Batismo', 
+                    slug: 'batismo', 
+                    description: 'Registros de batismo', 
+                    icon: 'images/batismo.png'
+                },
+                { 
+                    id: 2, 
+                    name: 'Crisma', 
+                    slug: 'crisma', 
+                    description: 'Registros de crisma', 
+                    icon: 'images/crisma.jpg'
+                },
+                { 
+                    id: 3, 
+                    name: 'Primeira Comunhão', 
+                    slug: 'comunhao', 
+                    description: 'Registros de 1ª comunhão', 
+                    icon: 'images/comunhao.jpg'
+                },
+                { 
+                    id: 4, 
+                    name: 'Casamento', 
+                    slug: 'casamento', 
+                    description: 'Registros de casamento', 
+                    icon: 'images/casamento.png'
+                },
+                { 
+                    id: 5, 
+                    name: 'Óbito', 
+                    slug: 'obito', 
+                    description: 'Registros de óbito', 
+                    icon: 'images/obito.jpg'
+                },
+                { 
+                    id: 6, 
+                    name: 'Admissão de Membros', 
+                    slug: 'admissao', 
+                    description: 'Novos membros', 
+                    icon: 'images/membros.png'
+                }
+            ],
+            documents: [
+                { 
+                    id: 1, 
+                    year: 2023, 
+                    type: 'Batismo', 
+                    typeId: 1,
+                    name: 'Maria Silva', 
+                    birthDate: '2000-05-12', 
+                    registrationDate: '2023-06-15',
+                    parentName1: 'José Silva',
+                    parentName2: 'Ana Silva',
+                    baptismDate: '2023-06-10',
+                    celebrant: 'Pe. João Paulo',
+                    godparent1: 'Carlos Santos',
+                    godparent2: 'Marta Pereira',
+                    baptismPlace: 'Paróquia São Cristóvão',
+                    observations: 'Sem observações adicionais',
+                    files: [
+                        { 
+                            id: 1, 
+                            name: 'certidao_nascimento.pdf', 
+                            type: 'application/pdf', 
+                            size: '520 KB',
+                            url: 'data:application/pdf;base64,JVBERi0xLjMKJf////8KNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHJ1ZVR5cGUKL0Jhc2VGb250IC9BcmlhbC1Cb2xkTVQKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Ci9Gb250RGVzY3JpcHRvciA2IDAgUgovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9BcmlhbC1Cb2xkTVQKL0ZsYWdzIDMyCi9JdGFsaWNBbmdsZSAwCi9Bc2NlbnQgOTA1Ci9EZXNjZW50IC0yMTAKL0NhcEhlaWdodCA3MjgKL0F2Z1dpZHRoIDQ3OQovTWF4V2lkdGggMjY2Mgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9SZXNvdXJjZXMgMTAgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0ZvbnQKPDwKL0YxIDUgMCBSCj4+Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9MZW5ndGggNjgKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAuMDAgNzAwLjAwIFRkCihDZXJ0aWTDo28gZGUgTmFzY2ltZW50bykgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMSAwIFJdCi9Db3VudCAxCi9NZWRpYUJveCBbMCAwIDYxMiA3OTJdCj4+CmVuZG9iago0IDAgb2JqCjw8Ci9UeXBlIC9DYXRhbG9nCi9QYWdlcyAyIDAgUgo+PgplbmRvYmoKeHJlZgowIDcKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNjY3IDAwMDAwIG4gCjAwMDAwMDA4NDggMDAwMDAgbiAKMDAwMDAwMDcyNyAwMDAwMCBuIAowMDAwMDAwOTA1IDAwMDAwIG4gCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDIxNiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKL0luZm8gOCAwIFIKPj4Kc3RhcnR4cmVmCjk1Mgp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKPj4Kc3RhcnR4cmVmCjEwNzQKJSVFT0Y='
+                        }
+                    ]
+                },
+                { 
+                    id: 2, 
+                    year: 2023, 
+                    type: 'Batismo', 
+                    typeId: 1,
+                    name: 'João Santos', 
+                    birthDate: '2001-09-22', 
+                    registrationDate: '2023-07-30',
+                    parentName1: 'Roberto Santos',
+                    parentName2: 'Maria Santos',
+                    baptismDate: '2023-07-25',
+                    celebrant: 'Pe. João Paulo',
+                    godparent1: 'Pedro Almeida',
+                    godparent2: 'Lucia Ferreira',
+                    baptismPlace: 'Paróquia São Cristóvão',
+                    observations: 'Filho adotivo',
+                    files: [
+                        { 
+                            id: 2, 
+                            name: 'certidao_nascimento.pdf', 
+                            type: 'application/pdf', 
+                            size: '485 KB',
+                            url: 'data:application/pdf;base64,JVBERi0xLjMKJf////8KNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHJ1ZVR5cGUKL0Jhc2VGb250IC9BcmlhbC1Cb2xkTVQKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Ci9Gb250RGVzY3JpcHRvciA2IDAgUgovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9BcmlhbC1Cb2xkTVQKL0ZsYWdzIDMyCi9JdGFsaWNBbmdsZSAwCi9Bc2NlbnQgOTA1Ci9EZXNjZW50IC0yMTAKL0NhcEhlaWdodCA3MjgKL0F2Z1dpZHRoIDQ3OQovTWF4V2lkdGggMjY2Mgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9SZXNvdXJjZXMgMTAgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0ZvbnQKPDwKL0YxIDUgMCBSCj4+Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9MZW5ndGggNjgKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAuMDAgNzAwLjAwIFRkCihDZXJ0aWTDo28gZGUgTmFzY2ltZW50bykgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMSAwIFJdCi9Db3VudCAxCi9NZWRpYUJveCBbMCAwIDYxMiA3OTJdCj4+CmVuZG9iago0IDAgb2JqCjw8Ci9UeXBlIC9DYXRhbG9nCi9QYWdlcyAyIDAgUgo+PgplbmRvYmoKeHJlZgowIDcKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNjY3IDAwMDAwIG4gCjAwMDAwMDA4NDggMDAwMDAgbiAKMDAwMDAwMDcyNyAwMDAwMCBuIAowMDAwMDAwOTA1IDAwMDAwIG4gCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDIxNiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKL0luZm8gOCAwIFIKPj4Kc3RhcnR4cmVmCjk1Mgp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKPj4Kc3RhcnR4cmVmCjEwNzQKJSVFT0Y='
+                        },
+                        { 
+                            id: 3, 
+                            name: 'documento_batismo.pdf', 
+                            type: 'application/pdf', 
+                            size: '312 KB',
+                            url: 'data:application/pdf;base64,JVBERi0xLjMKJf////8KNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHJ1ZVR5cGUKL0Jhc2VGb250IC9BcmlhbC1Cb2xkTVQKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Ci9Gb250RGVzY3JpcHRvciA2IDAgUgovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9BcmlhbC1Cb2xkTVQKL0ZsYWdzIDMyCi9JdGFsaWNBbmdsZSAwCi9Bc2NlbnQgOTA1Ci9EZXNjZW50IC0yMTAKL0NhcEhlaWdodCA3MjgKL0F2Z1dpZHRoIDQ3OQovTWF4V2lkdGggMjY2Mgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9SZXNvdXJjZXMgMTAgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0ZvbnQKPDwKL0YxIDUgMCBSCj4+Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9MZW5ndGggNjgKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAuMDAgNzAwLjAwIFRkCihEb2N1bWVudG8gZGUgQmF0aXNtbykgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMSAwIFJdCi9Db3VudCAxCi9NZWRpYUJveCBbMCAwIDYxMiA3OTJdCj4+CmVuZG9iago0IDAgb2JqCjw8Ci9UeXBlIC9DYXRhbG9nCi9QYWdlcyAyIDAgUgo+PgplbmRvYmoKeHJlZgowIDcKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNjY3IDAwMDAwIG4gCjAwMDAwMDA4NDggMDAwMDAgbiAKMDAwMDAwMDcyNyAwMDAwMCBuIAowMDAwMDAwOTA1IDAwMDAwIG4gCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDIxNiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKL0luZm8gOCAwIFIKPj4Kc3RhcnR4cmVmCjk1Mgp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKPj4Kc3RhcnR4cmVmCjEwNzQKJSVFT0Y='
+                        }
+                    ]
+                },
+                { 
+                    id: 3, 
+                    year: 2024, 
+                    type: 'Crisma', 
+                    typeId: 2,
+                    name: 'Ana Paula Costa', 
+                    birthDate: '1995-03-15', 
+                    registrationDate: '2024-04-10',
+                    confirmationDate: '2024-04-07',
+                    confirmationPlace: 'Catedral São Paulo',
+                    bishop: 'Dom Pedro Martins',
+                    confirmationGodparent: 'Marcos Lima',
+                    crismaParentName1: 'João Costa',
+                    crismaParentName2: 'Rosa Costa',
+                    observations: 'Preparação especial de 6 meses',
+                    files: [
+                        { 
+                            id: 4, 
+                            name: 'certificado_crisma.pdf', 
+                            type: 'application/pdf', 
+                            size: '410 KB',
+                            url: 'data:application/pdf;base64,JVBERi0xLjMKJf////8KNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHJ1ZVR5cGUKL0Jhc2VGb250IC9BcmlhbC1Cb2xkTVQKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Ci9Gb250RGVzY3JpcHRvciA2IDAgUgovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9BcmlhbC1Cb2xkTVQKL0ZsYWdzIDMyCi9JdGFsaWNBbmdsZSAwCi9Bc2NlbnQgOTA1Ci9EZXNjZW50IC0yMTAKL0NhcEhlaWdodCA3MjgKL0F2Z1dpZHRoIDQ3OQovTWF4V2lkdGggMjY2Mgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9SZXNvdXJjZXMgMTAgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0ZvbnQKPDwKL0YxIDUgMCBSCj4+Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9MZW5ndGggNjgKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAuMDAgNzAwLjAwIFRkCihDZXJ0aWZpY2FkbyBkZSBDcmlzbWEpIFRqCkVUCmVuZHN0cmVhbQplbmRvYmoKMiAwIG9iago8PAovVHlwZSAvUGFnZXMKL0tpZHMgWzEgMCBSXQovQ291bnQgMQovTWVkaWFCb3ggWzAgMCA2MTIgNzkyXQo+PgplbmRvYmoKNCAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMiAwIFIKPj4KZW5kb2JqCnhyZWYKMCA3CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDY2NyAwMDAwMCBuIAowMDAwMDAwODQ4IDAwMDAwIG4gCjAwMDAwMDA3MjcgMDAwMDAgbiAKMDAwMDAwMDkwNSAwMDAwMCBuIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAyMTYgMDAwMDAgbiAKdHJhaWxlcgo8PAovU2l6ZSA3Ci9Sb290IDQgMCBSCi9JbmZvIDggMCBSCj4+CnN0YXJ0eHJlZgo5NTIKdHJhaWxlcgo8PAovU2l6ZSA3Ci9Sb290IDQgMCBSCj4+CnN0YXJ0eHJlZgoxMDc0CiUlRU9G'
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // Global state
+        let currentUser = null;
+        let selectedYear = null;
+        let selectedDocType = null;
+        let selectedDocTypeId = null;
+        let selectedDocument = null;
+        let isEditMode = false;
+        let currentPage = 'dashboard';
+        let uploadedFiles = [];
+        let selectedFileForView = null;
+
+        // DOM Elements
+        const loginPage = document.getElementById('loginPage');
+        const dashboardPage = document.getElementById('dashboardPage');
+        const documentTypesPage = document.getElementById('documentTypesPage');
+        const documentsListPage = document.getElementById('documentsListPage');
+        const personFormContainer = document.getElementById('personFormContainer');
+        const searchResultsSection = document.getElementById('searchResultsSection');
+
+        // Initialize years grid
+        function initializeYearsGrid() {
+            const yearsGrid = document.getElementById('yearsGrid');
+            yearsGrid.innerHTML = '';
+            
+            db.years.forEach(year => {
+                const card = document.createElement('div');
+                card.className = 'folder-card';
+                card.setAttribute('data-year', year);
+                card.innerHTML = `
+                    <img src="images/ano.png" alt="Ano ${year}" class="folder-icon">
+                    <h3>${year}</h3>
+                    <p>Registros do ano</p>
+                `;
+                yearsGrid.appendChild(card);
+            });
+        }
+
+        // Initialize document types grid
+        function initializeDocumentTypesGrid() {
+            const docTypesGrid = document.getElementById('documentTypesGrid');
+            docTypesGrid.innerHTML = '';
+            
+            db.documentTypes.forEach(docType => {
+                const card = document.createElement('div');
+                card.className = 'folder-card';
+                card.setAttribute('data-type', docType.slug);
+                card.innerHTML = `
+                    <img src="${docType.icon}" alt="${docType.name}" class="folder-icon">
+                    <h3>${docType.name}</h3>
+                    <p>${docType.description}</p>
+                `;
+                docTypesGrid.appendChild(card);
+            });
+        }
+
+        // Função para mostrar campos específicos do tipo de documento
+        function showDocumentFields(docType) {
+            document.querySelectorAll('.document-fields').forEach(field => {
+                field.classList.remove('active');
+            });
+            
+            const fieldsToShow = document.getElementById(docType + 'Fields');
+            if (fieldsToShow) {
+                fieldsToShow.classList.add('active');
+            }
+        }
+
+        // Função para criar URL de blob para upload de arquivos
+        function createFileURL(file) {
+            return URL.createObjectURL(file);
+        }
+
+        // Função para visualizar arquivo
+        function viewFile(file) {
+            selectedFileForView = file;
+            const modal = document.getElementById('fileViewModal');
+            const title = document.getElementById('fileViewTitle');
+            const content = document.getElementById('fileViewContent');
+            
+            title.textContent = `Visualizar: ${file.name}`;
+            content.innerHTML = '';
+            
+            if (file.type.startsWith('image/')) {
+                const img = document.createElement('img');
+                img.src = file.url || file.localUrl;
+                img.className = 'file-preview';
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '400px';
+                content.appendChild(img);
+            } else if (file.type === 'application/pdf') {
+                const iframe = document.createElement('iframe');
+                iframe.src = file.url || file.localUrl;
+                iframe.style.width = '100%';
+                iframe.style.height = '400px';
+                iframe.style.border = 'none';
+                content.appendChild(iframe);
+            } else {
+                content.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <h3>Arquivo: ${file.name}</h3>
+                        <p>Tipo: ${file.type}</p>
+                        <p>Tamanho: ${file.size}</p>
+                        <p>Visualização não disponível para este tipo de arquivo.</p>
+                    </div>
+                `;
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        // Função para download de arquivo
+        function downloadFile(file) {
+            const link = document.createElement('a');
+            link.href = file.url || file.localUrl;
+            link.download = file.name;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Login Functionality
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            const user = db.users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                document.getElementById('loginError').style.display = 'none';
+                
+                // Update user info in all headers
+                ['userName', 'userName2', 'userName3', 'welcomeUserName'].forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) element.textContent = user.name;
+                });
+                
+                // Show dashboard
+                loginPage.style.display = 'none';
+                dashboardPage.style.display = 'block';
+                dashboardPage.classList.add('active');
+                
+                // Initialize grids
+                initializeYearsGrid();
+                initializeDocumentTypesGrid();
+                
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        });
+
+        // Logout Functionality
+        const logoutButtons = document.querySelectorAll('#logoutBtn, #logoutBtn2, #logoutBtn3');
+        logoutButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                currentUser = null;
+                loginPage.style.display = 'flex';
+                dashboardPage.style.display = 'none';
+                documentTypesPage.style.display = 'none';
+                documentsListPage.style.display = 'none';
+                personFormContainer.style.display = 'none';
+                searchResultsSection.style.display = 'none';
+                document.getElementById('loginForm').reset();
+            });
+        });
+
+        // Year Selection
+        document.getElementById('yearsGrid').addEventListener('click', function(e) {
+            const card = e.target.closest('.folder-card');
+            if (card) {
+                selectedYear = card.getAttribute('data-year');
+                document.getElementById('yearTitle').textContent = selectedYear;
+                document.getElementById('yearHeaderTitle').textContent = selectedYear;
+                
+                // Show document types page
+                dashboardPage.style.display = 'none';
+                searchResultsSection.style.display = 'none';
+                documentTypesPage.style.display = 'block';
+            }
+        });
+
+        // Document Type Selection
+        document.getElementById('documentTypesGrid').addEventListener('click', function(e) {
+            const card = e.target.closest('.folder-card');
+            if (card) {
+                const typeSlug = card.getAttribute('data-type');
+                const docType = db.documentTypes.find(t => t.slug === typeSlug);
+                
+                if (docType) {
+                    selectedDocType = docType.name;
+                    selectedDocTypeId = docType.id;
+                    document.getElementById('docTypeTitle').textContent = selectedDocType;
+                    document.getElementById('docTypeHeaderTitle').textContent = selectedDocType;
+                    document.getElementById('yearHeaderTitle2').textContent = selectedYear;
+                    
+                    // Set up breadcrumb navigation
+                    document.getElementById('backToDocTypes').textContent = selectedYear;
+                    
+                    // Load documents for this type and year
+                    loadDocuments(selectedYear, selectedDocTypeId);
+                    
+                    // Show documents list page
+                    documentTypesPage.style.display = 'none';
+                    documentsListPage.style.display = 'block';
+                }
+            }
+        });
+
+        // Load Documents Function
+        function loadDocuments(year, typeId) {
+            const docs = db.documents.filter(d => d.year.toString() === year.toString() && d.typeId === typeId);
+            const tableBody = document.getElementById('documentsTable');
+            tableBody.innerHTML = '';
+            
+            docs.forEach(doc => {
+                const row = document.createElement('tr');
+                row.setAttribute('data-id', doc.id);
+                
+                const birthDate = new Date(doc.birthDate).toLocaleDateString('pt-BR');
+                const regDate = new Date(doc.registrationDate).toLocaleDateString('pt-BR');
+                const filesCount = doc.files ? doc.files.length : 0;
+                
+                row.innerHTML = `
+                    <td>${doc.name}</td>
+                    <td>${birthDate}</td>
+                    <td>${regDate}</td>
+                    <td>${filesCount} ${filesCount === 1 ? 'arquivo' : 'arquivos'}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-info view-btn">Ver</button>
+                            <button class="btn btn-sm btn-warning edit-btn">Editar</button>
+                            <button class="btn btn-sm btn-danger delete-btn">Excluir</button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Header button actions
+        document.getElementById('addYearBtnHeader').addEventListener('click', function() {
+            document.getElementById('newYear').value = new Date().getFullYear();
+            document.getElementById('addYearModal').style.display = 'flex';
+        });
+
+        document.getElementById('addDocTypeBtnHeader').addEventListener('click', function() {
+            document.getElementById('addDocTypeModal').style.display = 'flex';
+        });
+
+        // Botão de remover anos
+        document.getElementById('removeYearBtnHeader').addEventListener('click', function() {
+            showRemoveYearModal();
+        });
+
+        // Botão de remover tipos de documento
+        document.getElementById('removeDocTypeBtnHeader').addEventListener('click', function() {
+            showRemoveDocTypeModal();
+        });
+
+        // Função para mostrar modal de remoção de anos
+        function showRemoveYearModal() {
+            const removeList = document.getElementById('removeYearList');
+            removeList.innerHTML = '';
+            
+            db.years.forEach(year => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'remove-item';
+                itemDiv.innerHTML = `
+                    <input type="checkbox" id="year_${year}" value="${year}">
+                    <label for="year_${year}">${year}</label>
+                `;
+                removeList.appendChild(itemDiv);
+            });
+            
+            document.getElementById('removeYearModal').style.display = 'flex';
+        }
+
+        // Função para mostrar modal de remoção de tipos de documento
+        function showRemoveDocTypeModal() {
+            const removeList = document.getElementById('removeDocTypeList');
+            removeList.innerHTML = '';
+            
+            db.documentTypes.forEach(docType => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'remove-item';
+                itemDiv.innerHTML = `
+                    <input type="checkbox" id="doctype_${docType.id}" value="${docType.id}">
+                    <label for="doctype_${docType.id}">${docType.name}</label>
+                `;
+                removeList.appendChild(itemDiv);
+            });
+            
+            document.getElementById('removeDocTypeModal').style.display = 'flex';
+        }
+
+        // Confirmação de remoção de anos
+        document.getElementById('confirmRemoveYearBtn').addEventListener('click', function() {
+            const checkedYears = document.querySelectorAll('#removeYearList input[type="checkbox"]:checked');
+            
+            checkedYears.forEach(checkbox => {
+                const year = parseInt(checkbox.value);
+                const index = db.years.indexOf(year);
+                if (index > -1) {
+                    db.years.splice(index, 1);
+                    // Remover documentos associados a este ano
+                    db.documents = db.documents.filter(doc => doc.year !== year);
+                }
+            });
+            
+            // Atualizar grid de anos
+            initializeYearsGrid();
+            document.getElementById('removeYearModal').style.display = 'none';
+        });
+
+        // Confirmação de remoção de tipos de documento
+        document.getElementById('confirmRemoveDocTypeBtn').addEventListener('click', function() {
+            const checkedDocTypes = document.querySelectorAll('#removeDocTypeList input[type="checkbox"]:checked');
+            
+            checkedDocTypes.forEach(checkbox => {
+                const docTypeId = parseInt(checkbox.value);
+                const index = db.documentTypes.findIndex(dt => dt.id === docTypeId);
+                if (index > -1) {
+                    db.documentTypes.splice(index, 1);
+                    // Remover documentos associados a este tipo
+                    db.documents = db.documents.filter(doc => doc.typeId !== docTypeId);
+                }
+            });
+            
+            // Atualizar grid de tipos de documento
+            initializeDocumentTypesGrid();
+            document.getElementById('removeDocTypeModal').style.display = 'none';
+        });
+
+        // Add Person Function
+        function addNewPerson() {
+            isEditMode = false;
+            selectedDocument = null;
+            uploadedFiles = [];
+            
+            // Reset form
+            document.getElementById('personForm').reset();
+            document.getElementById('fileList').innerHTML = '';
+            
+            // Set titles
+            document.getElementById('formTitle').textContent = 'Novo Registro';
+            document.getElementById('formHeaderTitle').textContent = `Adicionar Registro de ${selectedDocType}`;
+            
+            // Set up breadcrumb navigation
+            document.getElementById('backToDocTypes2').textContent = selectedYear;
+            document.getElementById('backToDocList').textContent = selectedDocType;
+            
+            // Show correct document fields
+            const docType = db.documentTypes.find(t => t.id === selectedDocTypeId);
+            if (docType) {
+                showDocumentFields(docType.slug);
+            }
+            
+            // Make form editable
+            const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
+            formInputs.forEach(input => {
+                input.readOnly = false;
+            });
+            
+            // Show the person form
+            documentsListPage.style.display = 'none';
+            personFormContainer.style.display = 'block';
+        }
+
+        // Add Person Button (alternative)
+        document.getElementById('addPersonBtn').addEventListener('click', addNewPerson);
+
+        // Person Form Submit - corrigindo duplicação
+        document.getElementById('personForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value.trim();
+            const birthDate = document.getElementById('birthDate').value;
+            
+            if (fullName && birthDate) {
+                if (isEditMode && selectedDocument) {
+                    // Update existing document
+                    const doc = db.documents.find(d => d.id === selectedDocument);
+                    if (doc) {
+                        doc.name = fullName;
+                        doc.birthDate = birthDate;
+                        
+                        // Update specific fields based on document type
+                        updateDocumentSpecificFields(doc);
+                        doc.observations = document.getElementById('observations').value;
+                        
+                        // Update files if new ones were uploaded
+                        if (uploadedFiles.length > 0) {
+                            // Adicionar novos arquivos aos existentes, não substituir
+                            if (!doc.files) doc.files = [];
+                            doc.files = [...doc.files, ...uploadedFiles];
+                        }
+                    }
+                } else {
+                    // Create new document - corrigindo problema de duplicação
+                    const newId = db.documents.length > 0 ? Math.max(...db.documents.map(d => d.id)) + 1 : 1;
+                    const today = new Date().toISOString().split('T')[0];
+                    
+                    const newDoc = {
+                        id: newId,
+                        year: parseInt(selectedYear),
+                        type: selectedDocType,
+                        typeId: selectedDocTypeId,
+                        name: fullName, // Usando apenas o nome uma vez
+                        birthDate: birthDate,
+                        registrationDate: today,
+                        observations: document.getElementById('observations').value,
+                        files: [...uploadedFiles] // Criando nova array para evitar referência
+                    };
+                    
+                    // Add specific fields based on document type
+                    updateDocumentSpecificFields(newDoc);
+                    
+                    db.documents.push(newDoc);
+                }
+                
+                // Reset uploaded files
+                uploadedFiles = [];
+                
+                // Reload documents list
+                loadDocuments(selectedYear, selectedDocTypeId);
+                
+                // Return to documents list
+                personFormContainer.style.display = 'none';
+                documentsListPage.style.display = 'block';
+            } else {
+                alert('Nome completo e data de nascimento são obrigatórios!');
+            }
+        });
+
+        // Function to update document specific fields
+        function updateDocumentSpecificFields(doc) {
+            const docType = db.documentTypes.find(t => t.id === selectedDocTypeId);
+            if (!docType) return;
+
+            switch (docType.slug) {
+                case 'batismo':
+                    doc.parentName1 = document.getElementById('parentName1').value;
+                    doc.parentName2 = document.getElementById('parentName2').value;
+                    doc.baptismDate = document.getElementById('baptismDate').value;
+                    doc.celebrant = document.getElementById('celebrant').value;
+                    doc.godparent1 = document.getElementById('godparent1').value;
+                    doc.godparent2 = document.getElementById('godparent2').value;
+                    doc.baptismPlace = document.getElementById('baptismPlace').value;
+                    break;
+                    
+                case 'crisma':
+                    doc.confirmationDate = document.getElementById('confirmationDate').value;
+                    doc.confirmationPlace = document.getElementById('confirmationPlace').value;
+                    doc.bishop = document.getElementById('bishop').value;
+                    doc.confirmationGodparent = document.getElementById('confirmationGodparent').value;
+                    doc.crismaParentName1 = document.getElementById('crismaParentName1').value;
+                    doc.crismaParentName2 = document.getElementById('crismaParentName2').value;
+                    break;
+                    
+                case 'comunhao':
+                    doc.communionDate = document.getElementById('communionDate').value;
+                    doc.communionPlace = document.getElementById('communionPlace').value;
+                    doc.communionPriest = document.getElementById('communionPriest').value;
+                    break;
+                    
+                case 'casamento':
+                    doc.marriageDate = document.getElementById('marriageDate').value;
+                    doc.marriagePlace = document.getElementById('marriagePlace').value;
+                    doc.marriageCelebrant = document.getElementById('marriageCelebrant').value;
+                    doc.groomName = document.getElementById('groomName').value;
+                    doc.groomBirthDate = document.getElementById('groomBirthDate').value;
+                    doc.brideName = document.getElementById('brideName').value;
+                    doc.brideBirthDate = document.getElementById('brideBirthDate').value;
+                    doc.groomFather = document.getElementById('groomFather').value;
+                    doc.groomMother = document.getElementById('groomMother').value;
+                    doc.brideFather = document.getElementById('brideFather').value;
+                    doc.brideMother = document.getElementById('brideMother').value;
+                    doc.witness1 = document.getElementById('witness1').value;
+                    doc.witness2 = document.getElementById('witness2').value;
+                    break;
+                    
+                case 'obito':
+                    doc.deathDate = document.getElementById('deathDate').value;
+                    doc.burialPlace = document.getElementById('burialPlace').value;
+                    doc.ritesPerformed = document.getElementById('ritesPerformed').value;
+                    break;
+                    
+                case 'admissao':
+                    doc.admissionDate = document.getElementById('admissionDate').value;
+                    doc.address = document.getElementById('address').value;
+                    doc.ministries = document.getElementById('ministries').value;
+                    break;
+            }
+        }
+
+        // Function to fill form with document specific fields
+        function fillDocumentSpecificFields(doc) {
+            const docType = db.documentTypes.find(t => t.id === doc.typeId);
+            if (!docType) return;
+
+            // Show correct fields
+            showDocumentFields(docType.slug);
+
+            switch (docType.slug) {
+                case 'batismo':
+                    document.getElementById('parentName1').value = doc.parentName1 || '';
+                    document.getElementById('parentName2').value = doc.parentName2 || '';
+                    document.getElementById('baptismDate').value = doc.baptismDate || '';
+                    document.getElementById('celebrant').value = doc.celebrant || '';
+                    document.getElementById('godparent1').value = doc.godparent1 || '';
+                    document.getElementById('godparent2').value = doc.godparent2 || '';
+                    document.getElementById('baptismPlace').value = doc.baptismPlace || '';
+                    break;
+                    
+                case 'crisma':
+                    document.getElementById('confirmationDate').value = doc.confirmationDate || '';
+                    document.getElementById('confirmationPlace').value = doc.confirmationPlace || '';
+                    document.getElementById('bishop').value = doc.bishop || '';
+                    document.getElementById('confirmationGodparent').value = doc.confirmationGodparent || '';
+                    document.getElementById('crismaParentName1').value = doc.crismaParentName1 || '';
+                    document.getElementById('crismaParentName2').value = doc.crismaParentName2 || '';
+                    break;
+                    
+                case 'comunhao':
+                    document.getElementById('communionDate').value = doc.communionDate || '';
+                    document.getElementById('communionPlace').value = doc.communionPlace || '';
+                    document.getElementById('communionPriest').value = doc.communionPriest || '';
+                    break;
+                    
+                case 'casamento':
+                    document.getElementById('marriageDate').value = doc.marriageDate || '';
+                    document.getElementById('marriagePlace').value = doc.marriagePlace || '';
+                    document.getElementById('marriageCelebrant').value = doc.marriageCelebrant || '';
+                    document.getElementById('groomName').value = doc.groomName || '';
+                    document.getElementById('groomBirthDate').value = doc.groomBirthDate || '';
+                    document.getElementById('brideName').value = doc.brideName || '';
+                    document.getElementById('brideBirthDate').value = doc.brideBirthDate || '';
+                    document.getElementById('groomFather').value = doc.groomFather || '';
+                    document.getElementById('groomMother').value = doc.groomMother || '';
+                    document.getElementById('brideFather').value = doc.brideFather || '';
+                    document.getElementById('brideMother').value = doc.brideMother || '';
+                    document.getElementById('witness1').value = doc.witness1 || '';
+                    document.getElementById('witness2').value = doc.witness2 || '';
+                    break;
+                    
+                case 'obito':
+                    document.getElementById('deathDate').value = doc.deathDate || '';
+                    document.getElementById('burialPlace').value = doc.burialPlace || '';
+                    document.getElementById('ritesPerformed').value = doc.ritesPerformed || '';
+                    break;
+                    
+                case 'admissao':
+                    document.getElementById('admissionDate').value = doc.admissionDate || '';
+                    document.getElementById('address').value = doc.address || '';
+                    document.getElementById('ministries').value = doc.ministries || '';
+                    break;
+            }
+        }
+
+        // Document Actions (View, Edit, Delete)
+        document.getElementById('documentsTable').addEventListener('click', function(e) {
+            if (e.target.classList.contains('view-btn') || e.target.classList.contains('edit-btn')) {
+                const row = e.target.closest('tr');
+                const docId = parseInt(row.getAttribute('data-id'));
+                const doc = db.documents.find(d => d.id === docId);
+                
+                if (doc) {
+                    selectedDocument = docId;
+                    
+                    // Fill form with document data
+                    document.getElementById('fullName').value = doc.name;
+                    document.getElementById('birthDate').value = doc.birthDate;
+                    document.getElementById('observations').value = doc.observations || '';
+                    
+                    // Fill document-specific fields
+                    fillDocumentSpecificFields(doc);
+                    
+                    // Display attached files
+                    const fileList = document.getElementById('fileList');
+                    fileList.innerHTML = '';
+                    
+                    if (doc.files && doc.files.length > 0) {
+                        doc.files.forEach(file => {
+                            const fileItem = document.createElement('div');
+                            fileItem.className = 'file-item';
+                            fileItem.innerHTML = `
+                                <span class="file-name">${file.name} (${file.size})</span>
+                                <div class="file-actions">
+                                    <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
+                                    <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
+                                    <button type="button" class="btn btn-sm btn-danger remove-file-btn" data-file-id="${file.id}">Remover</button>
+                                </div>
+                            `;
+                            fileList.appendChild(fileItem);
+                        });
+                    }
+                    
+                    // Set up form mode
+                    isEditMode = e.target.classList.contains('edit-btn');
+                    document.getElementById('formTitle').textContent = isEditMode ? 'Editar Registro' : 'Visualizar Registro';
+                    document.getElementById('formHeaderTitle').textContent = `${isEditMode ? 'Editar' : 'Visualizar'} Registro de ${doc.type}`;
+                    
+                    // Make fields readonly in view mode
+                    const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
+                    formInputs.forEach(input => {
+                        input.readOnly = !isEditMode;
+                    });
+                    
+                    // Set up breadcrumb navigation
+                    document.getElementById('backToDocTypes2').textContent = doc.year;
+                    document.getElementById('backToDocList').textContent = doc.type;
+                    
+                    // Show the person form
+                    documentsListPage.style.display = 'none';
+                    personFormContainer.style.display = 'block';
+                }
+            } else if (e.target.classList.contains('delete-btn')) {
+                const row = e.target.closest('tr');
+                const docId = parseInt(row.getAttribute('data-id'));
+                selectedDocument = docId;
+                
+                // Show delete confirmation modal
+                document.getElementById('deleteConfirmModal').style.display = 'flex';
+            }
+        });
+
+        // File actions in file list
+        document.getElementById('fileList').addEventListener('click', function(e) {
+            if (e.target.classList.contains('view-file-btn')) {
+                const fileId = parseInt(e.target.getAttribute('data-file-id'));
+                const doc = db.documents.find(d => d.id === selectedDocument);
+                if (doc && doc.files) {
+                    const file = doc.files.find(f => f.id === fileId);
+                    if (file) {
+                        viewFile(file);
+                    }
+                }
+            } else if (e.target.classList.contains('download-file-btn')) {
+                const fileId = parseInt(e.target.getAttribute('data-file-id'));
+                const doc = db.documents.find(d => d.id === selectedDocument);
+                if (doc && doc.files) {
+                    const file = doc.files.find(f => f.id === fileId);
+                    if (file) {
+                        downloadFile(file);
+                    }
+                }
+            } else if (e.target.classList.contains('remove-file-btn')) {
+                const fileId = parseInt(e.target.getAttribute('data-file-id'));
+                const doc = db.documents.find(d => d.id === selectedDocument);
+                if (doc && doc.files) {
+                    doc.files = doc.files.filter(f => f.id !== fileId);
+                    // Refresh file list
+                    const fileList = document.getElementById('fileList');
+                    const fileItem = e.target.closest('.file-item');
+                    fileItem.remove();
+                }
+            } else if (e.target.classList.contains('remove-file')) {
+                const index = parseInt(e.target.getAttribute('data-index'));
+                uploadedFiles.splice(index, 1);
+                
+                // Refresh file list display
+                const fileList = document.getElementById('fileList');
+                const fileItem = e.target.closest('.file-item');
+                if (fileItem) {
+                    fileItem.remove();
+                }
+            }
+        });
+
+        // Cancel Form Button
+        document.getElementById('cancelFormBtn').addEventListener('click', function() {
+            personFormContainer.style.display = 'none';
+            documentsListPage.style.display = 'block';
+        });
+
+        // Breadcrumb Navigation
+        document.getElementById('backToDashboard').addEventListener('click', function(e) {
+            e.preventDefault();
+            documentTypesPage.style.display = 'none';
+            searchResultsSection.style.display = 'none';
+            dashboardPage.style.display = 'block';
+        });
+
+        document.getElementById('backToDashboard2').addEventListener('click', function(e) {
+            e.preventDefault();
+            documentsListPage.style.display = 'none';
+            searchResultsSection.style.display = 'none';
+            dashboardPage.style.display = 'block';
+        });
+
+        document.getElementById('backToDashboard3').addEventListener('click', function(e) {
+            e.preventDefault();
+            personFormContainer.style.display = 'none';
+            searchResultsSection.style.display = 'none';
+            dashboardPage.style.display = 'block';
+        });
+
+        document.getElementById('backToDocTypes').addEventListener('click', function(e) {
+            e.preventDefault();
+            documentsListPage.style.display = 'none';
+            documentTypesPage.style.display = 'block';
+        });
+
+        document.getElementById('backToDocTypes2').addEventListener('click', function(e) {
+            e.preventDefault();
+            personFormContainer.style.display = 'none';
+            documentTypesPage.style.display = 'block';
+        });
+
+        document.getElementById('backToDocList').addEventListener('click', function(e) {
+            e.preventDefault();
+            personFormContainer.style.display = 'none';
+            documentsListPage.style.display = 'block';
+        });
+
+        // Enhanced Global Search Functionality
+        const searchInputs = document.querySelectorAll('#globalSearch, #globalSearch2, #globalSearch3');
+        searchInputs.forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const searchTerm = this.value.trim().toLowerCase();
+                    
+                    if (searchTerm.length >= 2) {
+                        performSearch(searchTerm);
+                    } else if (searchTerm.length > 0) {
+                        alert('Por favor, digite pelo menos 2 caracteres para buscar.');
+                    }
+                }
+            });
+        });
+
+        function performSearch(term) {
+            console.log('Searching for:', term);
+            
+            // Enhanced search in documents - search by name and birth date
+            const results = db.documents.filter(doc => {
+                const nameMatch = doc.name.toLowerCase().includes(term);
+                const birthDateMatch = doc.birthDate && (
+                    doc.birthDate.includes(term) || 
+                    new Date(doc.birthDate).toLocaleDateString('pt-BR').includes(term)
+                );
+                
+                return nameMatch || birthDateMatch;
+            });
+            
+            console.log('Search results:', results);
+            
+            // Display search results
+            document.getElementById('searchTerm').textContent = term;
+            const resultsTable = document.getElementById('searchResultsTable');
+            resultsTable.innerHTML = '';
+            
+            if (results.length > 0) {
+                results.forEach(doc => {
+                    const row = document.createElement('tr');
+                    row.setAttribute('data-id', doc.id);
+                    row.setAttribute('data-year', doc.year);
+                    row.setAttribute('data-type-id', doc.typeId);
+                    
+                    const birthDate = new Date(doc.birthDate).toLocaleDateString('pt-BR');
+                    const regDate = new Date(doc.registrationDate).toLocaleDateString('pt-BR');
+                    
+                    row.innerHTML = `
+                        <td>${doc.name}</td>
+                        <td>${doc.type}</td>
+                        <td>${birthDate}</td>
+                        <td>${regDate}</td>
+                        <td>${doc.year}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-sm btn-info search-view-btn">Ver</button>
+                            </div>
+                        </td>
+                    `;
+                    resultsTable.appendChild(row);
+                });
+                
+                document.getElementById('noResults').style.display = 'none';
+            } else {
+                document.getElementById('noResults').style.display = 'block';
+            }
+            
+            // Show search results section
+            dashboardPage.style.display = 'block';
+            documentTypesPage.style.display = 'none';
+            documentsListPage.style.display = 'none';
+            personFormContainer.style.display = 'none';
+            searchResultsSection.style.display = 'block';
+            
+            // Clear search inputs
+            searchInputs.forEach(input => input.value = '');
+        }
+
+        // Search Results Actions
+        document.getElementById('searchResultsTable').addEventListener('click', function(e) {
+            if (e.target.classList.contains('search-view-btn')) {
+                const row = e.target.closest('tr');
+                const docId = parseInt(row.getAttribute('data-id'));
+                const year = row.getAttribute('data-year');
+                const typeId = parseInt(row.getAttribute('data-type-id'));
+                
+                selectedYear = year;
+                selectedDocTypeId = typeId;
+                const docType = db.documentTypes.find(t => t.id === typeId);
+                selectedDocType = docType ? docType.name : 'Documento';
+                
+                // Load documents list
+                loadDocuments(selectedYear, selectedDocTypeId);
+                
+                // Update navigation and titles
+                document.getElementById('yearHeaderTitle2').textContent = selectedYear;
+                document.getElementById('docTypeTitle').textContent = selectedDocType;
+                document.getElementById('docTypeHeaderTitle').textContent = selectedDocType;
+                document.getElementById('backToDocTypes').textContent = selectedYear;
+                
+                // Find and view the document
+                const doc = db.documents.find(d => d.id === docId);
+                if (doc) {
+                    selectedDocument = docId;
+                    
+                    // Fill form with document data
+                    document.getElementById('fullName').value = doc.name;
+                    document.getElementById('birthDate').value = doc.birthDate;
+                    document.getElementById('observations').value = doc.observations || '';
+                    
+                    // Fill document-specific fields
+                    fillDocumentSpecificFields(doc);
+                    
+                    // Display attached files
+                    const fileList = document.getElementById('fileList');
+                    fileList.innerHTML = '';
+                    
+                    if (doc.files && doc.files.length > 0) {
+                        doc.files.forEach(file => {
+                            const fileItem = document.createElement('div');
+                            fileItem.className = 'file-item';
+                            fileItem.innerHTML = `
+                                <span class="file-name">${file.name} (${file.size})</span>
+                                <div class="file-actions">
+                                    <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
+                                    <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
+                                    <button type="button" class="btn btn-sm btn-danger remove-file-btn" data-file-id="${file.id}">Remover</button>
+                                </div>
+                            `;
+                            fileList.appendChild(fileItem);
+                        });
+                    }
+                    
+                    // Set up form mode
+                    isEditMode = false;
+                    document.getElementById('formTitle').textContent = 'Visualizar Registro';
+                    document.getElementById('formHeaderTitle').textContent = `Visualizar Registro de ${doc.type}`;
+                    
+                    // Make fields readonly in view mode
+                    const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
+                    formInputs.forEach(input => {
+                        input.readOnly = true;
+                    });
+                    
+                    // Set up breadcrumb navigation
+                    document.getElementById('backToDocTypes2').textContent = doc.year;
+                    document.getElementById('backToDocList').textContent = doc.type;
+                    
+                    // Show the person form
+                    searchResultsSection.style.display = 'none';
+                    personFormContainer.style.display = 'block';
+                }
+            }
+        });
+
+        // File Upload Enhanced Functionality
+        document.getElementById('fileUpload').addEventListener('change', function(e) {
+            const fileList = document.getElementById('fileList');
+            
+            if (this.files.length > 0) {
+                for (let i = 0; i < this.files.length; i++) {
+                    const file = this.files[i];
+                    const size = Math.round(file.size / 1024) + ' KB';
+                    const localUrl = createFileURL(file);
+                    
+                    const uploadedFile = {
+                        id: Date.now() + i,
+                        name: file.name,
+                        type: file.type,
+                        size: size,
+                        localUrl: localUrl,
+                        file: file
+                    };
+                    
+                    uploadedFiles.push(uploadedFile);
+                    
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    fileItem.innerHTML = `
+                        <span class="file-name">${file.name} (${size})</span>
+                        <div class="file-actions">
+                            <button type="button" class="btn btn-sm btn-info view-uploaded-file" data-index="${uploadedFiles.length - 1}">Visualizar</button>
+                            <button type="button" class="btn btn-sm btn-danger remove-file" data-index="${uploadedFiles.length - 1}">Remover</button>
+                        </div>
+                    `;
+                    fileList.appendChild(fileItem);
+                }
+            }
+            
+            // Reset file input
+            this.value = '';
+        });
+
+        // Handle uploaded file actions
+        document.getElementById('fileList').addEventListener('click', function(e) {
+            if (e.target.classList.contains('view-uploaded-file')) {
+                const index = parseInt(e.target.getAttribute('data-index'));
+                const file = uploadedFiles[index];
+                if (file) {
+                    viewFile(file);
+                }
+            }
+        });
+
+        // File upload area click to trigger file input
+        document.getElementById('fileUploadArea').addEventListener('click', function(e) {
+            if (e.target.id === 'fileUploadArea' || e.target.tagName === 'P') {
+                document.getElementById('fileUpload').click();
+            }
+        });
+
+        // Drag and drop functionality
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        
+        fileUploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.borderColor = 'var(--primary)';
+            this.style.backgroundColor = 'rgba(139, 0, 0, 0.1)';
+        });
+        
+        fileUploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.style.borderColor = 'rgba(139, 0, 0, 0.3)';
+            this.style.backgroundColor = 'rgba(139, 0, 0, 0.02)';
+        });
+        
+        fileUploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.borderColor = 'rgba(139, 0, 0, 0.3)';
+            this.style.backgroundColor = 'rgba(139, 0, 0, 0.02)';
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                // Trigger the same logic as file input change
+                const fileInput = document.getElementById('fileUpload');
+                fileInput.files = files;
+                fileInput.dispatchEvent(new Event('change'));
+            }
+        });
+
+        // Modal event listeners
+        ['addYearModal', 'addDocTypeModal', 'deleteConfirmModal', 'fileViewModal', 'removeYearModal', 'removeDocTypeModal'].forEach(modalId => {
+            const modal = document.getElementById(modalId);
+            const closeBtn = modal.querySelector('.modal-close');
+            
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    modal.style.display = 'none';
+                });
+            }
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // File view modal specific controls
+        document.getElementById('closeFileViewBtn').addEventListener('click', function() {
+            document.getElementById('fileViewModal').style.display = 'none';
+        });
+
+        document.getElementById('downloadFileBtn').addEventListener('click', function() {
+            if (selectedFileForView) {
+                downloadFile(selectedFileForView);
+            }
+        });
+
+        document.getElementById('saveYearBtn').addEventListener('click', function() {
+            const newYear = parseInt(document.getElementById('newYear').value);
+            if (newYear && !db.years.includes(newYear)) {
+                db.years.push(newYear);
+                db.years.sort((a, b) => b - a);
+                
+                // Update the years grid
+                initializeYearsGrid();
+                
+                document.getElementById('addYearModal').style.display = 'none';
+            } else {
+                alert('Ano inválido ou já existente!');
+            }
+        });
+
+        document.getElementById('saveDocTypeBtn').addEventListener('click', function() {
+            const newDocTypeName = document.getElementById('newDocType').value.trim();
+            const newDocTypeDesc = document.getElementById('docTypeDescription').value.trim();
+            
+            if (newDocTypeName && !db.documentTypes.find(t => t.name.toLowerCase() === newDocTypeName.toLowerCase())) {
+                const newId = Math.max(...db.documentTypes.map(t => t.id)) + 1;
+                const newSlug = newDocTypeName.toLowerCase().replace(/\s+/g, '-');
+                
+                db.documentTypes.push({
+                    id: newId,
+                    name: newDocTypeName,
+                    slug: newSlug,
+                    description: newDocTypeDesc || `Registros de ${newDocTypeName.toLowerCase()}`,
+                    icon: 'images/outros.png'
+                });
+                
+                // Update the document types grid
+                initializeDocumentTypesGrid();
+                
+                document.getElementById('addDocTypeModal').style.display = 'none';
+                document.getElementById('newDocType').value = '';
+                document.getElementById('docTypeDescription').value = '';
+            } else {
+                alert('Nome inválido ou tipo de documento já existente!');
+            }
+        });
+
+        // Delete confirmation
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+            if (selectedDocument) {
+                const index = db.documents.findIndex(d => d.id === selectedDocument);
+                
+                if (index !== -1) {
+                    db.documents.splice(index, 1);
+                    loadDocuments(selectedYear, selectedDocTypeId);
+                    document.getElementById('deleteConfirmModal').style.display = 'none';
+                }
+            }
+        });
+
+        document.getElementById('cancelDeleteBtn').addEventListener('click', function() {
+            document.getElementById('deleteConfirmModal').style.display = 'none';
+        });
+
+        // Cancel buttons for modals
+        document.getElementById('cancelYearBtn').addEventListener('click', function() {
+            document.getElementById('addYearModal').style.display = 'none';
+        });
+
+        document.getElementById('cancelDocTypeBtn').addEventListener('click', function() {
+            document.getElementById('addDocTypeModal').style.display = 'none';
+        });
+
+        document.getElementById('cancelRemoveYearBtn').addEventListener('click', function() {
+            document.getElementById('removeYearModal').style.display = 'none';
+        });
+
+        document.getElementById('cancelRemoveDocTypeBtn').addEventListener('click', function() {
+            document.getElementById('removeDocTypeModal').style.display = 'none';
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year as default login
+            const currentYear = new Date().getFullYear();
+            if (!db.years.includes(currentYear)) {
+                db.years.push(currentYear);
+                db.years.sort((a, b) => b - a);
+            }
+        });
+    </script>
+</body>
+</html>
