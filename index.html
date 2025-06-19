@@ -287,19 +287,42 @@
             max-width: 600px;
             margin: 0 40px;
             position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .search-bar input {
-            width: 100%;
-            padding: 15px 50px 15px 25px;
+            flex: 1;
+            padding: 15px 25px;
             border: none;
-            border-radius: 30px;
+            border-radius: 30px 0 0 30px;
             background-color: rgba(255, 255, 255, 0.15);
             color: white;
             font-size: 16px;
             backdrop-filter: blur(15px);
             border: 2px solid rgba(255, 255, 255, 0.2);
+            border-right: none;
             font-weight: 500;
+        }
+
+        .search-btn {
+            padding: 17px 25px;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            background-color: rgba(255, 255, 255, 0.25);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-left: none;
+            backdrop-filter: blur(15px);
+        }
+
+        .search-btn:hover {
+            background-color: rgba(255, 255, 255, 0.35);
+            transform: translateY(-1px);
         }
 
         .search-bar::after {
@@ -716,29 +739,34 @@
         /* SEARCH RESULTS */
         .search-results {
             display: none;
-            margin-top: 25px;
+            margin: 25px 0;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(139, 0, 0, 0.15);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(139, 0, 0, 0.1);
         }
 
         .search-header {
-            margin-bottom: 40px;
-            background: rgba(255, 255, 255, 0.98);
-            padding: 30px 35px;
-            border-radius: 20px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 25px rgba(139, 0, 0, 0.15);
+            margin-bottom: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px 35px;
+            border-radius: 20px 20px 0 0;
         }
 
         .search-header h2 {
-            font-size: 32px;
-            margin-bottom: 15px;
-            color: var(--primary);
-            font-weight: 800;
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: white;
+            font-weight: 700;
         }
 
         .search-header p {
-            color: #64748b;
-            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
             font-weight: 500;
+            margin: 0;
         }
 
         .no-results {
@@ -975,6 +1003,7 @@
                     </div>
                     <div class="search-bar">
                         <input type="text" id="globalSearch" placeholder="Buscar por nome ou data de nascimento...">
+                        <button type="button" class="search-btn" id="searchBtn">🔍</button>
                     </div>
                     <div class="user-menu">
                         <img src="images/igreja1.jpg" alt="Avatar" class="avatar" id="userAvatar">
@@ -991,26 +1020,15 @@
                 <p>Sistema Profissional de Gerenciamento Paroquial - Organize todos os registros da comunidade</p>
             </section>
 
-            <section>
-                <div class="section-header">
-                    <h2>Arquivos por Ano</h2>
-                    <div class="section-actions">
-                        <button class="btn-red" id="addYearBtnHeader">Adicionar</button>
-                        <button class="btn-red" id="removeYearBtnHeader">Remover</button>
-                    </div>
-                </div>
-                <div class="card-grid" id="yearsGrid">
-                    <!-- Years will be dynamically added here -->
-                </div>
-            </section>
-
             <!-- Search Results Section -->
             <section class="search-results" id="searchResultsSection">
                 <div class="search-header">
-                    <h2>Resultados da Busca</h2>
-                    <p>Exibindo resultados para: <strong id="searchTerm"></strong></p>
+                    <h2>📋 Resultados da Busca</h2>
+                    <p>Exibindo resultados para: <strong id="searchTerm"></strong> 
+                        <button class="btn-red" id="clearSearchBtn" style="margin-left: 15px; padding: 5px 15px; font-size: 12px;">✕ Limpar</button>
+                    </p>
                 </div>
-                <div class="table-container">
+                <div class="table-container" style="border-radius: 0 0 20px 20px;">
                     <table>
                         <thead>
                             <tr>
@@ -1027,7 +1045,24 @@
                     </table>
                 </div>
                 <div class="no-results" id="noResults" style="display: none;">
-                    <p>Nenhum resultado encontrado para a sua busca.</p>
+                    <p>🔍 Nenhum resultado encontrado para a sua busca.</p>
+                    <p style="margin-top: 10px; font-size: 16px; color: #94a3b8;">
+                        Dica: Tente pesquisar por nome completo, parte do nome, ou nome + data de nascimento<br>
+                        Exemplo: "Maria Silva" ou "Maria Silva 15/06/1990"
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-header">
+                    <h2>Arquivos por Ano</h2>
+                    <div class="section-actions">
+                        <button class="btn-red" id="addYearBtnHeader">Adicionar</button>
+                        <button class="btn-red" id="removeYearBtnHeader">Remover</button>
+                    </div>
+                </div>
+                <div class="card-grid" id="yearsGrid">
+                    <!-- Years will be dynamically added here -->
                 </div>
             </section>
         </main>
@@ -1044,6 +1079,7 @@
                     </div>
                     <div class="search-bar">
                         <input type="text" id="globalSearch2" placeholder="Buscar por nome ou data de nascimento...">
+                        <button type="button" class="search-btn" id="searchBtn2">🔍</button>
                     </div>
                     <div class="user-menu">
                         <img src="images/igreja1.jpg" alt="Avatar" class="avatar" id="userAvatar2">
@@ -1087,6 +1123,7 @@
                     </div>
                     <div class="search-bar">
                         <input type="text" id="globalSearch3" placeholder="Buscar por nome ou data de nascimento...">
+                        <button type="button" class="search-btn" id="searchBtn3">🔍</button>
                     </div>
                     <div class="user-menu">
                         <img src="images/igreja1.jpg" alt="Avatar" class="avatar" id="userAvatar3">
@@ -1133,6 +1170,39 @@
     <!-- Person Form -->
     <div class="person-form" id="personFormContainer">
         <div class="container">
+            <!-- Search Results Section - também mostrar no form -->
+            <section class="search-results" id="searchResultsFormSection" style="display: none;">
+                <div class="search-header">
+                    <h2>📋 Resultados da Busca</h2>
+                    <p>Exibindo resultados para: <strong id="searchTermForm"></strong> 
+                        <button class="btn-red" id="clearSearchFormBtn" style="margin-left: 15px; padding: 5px 15px; font-size: 12px;">✕ Limpar</button>
+                    </p>
+                </div>
+                <div class="table-container" style="border-radius: 0 0 20px 20px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Tipo de Documento</th>
+                                <th>Data de Nascimento</th>
+                                <th>Data do Registro</th>
+                                <th>Ano</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="searchResultsFormTable">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="no-results" id="noResultsForm" style="display: none;">
+                    <p>🔍 Nenhum resultado encontrado para a sua busca.</p>
+                    <p style="margin-top: 10px; font-size: 16px; color: #94a3b8;">
+                        Dica: Tente pesquisar por nome completo, parte do nome, ou nome + data de nascimento<br>
+                        Exemplo: "Maria Silva" ou "Maria Silva 15/06/1990"
+                    </p>
+                </div>
+            </section>
+
             <div class="breadcrumb">
                 <a href="#" id="backToDashboard3">Dashboard</a>
                 <span class="separator">›</span>
@@ -1597,12 +1667,12 @@
             documents: [
                 { 
                     id: 1, 
-                    year: 2023, 
+                    year: 2020, 
                     type: 'Batismo', 
                     typeId: 1,
-                    name: 'Maria Silva', 
-                    birthDate: '2000-05-12', 
-                    registrationDate: '2023-06-15',
+                    name: 'Paulo Henrique Soares Silva', 
+                    birthDate: '2000-01-14', 
+                    registrationDate: '2025-06-18',
                     parentName1: 'José Silva',
                     parentName2: 'Ana Silva',
                     baptismDate: '2023-06-10',
@@ -1617,18 +1687,18 @@
                             name: 'certidao_nascimento.pdf', 
                             type: 'application/pdf', 
                             size: '520 KB',
-                            url: 'data:application/pdf;base64,JVBERi0xLjMKJf////8KNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHJ1ZVR5cGUKL0Jhc2VGb250IC9BcmlhbC1Cb2xkTVQKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Ci9Gb250RGVzY3JpcHRvciA2IDAgUgovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9BcmlhbC1Cb2xkTVQKL0ZsYWdzIDMyCi9JdGFsaWNBbmdsZSAwCi9Bc2NlbnQgOTA1Ci9EZXNjZW50IC0yMTAKL0NhcEhlaWdodCA3MjgKL0F2Z1dpZHRoIDQ3OQovTWF4V2lkdGggMjY2Mgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9SZXNvdXJjZXMgMTAgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0ZvbnQKPDwKL0YxIDUgMCBSCj4+Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9MZW5ndGggNjgKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAuMDAgNzAwLjAwIFRkCihDZXJ0aWTDo28gZGUgTmFzY2ltZW50bykgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMSAwIFJdCi9Db3VudCAxCi9NZWRpYUJveCBbMCAwIDYxMiA3OTJdCj4+CmVuZG9iago0IDAgb2JqCjw8Ci9UeXBlIC9DYXRhbG9nCi9QYWdlcyAyIDAgUgo+PgplbmRvYmoKeHJlZgowIDcKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNjY3IDAwMDAwIG4gCjAwMDAwMDA4NDggMDAwMDAgbiAKMDAwMDAwMDcyNyAwMDAwMCBuIAowMDAwMDAwOTA1IDAwMDAwIG4gCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDIxNiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKL0luZm8gOCAwIFIKPj4Kc3RhcnR4cmVmCjk1Mgp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKPj4Kc3RhcnR4cmVmCjEwNzQKJSVFT0Y='
+                            url: 'data:application/pdf;base64,JVBERi0xLjMKJf////8KNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHJ1ZVR5cGUKL0Jhc2VGb250IC9BcmlhbC1Cb2xkTVQKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Ci9Gb250RGVzY3JpcHRvciA2IDAgUgovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9BcmlhbC1Cb2xkTVQKL0ZsYWdzIDMyCi9JdGFsaWNBbmdsZSAwCi9Bc2NlbnQgOTA1Ci9EZXNjZW50IC0yMTAKL0NhcEhlaWdodCA3MjgKL0F2Z1dpZHRoIDQ3OQovTWF4V2lkdGggMjY2Mgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9SZXNvdXJjZXMgMTAgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0ZvbnQKPDwKL0YxIDUgMCBSCj4+Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9MZW5ndGggNjgKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAuMDAgNzAwLjAwIFRkCihDZXJ0aWTDo28gZGUgTmFzY2ltZW50bykgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMSAwIFJdCi9Db3VudCAxCi9NZWRpYUJveCBbMCAwIDYxMiA3OTJdCj4+CmVuZG9iagowIDAgb2JqCjw8Ci9UeXBlIC9DYXRhbG9nCi9QYWdlcyAyIDAgUgo+PgplbmRvYmoKeHJlZgowIDcKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNjY3IDAwMDAwIG4gCjAwMDAwMDA4NDggMDAwMDAgbiAKMDAwMDAwMDcyNyAwMDAwMCBuIAowMDAwMDAwOTA1IDAwMDAwIG4gCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDIxNiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKL0luZm8gOCAwIFIKPj4Kc3RhcnR4cmVmCjk1Mgp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKPj4Kc3RhcnR4cmVmCjEwNzQKJSVFT0Y='
                         }
                     ]
                 },
                 { 
                     id: 2, 
-                    year: 2023, 
+                    year: 2020, 
                     type: 'Batismo', 
                     typeId: 1,
-                    name: 'João Santos', 
-                    birthDate: '2001-09-22', 
-                    registrationDate: '2023-07-30',
+                    name: 'Paulo Henrique Soares Silva', 
+                    birthDate: '2000-01-14', 
+                    registrationDate: '2025-06-18',
                     parentName1: 'Roberto Santos',
                     parentName2: 'Maria Santos',
                     baptismDate: '2023-07-25',
@@ -1643,14 +1713,14 @@
                             name: 'certidao_nascimento.pdf', 
                             type: 'application/pdf', 
                             size: '485 KB',
-                            url: 'data:application/pdf;base64,JVBERi0xLjMKJf////8KNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHJ1ZVR5cGUKL0Jhc2VGb250IC9BcmlhbC1Cb2xkTVQKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Ci9Gb250RGVzY3JpcHRvciA2IDAgUgovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9BcmlhbC1Cb2xkTVQKL0ZsYWdzIDMyCi9JdGFsaWNBbmdsZSAwCi9Bc2NlbnQgOTA1Ci9EZXNjZW50IC0yMTAKL0NhcEhlaWdodCA3MjgKL0F2Z1dpZHRoIDQ3OQovTWF4V2lkdGggMjY2Mgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9SZXNvdXJjZXMgMTAgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0ZvbnQKPDwKL0YxIDUgMCBSCj4+Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9MZW5ndGggNjgKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAuMDAgNzAwLjAwIFRkCihDZXJ0aWTDo28gZGUgTmFzY2ltZW50bykgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMSAwIFJdCi9Db3VudCAxCi9NZWRpYUJveCBbMCAwIDYxMiA3OTJdCj4+CmVuZG9iago0IDAgb2JqCjw8Ci9UeXBlIC9DYXRhbG9nCi9QYWdlcyAyIDAgUgo+PgplbmRvYmoKeHJlZgowIDcKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNjY3IDAwMDAwIG4gCjAwMDAwMDA4NDggMDAwMDAgbiAKMDAwMDAwMDcyNyAwMDAwMCBuIAowMDAwMDAwOTA1IDAwMDAwIG4gCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDIxNiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKL0luZm8gOCAwIFIKPj4Kc3RhcnR4cmVmCjk1Mgp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKPj4Kc3RhcnR4cmVmCjEwNzQKJSVFT0Y='
+                            url: 'data:application/pdf;base64,JVBERi0xLjMKJf////8KNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHJ1ZVR5cGUKL0Jhc2VGb250IC9BcmlhbC1Cb2xkTVQKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Ci9Gb250RGVzY3JpcHRvciA2IDAgUkovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9BcmlhbC1Cb2xkTVQKL0ZsYWdzIDMyCi9JdGFsaWNBbmdsZSAwCi9Bc2NlbnQgOTA1Ci9EZXNjZW50IC0yMTAKL0NhcEhlaWdodCA3MjgKL0F2Z1dpZHRoIDQ3OQovTWF4V2lkdGggMjY2Mgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9SZXNvdXJjZXMgMTAgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0ZvbnQKPDwKL0YxIDUgMCBSCj4+Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9MZW5ndGggNjgKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAuMDAgNzAwLjAwIFRkCihDZXJ0aWTDo28gZGUgTmFzY2ltZW50bykgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMSAwIFJdCi9Db3VudCAxCi9NZWRpYUJveCBbMCAwIDYxMiA3OTJdCj4+CmVuZG9iagowIDAgb2JqCjw8Ci9UeXBlIC9DYXRhbG9nCi9QYWdlcyAyIDAgUgo+PgplbmRvYmoKeHJlZgowIDcKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNjY3IDAwMDAwIG4gCjAwMDAwMDA4NDggMDAwMDAgbiAKMDAwMDAwMDcyNyAwMDAwMCBuIAowMDAwMDAwOTA1IDAwMDAwIG4gCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDIxNiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKL0luZm8gOCAwIFIKPj4Kc3RhcnR4cmVmCjk1Mgp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKPj4Kc3RhcnR4cmVmCjEwNzQKJSVFT0Y='
                         },
                         { 
                             id: 3, 
                             name: 'documento_batismo.pdf', 
                             type: 'application/pdf', 
                             size: '312 KB',
-                            url: 'data:application/pdf;base64,JVBERi0xLjMKJf////8KNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHJ1ZVR5cGUKL0Jhc2VGb250IC9BcmlhbC1Cb2xkTVQKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Ci9Gb250RGVzY3JpcHRvciA2IDAgUgovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9BcmlhbC1Cb2xkTVQKL0ZsYWdzIDMyCi9JdGFsaWNBbmdsZSAwCi9Bc2NlbnQgOTA1Ci9EZXNjZW50IC0yMTAKL0NhcEhlaWdodCA3MjgKL0F2Z1dpZHRoIDQ3OQovTWF4V2lkdGggMjY2Mgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9SZXNvdXJjZXMgMTAgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0ZvbnQKPDwKL0YxIDUgMCBSCj4+Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9MZW5ndGggNjgKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAuMDAgNzAwLjAwIFRkCihEb2N1bWVudG8gZGUgQmF0aXNtbykgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMSAwIFJdCi9Db3VudCAxCi9NZWRpYUJveCBbMCAwIDYxMiA3OTJdCj4+CmVuZG9iago0IDAgb2JqCjw8Ci9UeXBlIC9DYXRhbG9nCi9QYWdlcyAyIDAgUgo+PgplbmRvYmoKeHJlZgowIDcKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNjY3IDAwMDAwIG4gCjAwMDAwMDA4NDggMDAwMDAgbiAKMDAwMDAwMDcyNyAwMDAwMCBuIAowMDAwMDAwOTA1IDAwMDAwIG4gCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDIxNiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKL0luZm8gOCAwIFIKPj4Kc3RhcnR4cmVmCjk1Mgp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKPj4Kc3RhcnR4cmVmCjEwNzQKJSVFT0Y='
+                            url: 'data:application/pdf;base64,JVBERi0xLjMKJf////8KNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHJ1ZVR5cGUKL0Jhc2VGb250IC9BcmlhbC1Cb2xkTVQKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Ci9Gb250RGVzY3JpcHRvciA2IDAgUgovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9BcmlhbC1Cb2xkTVQKL0ZsYWdzIDMyCi9JdGFsaWNBbmdsZSAwCi9Bc2NlbnQgOTA1Ci9EZXNjZW50IC0yMTAKL0NhcEhlaWdodCA3MjgKL0F2Z1dpZHRoIDQ3OQovTWF4V2lkdGggMjY2Mgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9SZXNvdXJjZXMgMTAgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0ZvbnQKPDwKL0YxIDUgMCBSCj4+Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9MZW5ndGggNjgKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAuMDAgNzAwLjAwIFRkCihEb2N1bWVudG8gZGUgQmF0aXNtbykgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMSAwIFJdCi9Db3VudCAxCi9NZWRpYUJveCBbMCAwIDYxMiA3OTJdCj4+CmVuZG9iagowIDAgb2JqCjw8Ci9UeXBlIC9DYXRhbG9nCi9QYWdlcyAyIDAgUgo+PgplbmRvYmoKeHJlZgowIDcKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNjY3IDAwMDAwIG4gCjAwMDAwMDA4NDggMDAwMDAgbiAKMDAwMDAwMDcyNyAwMDAwMCBuIAowMDAwMDAwOTA1IDAwMDAwIG4gCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDIxNiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKL0luZm8gOCAwIFIKPj4Kc3RhcnR4cmVmCjk1Mgp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKPj4Kc3RhcnR4cmVmCjEwNzQKJSVFT0Y='
                         }
                     ]
                 },
@@ -1700,6 +1770,7 @@
         const documentsListPage = document.getElementById('documentsListPage');
         const personFormContainer = document.getElementById('personFormContainer');
         const searchResultsSection = document.getElementById('searchResultsSection');
+        const searchResultsFormSection = document.getElementById('searchResultsFormSection');
 
         // Initialize years grid
         function initializeYearsGrid() {
@@ -1845,6 +1916,7 @@
                 documentsListPage.style.display = 'none';
                 personFormContainer.style.display = 'none';
                 searchResultsSection.style.display = 'none';
+                searchResultsFormSection.style.display = 'none';
                 document.getElementById('loginForm').reset();
             });
         });
@@ -2054,7 +2126,7 @@
         // Add Person Button (alternative)
         document.getElementById('addPersonBtn').addEventListener('click', addNewPerson);
 
-        // Person Form Submit - corrigindo duplicação
+        // Person Form Submit - CORRIGINDO A DUPLICAÇÃO
         document.getElementById('personForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -2063,9 +2135,10 @@
             
             if (fullName && birthDate) {
                 if (isEditMode && selectedDocument) {
-                    // Update existing document
-                    const doc = db.documents.find(d => d.id === selectedDocument);
-                    if (doc) {
+                    // Update existing document - corrigindo duplicação
+                    const docIndex = db.documents.findIndex(d => d.id === selectedDocument);
+                    if (docIndex !== -1) {
+                        const doc = db.documents[docIndex];
                         doc.name = fullName;
                         doc.birthDate = birthDate;
                         
@@ -2077,20 +2150,33 @@
                         if (uploadedFiles.length > 0) {
                             // Adicionar novos arquivos aos existentes, não substituir
                             if (!doc.files) doc.files = [];
+                            
+                            // Gerar IDs únicos para novos arquivos
+                            uploadedFiles.forEach(file => {
+                                file.id = Date.now() + Math.random();
+                            });
+                            
                             doc.files = [...doc.files, ...uploadedFiles];
                         }
+                        
+                        console.log('Documento atualizado:', doc);
                     }
                 } else {
-                    // Create new document - corrigindo problema de duplicação
+                    // Create new document
                     const newId = db.documents.length > 0 ? Math.max(...db.documents.map(d => d.id)) + 1 : 1;
                     const today = new Date().toISOString().split('T')[0];
+                    
+                    // Gerar IDs únicos para arquivos
+                    uploadedFiles.forEach(file => {
+                        file.id = Date.now() + Math.random();
+                    });
                     
                     const newDoc = {
                         id: newId,
                         year: parseInt(selectedYear),
                         type: selectedDocType,
                         typeId: selectedDocTypeId,
-                        name: fullName, // Usando apenas o nome uma vez
+                        name: fullName,
                         birthDate: birthDate,
                         registrationDate: today,
                         observations: document.getElementById('observations').value,
@@ -2101,10 +2187,13 @@
                     updateDocumentSpecificFields(newDoc);
                     
                     db.documents.push(newDoc);
+                    console.log('Novo documento criado:', newDoc);
                 }
                 
-                // Reset uploaded files
+                // Reset uploaded files e form
                 uploadedFiles = [];
+                isEditMode = false;
+                selectedDocument = null;
                 
                 // Reload documents list
                 loadDocuments(selectedYear, selectedDocTypeId);
@@ -2355,6 +2444,7 @@
         // Cancel Form Button
         document.getElementById('cancelFormBtn').addEventListener('click', function() {
             personFormContainer.style.display = 'none';
+            searchResultsFormSection.style.display = 'none';
             documentsListPage.style.display = 'block';
         });
 
@@ -2377,6 +2467,7 @@
             e.preventDefault();
             personFormContainer.style.display = 'none';
             searchResultsSection.style.display = 'none';
+            searchResultsFormSection.style.display = 'none';
             dashboardPage.style.display = 'block';
         });
 
@@ -2389,50 +2480,99 @@
         document.getElementById('backToDocTypes2').addEventListener('click', function(e) {
             e.preventDefault();
             personFormContainer.style.display = 'none';
+            searchResultsFormSection.style.display = 'none';
             documentTypesPage.style.display = 'block';
         });
 
         document.getElementById('backToDocList').addEventListener('click', function(e) {
             e.preventDefault();
             personFormContainer.style.display = 'none';
+            searchResultsFormSection.style.display = 'none';
             documentsListPage.style.display = 'block';
         });
 
         // Enhanced Global Search Functionality
         const searchInputs = document.querySelectorAll('#globalSearch, #globalSearch2, #globalSearch3');
+        const searchButtons = document.querySelectorAll('#searchBtn, #searchBtn2, #searchBtn3');
+        
+        // Function to handle search
+        function handleSearch(input, inForm = false) {
+            const searchTerm = input.value.trim().toLowerCase();
+            
+            if (searchTerm.length >= 2) {
+                performSearch(searchTerm, inForm);
+            } else if (searchTerm.length > 0) {
+                alert('Por favor, digite pelo menos 2 caracteres para buscar.');
+            }
+        }
+        
+        // Add event listeners for Enter key
         searchInputs.forEach(input => {
             input.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
-                    const searchTerm = this.value.trim().toLowerCase();
-                    
-                    if (searchTerm.length >= 2) {
-                        performSearch(searchTerm);
-                    } else if (searchTerm.length > 0) {
-                        alert('Por favor, digite pelo menos 2 caracteres para buscar.');
-                    }
+                    handleSearch(this);
+                }
+            });
+        });
+        
+        // Add event listeners for search buttons
+        searchButtons.forEach((button, index) => {
+            button.addEventListener('click', function() {
+                const input = searchInputs[index];
+                if (input) {
+                    handleSearch(input);
                 }
             });
         });
 
-        function performSearch(term) {
+        function performSearch(term, inForm = false) {
             console.log('Searching for:', term);
             
-            // Enhanced search in documents - search by name and birth date
+            // Enhanced search in documents - search by name, birth date, and combined name+date
             const results = db.documents.filter(doc => {
-                const nameMatch = doc.name.toLowerCase().includes(term);
+                const docName = doc.name.toLowerCase();
+                const docBirthDate = doc.birthDate ? new Date(doc.birthDate).toLocaleDateString('pt-BR') : '';
+                
+                // Simple name match
+                const nameMatch = docName.includes(term);
+                
+                // Birth date match (multiple formats)
                 const birthDateMatch = doc.birthDate && (
                     doc.birthDate.includes(term) || 
-                    new Date(doc.birthDate).toLocaleDateString('pt-BR').includes(term)
+                    docBirthDate.includes(term) ||
+                    doc.birthDate.replace(/-/g, '/').includes(term)
                 );
                 
-                return nameMatch || birthDateMatch;
+                // Combined search: name + date (e.g., "paulo henrique silva 12/03/1998")
+                const combinedText = `${docName} ${docBirthDate}`.toLowerCase();
+                const combinedMatch = combinedText.includes(term);
+                
+                // Search for partial date formats
+                let partialDateMatch = false;
+                if (doc.birthDate) {
+                    const [year, month, day] = doc.birthDate.split('-');
+                    const dateFormats = [
+                        `${day}/${month}/${year}`,
+                        `${day}/${month}`,
+                        `${month}/${year}`,
+                        `${day}/${month}/${year.slice(-2)}`,
+                        day, month, year
+                    ];
+                    partialDateMatch = dateFormats.some(format => format.includes(term));
+                }
+                
+                return nameMatch || birthDateMatch || combinedMatch || partialDateMatch;
             });
             
             console.log('Search results:', results);
             
-            // Display search results
-            document.getElementById('searchTerm').textContent = term;
-            const resultsTable = document.getElementById('searchResultsTable');
+            // CORRIGINDO: Mostrar resultados da busca
+            const searchTermElement = document.getElementById(inForm ? 'searchTermForm' : 'searchTerm');
+            const resultsTable = document.getElementById(inForm ? 'searchResultsFormTable' : 'searchResultsTable');
+            const noResultsElement = document.getElementById(inForm ? 'noResultsForm' : 'noResults');
+            const searchSection = inForm ? searchResultsFormSection : searchResultsSection;
+            
+            searchTermElement.textContent = term;
             resultsTable.innerHTML = '';
             
             if (results.length > 0) {
@@ -2460,24 +2600,20 @@
                     resultsTable.appendChild(row);
                 });
                 
-                document.getElementById('noResults').style.display = 'none';
+                noResultsElement.style.display = 'none';
             } else {
-                document.getElementById('noResults').style.display = 'block';
+                noResultsElement.style.display = 'block';
             }
             
             // Show search results section
-            dashboardPage.style.display = 'block';
-            documentTypesPage.style.display = 'none';
-            documentsListPage.style.display = 'none';
-            personFormContainer.style.display = 'none';
-            searchResultsSection.style.display = 'block';
+            searchSection.style.display = 'block';
             
             // Clear search inputs
             searchInputs.forEach(input => input.value = '');
         }
 
-        // Search Results Actions
-        document.getElementById('searchResultsTable').addEventListener('click', function(e) {
+        // Search Results Actions (both in dashboard and form)
+        function handleSearchViewBtn(e) {
             if (e.target.classList.contains('search-view-btn')) {
                 const row = e.target.closest('tr');
                 const docId = parseInt(row.getAttribute('data-id'));
@@ -2489,16 +2625,7 @@
                 const docType = db.documentTypes.find(t => t.id === typeId);
                 selectedDocType = docType ? docType.name : 'Documento';
                 
-                // Load documents list
-                loadDocuments(selectedYear, selectedDocTypeId);
-                
-                // Update navigation and titles
-                document.getElementById('yearHeaderTitle2').textContent = selectedYear;
-                document.getElementById('docTypeTitle').textContent = selectedDocType;
-                document.getElementById('docTypeHeaderTitle').textContent = selectedDocType;
-                document.getElementById('backToDocTypes').textContent = selectedYear;
-                
-                // Find and view the document
+                // Find the document
                 const doc = db.documents.find(d => d.id === docId);
                 if (doc) {
                     selectedDocument = docId;
@@ -2546,12 +2673,28 @@
                     document.getElementById('backToDocTypes2').textContent = doc.year;
                     document.getElementById('backToDocList').textContent = doc.type;
                     
-                    // Show the person form
+                    // MOSTRANDO A BUSCA NO FORMULÁRIO: copiar resultados da busca
+                    const searchTermDashboard = document.getElementById('searchTerm').textContent;
+                    if (searchTermDashboard) {
+                        document.getElementById('searchTermForm').textContent = searchTermDashboard;
+                        const dashboardTable = document.getElementById('searchResultsTable').innerHTML;
+                        document.getElementById('searchResultsFormTable').innerHTML = dashboardTable;
+                        searchResultsFormSection.style.display = 'block';
+                    }
+                    
+                    // Hide other sections and show form
+                    dashboardPage.style.display = 'none';
+                    documentsListPage.style.display = 'none';
+                    documentTypesPage.style.display = 'none';
                     searchResultsSection.style.display = 'none';
                     personFormContainer.style.display = 'block';
                 }
             }
-        });
+        }
+
+        // Add event listeners to both search results tables
+        document.getElementById('searchResultsTable').addEventListener('click', handleSearchViewBtn);
+        document.getElementById('searchResultsFormTable').addEventListener('click', handleSearchViewBtn);
 
         // File Upload Enhanced Functionality
         document.getElementById('fileUpload').addEventListener('change', function(e) {
@@ -2741,6 +2884,17 @@
 
         document.getElementById('cancelRemoveDocTypeBtn').addEventListener('click', function() {
             document.getElementById('removeDocTypeModal').style.display = 'none';
+        });
+
+        // Clear search results
+        document.getElementById('clearSearchBtn').addEventListener('click', function() {
+            searchResultsSection.style.display = 'none';
+            // Clear all search inputs
+            searchInputs.forEach(input => input.value = '');
+        });
+
+        document.getElementById('clearSearchFormBtn').addEventListener('click', function() {
+            searchResultsFormSection.style.display = 'none';
         });
 
         // Initialize on page load
