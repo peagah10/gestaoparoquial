@@ -1767,20 +1767,52 @@
             try {
                 showLoading();
                 
-                const { data, error } = await supabase
+                // Tentar detectar se o termo de busca contém uma data
+                const dateRegex = /(\d{1,2}\/\d{1,2}\/\d{4}|\d{4}-\d{1,2}-\d{1,2})/;
+                const hasDate = dateRegex.test(searchTerm);
+                
+                let query = supabase
                     .from('documents')
                     .select(`
                         *,
                         document_types(name),
                         files(*)
-                    `)
-                    .or(`name.ilike.%${searchTerm}%,birth_date.ilike.%${searchTerm}%`)
-                    .order('name');
+                    `);
+                
+                if (hasDate) {
+                    // Se contém data, separar nome e data
+                    const parts = searchTerm.split(/\s+/);
+                    const datePart = parts.find(part => dateRegex.test(part));
+                    const nameParts = parts.filter(part => !dateRegex.test(part));
+                    const nameTerm = nameParts.join(' ');
+                    
+                    // Converter data para formato ISO se necessário
+                    let isoDate = datePart;
+                    if (datePart.includes('/')) {
+                        const [day, month, year] = datePart.split('/');
+                        isoDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                    }
+                    
+                    if (nameTerm.trim()) {
+                        // Buscar por nome E data
+                        query = query
+                            .ilike('name', `%${nameTerm.trim()}%`)
+                            .eq('birth_date', isoDate);
+                    } else {
+                        // Buscar só por data
+                        query = query.eq('birth_date', isoDate);
+                    }
+                } else {
+                    // Buscar só por nome (sem data)
+                    query = query.ilike('name', `%${searchTerm}%`);
+                }
+                
+                const { data, error } = await query.order('name');
                 
                 if (error) throw error;
                 
                 hideLoading();
-                return data;
+                return data || [];
             } catch (error) {
                 console.error('Error searching documents:', error);
                 hideLoading();
@@ -1793,6 +1825,8 @@
             try {
                 showLoading();
                 
+                let savedDoc;
+                
                 if (isEditMode && selectedDocument) {
                     // Update existing document
                     const { data, error } = await supabase
@@ -1803,9 +1837,7 @@
                         .single();
                     
                     if (error) throw error;
-                    
-                    hideLoading();
-                    return data;
+                    savedDoc = data;
                 } else {
                     // Create new document
                     const { data, error } = await supabase
@@ -1815,15 +1847,74 @@
                         .single();
                     
                     if (error) throw error;
-                    
-                    hideLoading();
-                    return data;
+                    savedDoc = data;
                 }
+                
+                // Save uploaded files if any
+                if (uploadedFiles.length > 0) {
+                    await saveDocumentFiles(savedDoc.id, uploadedFiles);
+                }
+                
+                hideLoading();
+                return savedDoc;
             } catch (error) {
                 console.error('Error saving document:', error);
                 hideLoading();
-                showError('Erro ao salvar documento');
+                showError('Erro ao salvar documento: ' + error.message);
                 throw error;
+            }
+        }
+
+        async function saveDocumentFiles(documentId, files) {
+            try {
+                for (const fileData of files) {
+                    // Create a unique filename
+                    const fileName = `${documentId}_${Date.now()}_${fileData.name}`;
+                    
+                    try {
+                        // Try to upload file to Supabase Storage
+                        const { data: uploadData, error: uploadError } = await supabase.storage
+                            .from('document-files')
+                            .upload(fileName, fileData.file);
+                        
+                        let fileUrl = null;
+                        
+                        if (!uploadError && uploadData) {
+                            // Get public URL if upload successful
+                            const { data: { publicUrl } } = supabase.storage
+                                .from('document-files')
+                                .getPublicUrl(fileName);
+                            fileUrl = publicUrl;
+                        } else {
+                            console.warn('File upload failed, saving file reference without URL:', uploadError);
+                        }
+                        
+                        // Save file reference in database regardless of upload status
+                        const { error: dbError } = await supabase
+                            .from('files')
+                            .insert([{
+                                document_id: documentId,
+                                name: fileData.name,
+                                file_path: fileName,
+                                file_url: fileUrl,
+                                file_type: fileData.type || 'application/octet-stream',
+                                file_size: fileData.file.size,
+                                uploaded_at: new Date().toISOString()
+                            }]);
+                        
+                        if (dbError) {
+                            console.error('Error saving file reference:', dbError);
+                        }
+                        
+                    } catch (fileError) {
+                        console.error('Error processing file:', fileData.name, fileError);
+                        // Continue with other files even if one fails
+                        continue;
+                    }
+                }
+            } catch (error) {
+                console.error('Error saving files:', error);
+                showError('Alguns arquivos podem não ter sido salvos');
             }
         }
 
@@ -2350,6 +2441,7 @@
                         type_id: selectedDocTypeId,
                         name: fullName,
                         birth_date: birthDate,
+                        registration_date: new Date().toISOString().split('T')[0],
                         observations: document.getElementById('observations').value
                     };
                     
@@ -2357,8 +2449,6 @@
                     updateDocumentSpecificFields(documentData);
                     
                     const savedDoc = await saveDocument(documentData);
-                    
-                    // TODO: Handle file uploads to Supabase Storage if needed
                     
                     // Reset form state
                     uploadedFiles = [];
@@ -2548,7 +2638,7 @@
                             const fileItem = document.createElement('div');
                             fileItem.className = 'file-item';
                             fileItem.innerHTML = `
-                                <span class="file-name">${file.name} (${file.size || 'N/A'})</span>
+                                <span class="file-name">${file.name} (${file.file_size ? Math.round(file.file_size / 1024) + ' KB' : 'N/A'})</span>
                                 <div class="file-actions">
                                     <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
                                     <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
@@ -2617,6 +2707,12 @@
                 if (fileItem) {
                     fileItem.remove();
                 }
+            } else if (e.target.classList.contains('view-uploaded-file')) {
+                const index = parseInt(e.target.getAttribute('data-index'));
+                const file = uploadedFiles[index];
+                if (file) {
+                    viewFile(file);
+                }
             }
         });
 
@@ -2676,7 +2772,7 @@
         
         // Function to handle search
         function handleSearch(input, inForm = false) {
-            const searchTerm = input.value.trim().toLowerCase();
+            const searchTerm = input.value.trim();
             
             if (searchTerm.length >= 2) {
                 performSearch(searchTerm, inForm);
@@ -2812,7 +2908,7 @@
                         const fileItem = document.createElement('div');
                         fileItem.className = 'file-item';
                         fileItem.innerHTML = `
-                            <span class="file-name">${file.name} (${file.size || 'N/A'})</span>
+                            <span class="file-name">${file.name} (${file.file_size ? Math.round(file.file_size / 1024) + ' KB' : 'N/A'})</span>
                             <div class="file-actions">
                                 <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
                                 <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
@@ -2901,17 +2997,6 @@
             
             // Reset file input
             this.value = '';
-        });
-
-        // Handle uploaded file actions
-        document.getElementById('fileList').addEventListener('click', function(e) {
-            if (e.target.classList.contains('view-uploaded-file')) {
-                const index = parseInt(e.target.getAttribute('data-index'));
-                const file = uploadedFiles[index];
-                if (file) {
-                    viewFile(file);
-                }
-            }
         });
 
         // File upload area click to trigger file input
