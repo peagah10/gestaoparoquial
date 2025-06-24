@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento Paroquial - Paróquia São Cristóvão</title>
     
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <!-- Open Graph para Instagram, WhatsApp e Facebook -->
 <meta property="og:title" content="Gerenciamento Paroquial - Paróquia São Cristóvão">
 <meta property="og:description" content="Sistema moderno para gestão de sacramentos, eventos e membros da Paróquia São Cristóvão. Acesse agora!">
@@ -50,6 +53,34 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+        }
+
+        /* Loading Spinner */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(139, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Novos estilos para botões vermelhos */
@@ -967,6 +998,11 @@
     </style>
 </head>
 <body>
+    <!-- Loading Spinner -->
+    <div class="loading" id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+
     <!-- Login Page -->
     <div class="login-container" id="loginPage">
         <div class="login-card">
@@ -1614,143 +1650,10 @@
     </div>
 
     <script>
-        // Mock database com campos específicos e URLs de arquivo
-        const db = {
-            users: [
-                { id: 1, name: 'Administrador', email: 'admin@paroquia.com', password: 'admin123', initials: 'AD' }
-            ],
-            years: [2020, 2021, 2022, 2023, 2024, 2025],
-            documentTypes: [
-                { 
-                    id: 1, 
-                    name: 'Batismo', 
-                    slug: 'batismo', 
-                    description: 'Registros de batismo', 
-                    icon: 'images/batismo.png'
-                },
-                { 
-                    id: 2, 
-                    name: 'Crisma', 
-                    slug: 'crisma', 
-                    description: 'Registros de crisma', 
-                    icon: 'images/crisma.jpg'
-                },
-                { 
-                    id: 3, 
-                    name: 'Primeira Comunhão', 
-                    slug: 'comunhao', 
-                    description: 'Registros de 1ª comunhão', 
-                    icon: 'images/comunhao.jpg'
-                },
-                { 
-                    id: 4, 
-                    name: 'Casamento', 
-                    slug: 'casamento', 
-                    description: 'Registros de casamento', 
-                    icon: 'images/casamento.png'
-                },
-                { 
-                    id: 5, 
-                    name: 'Óbito', 
-                    slug: 'obito', 
-                    description: 'Registros de óbito', 
-                    icon: 'images/obito.jpg'
-                },
-                { 
-                    id: 6, 
-                    name: 'Admissão de Membros', 
-                    slug: 'admissao', 
-                    description: 'Novos membros', 
-                    icon: 'images/membros.png'
-                }
-            ],
-            documents: [
-                { 
-                    id: 1, 
-                    year: 2020, 
-                    type: 'Batismo', 
-                    typeId: 1,
-                    name: 'Paulo Henrique Soares Silva', 
-                    birthDate: '2000-01-14', 
-                    registrationDate: '2025-06-18',
-                    parentName1: 'José Silva',
-                    parentName2: 'Ana Silva',
-                    baptismDate: '2023-06-10',
-                    celebrant: 'Pe. João Paulo',
-                    godparent1: 'Carlos Santos',
-                    godparent2: 'Marta Pereira',
-                    baptismPlace: 'Paróquia São Cristóvão',
-                    observations: 'Sem observações adicionais',
-                    files: [
-                        { 
-                            id: 1, 
-                            name: 'certidao_nascimento.pdf', 
-                            type: 'application/pdf', 
-                            size: '520 KB',
-                            url: 'data:application/pdf;base64,JVBERi0xLjMKJf////8KNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHJ1ZVR5cGUKL0Jhc2VGb250IC9BcmlhbC1Cb2xkTVQKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Ci9Gb250RGVzY3JpcHRvciA2IDAgUgovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9BcmlhbC1Cb2xkTVQKL0ZsYWdzIDMyCi9JdGFsaWNBbmdsZSAwCi9Bc2NlbnQgOTA1Ci9EZXNjZW50IC0yMTAKL0NhcEhlaWdodCA3MjgKL0F2Z1dpZHRoIDQ3OQovTWF4V2lkdGggMjY2Mgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9SZXNvdXJjZXMgMTAgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0ZvbnQKPDwKL0YxIDUgMCBSCj4+Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9MZW5ndGggNjgKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAuMDAgNzAwLjAwIFRkCihDZXJ0aWTDo28gZGUgTmFzY2ltZW50bykgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMSAwIFJdCi9Db3VudCAxCi9NZWRpYUJveCBbMCAwIDYxMiA3OTJdCj4+CmVuZG9iagowIDAgb2JqCjw8Ci9UeXBlIC9DYXRhbG9nCi9QYWdlcyAyIDAgUgo+PgplbmRvYmoKeHJlZgowIDcKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNjY3IDAwMDAwIG4gCjAwMDAwMDA4NDggMDAwMDAgbiAKMDAwMDAwMDcyNyAwMDAwMCBuIAowMDAwMDAwOTA1IDAwMDAwIG4gCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDIxNiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKL0luZm8gOCAwIFIKPj4Kc3RhcnR4cmVmCjk1Mgp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKPj4Kc3RhcnR4cmVmCjEwNzQKJSVFT0Y='
-                        }
-                    ]
-                },
-                { 
-                    id: 2, 
-                    year: 2020, 
-                    type: 'Batismo', 
-                    typeId: 1,
-                    name: 'Paulo Henrique Soares Silva', 
-                    birthDate: '2000-01-14', 
-                    registrationDate: '2025-06-18',
-                    parentName1: 'Roberto Santos',
-                    parentName2: 'Maria Santos',
-                    baptismDate: '2023-07-25',
-                    celebrant: 'Pe. João Paulo',
-                    godparent1: 'Pedro Almeida',
-                    godparent2: 'Lucia Ferreira',
-                    baptismPlace: 'Paróquia São Cristóvão',
-                    observations: 'Filho adotivo',
-                    files: [
-                        { 
-                            id: 2, 
-                            name: 'certidao_nascimento.pdf', 
-                            type: 'application/pdf', 
-                            size: '485 KB',
-                            url: 'data:application/pdf;base64,JVBERi0xLjMKJf////8KNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHJ1ZVR5cGUKL0Jhc2VGb250IC9BcmlhbC1Cb2xkTVQKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Ci9Gb250RGVzY3JpcHRvciA2IDAgUkovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9BcmlhbC1Cb2xkTVQKL0ZsYWdzIDMyCi9JdGFsaWNBbmdsZSAwCi9Bc2NlbnQgOTA1Ci9EZXNjZW50IC0yMTAKL0NhcEhlaWdodCA3MjgKL0F2Z1dpZHRoIDQ3OQovTWF4V2lkdGggMjY2Mgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9SZXNvdXJjZXMgMTAgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0ZvbnQKPDwKL0YxIDUgMCBSCj4+Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9MZW5ndGggNjgKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAuMDAgNzAwLjAwIFRkCihDZXJ0aWTDo28gZGUgTmFzY2ltZW50bykgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMSAwIFJdCi9Db3VudCAxCi9NZWRpYUJveCBbMCAwIDYxMiA3OTJdCj4+CmVuZG9iagowIDAgb2JqCjw8Ci9UeXBlIC9DYXRhbG9nCi9QYWdlcyAyIDAgUgo+PgplbmRvYmoKeHJlZgowIDcKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNjY3IDAwMDAwIG4gCjAwMDAwMDA4NDggMDAwMDAgbiAKMDAwMDAwMDcyNyAwMDAwMCBuIAowMDAwMDAwOTA1IDAwMDAwIG4gCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDIxNiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKL0luZm8gOCAwIFIKPj4Kc3RhcnR4cmVmCjk1Mgp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKPj4Kc3RhcnR4cmVmCjEwNzQKJSVFT0Y='
-                        },
-                        { 
-                            id: 3, 
-                            name: 'documento_batismo.pdf', 
-                            type: 'application/pdf', 
-                            size: '312 KB',
-                            url: 'data:application/pdf;base64,JVBERi0xLjMKJf////8KNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHJ1ZVR5cGUKL0Jhc2VGb250IC9BcmlhbC1Cb2xkTVQKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Ci9Gb250RGVzY3JpcHRvciA2IDAgUgovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9BcmlhbC1Cb2xkTVQKL0ZsYWdzIDMyCi9JdGFsaWNBbmdsZSAwCi9Bc2NlbnQgOTA1Ci9EZXNjZW50IC0yMTAKL0NhcEhlaWdodCA3MjgKL0F2Z1dpZHRoIDQ3OQovTWF4V2lkdGggMjY2Mgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9SZXNvdXJjZXMgMTAgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0ZvbnQKPDwKL0YxIDUgMCBSCj4+Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9MZW5ndGggNjgKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAuMDAgNzAwLjAwIFRkCihEb2N1bWVudG8gZGUgQmF0aXNtbykgVGoKRVQKZW5kc3RyZWFtCmVuZG9iagoyIDAgb2JqCjw8Ci9UeXBlIC9QYWdlcwovS2lkcyBbMSAwIFJdCi9Db3VudCAxCi9NZWRpYUJveCBbMCAwIDYxMiA3OTJdCj4+CmVuZG9iagowIDAgb2JqCjw8Ci9UeXBlIC9DYXRhbG9nCi9QYWdlcyAyIDAgUgo+PgplbmRvYmoKeHJlZgowIDcKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwNjY3IDAwMDAwIG4gCjAwMDAwMDA4NDggMDAwMDAgbiAKMDAwMDAwMDcyNyAwMDAwMCBuIAowMDAwMDAwOTA1IDAwMDAwIG4gCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDIxNiAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKL0luZm8gOCAwIFIKPj4Kc3RhcnR4cmVmCjk1Mgp0cmFpbGVyCjw8Ci9TaXplIDcKL1Jvb3QgNCAwIFIKPj4Kc3RhcnR4cmVmCjEwNzQKJSVFT0Y='
-                        }
-                    ]
-                },
-                { 
-                    id: 3, 
-                    year: 2024, 
-                    type: 'Crisma', 
-                    typeId: 2,
-                    name: 'Ana Paula Costa', 
-                    birthDate: '1995-03-15', 
-                    registrationDate: '2024-04-10',
-                    confirmationDate: '2024-04-07',
-                    confirmationPlace: 'Catedral São Paulo',
-                    bishop: 'Dom Pedro Martins',
-                    confirmationGodparent: 'Marcos Lima',
-                    crismaParentName1: 'João Costa',
-                    crismaParentName2: 'Rosa Costa',
-                    observations: 'Preparação especial de 6 meses',
-                    files: [
-                        { 
-                            id: 4, 
-                            name: 'certificado_crisma.pdf', 
-                            type: 'application/pdf', 
-                            size: '410 KB',
-                            url: 'data:application/pdf;base64,JVBERi0xLjMKJf////8KNSAwIG9iago8PAovVHlwZSAvRm9udAovU3VidHlwZSAvVHJ1ZVR5cGUKL0Jhc2VGb250IC9BcmlhbC1Cb2xkTVQKL0ZpcnN0Q2hhciAzMgovTGFzdENoYXIgMjU1Ci9Gb250RGVzY3JpcHRvciA2IDAgUgovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKNiAwIG9iago8PAovVHlwZSAvRm9udERlc2NyaXB0b3IKL0ZvbnROYW1lIC9BcmlhbC1Cb2xkTVQKL0ZsYWdzIDMyCi9JdGFsaWNBbmdsZSAwCi9Bc2NlbnQgOTA1Ci9EZXNjZW50IC0yMTAKL0NhcEhlaWdodCA3MjgKL0F2Z1dpZHRoIDQ3OQovTWF4V2lkdGggMjY2Mgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZQovUGFyZW50IDIgMCBSCi9SZXNvdXJjZXMgMTAgMCBSCi9Db250ZW50cyAzIDAgUgo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0ZvbnQKPDwKL0YxIDUgMCBSCj4+Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9MZW5ndGggNjgKPj4Kc3RyZWFtCkJUCi9GMSAxMiBUZgoxMDAuMDAgNzAwLjAwIFRkCihDZXJ0aWZpY2FkbyBkZSBDcmlzbWEpIFRqCkVUCmVuZHN0cmVhbQplbmRvYmoKMiAwIG9iago8PAovVHlwZSAvUGFnZXMKL0tpZHMgWzEgMCBSXQovQ291bnQgMQovTWVkaWFCb3ggWzAgMCA2MTIgNzkyXQo+PgplbmRvYmoKNCAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwovUGFnZXMgMiAwIFIKPj4KZW5kb2JqCnhyZWYKMCA3CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDY2NyAwMDAwMCBuIAowMDAwMDAwODQ4IDAwMDAwIG4gCjAwMDAwMDA3MjcgMDAwMDAgbiAKMDAwMDAwMDkwNSAwMDAwMCBuIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAyMTYgMDAwMDAgbiAKdHJhaWxlcgo8PAovU2l6ZSA3Ci9Sb290IDQgMCBSCi9JbmZvIDggMCBSCj4+CnN0YXJ0eHJlZgo5NTIKdHJhaWxlcgo8PAovU2l6ZSA3Ci9Sb290IDQgMCBSCj4+CnN0YXJ0eHJlZgoxMDc0CiUlRU9G'
-                        }
-                    ]
-                }
-            ]
-        };
+        // Initialize Supabase
+        const SUPABASE_URL = 'https://objhnypjkrocgixsyejf.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9iamhueXBqa3JvY2dpeHN5ZWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3NzU2MDIsImV4cCI6MjA2NjM1MTYwMn0.tOg52_qdTVwy5N09abTBxmKmFb4h0yJaSutPxKflZKY';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // Global state
         let currentUser = null;
@@ -1763,6 +1666,11 @@
         let uploadedFiles = [];
         let selectedFileForView = null;
 
+        // Cache for database data
+        let yearsCache = [];
+        let documentTypesCache = [];
+        let documentsCache = [];
+
         // DOM Elements
         const loginPage = document.getElementById('loginPage');
         const dashboardPage = document.getElementById('dashboardPage');
@@ -1771,13 +1679,269 @@
         const personFormContainer = document.getElementById('personFormContainer');
         const searchResultsSection = document.getElementById('searchResultsSection');
         const searchResultsFormSection = document.getElementById('searchResultsFormSection');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        // Utility functions
+        function showLoading() {
+            loadingSpinner.style.display = 'flex';
+        }
+
+        function hideLoading() {
+            loadingSpinner.style.display = 'none';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('loginError');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Database functions
+        async function loadYears() {
+            try {
+                const { data, error } = await supabase
+                    .from('years')
+                    .select('*')
+                    .order('year', { ascending: false });
+                
+                if (error) throw error;
+                
+                yearsCache = data.map(y => y.year);
+                return yearsCache;
+            } catch (error) {
+                console.error('Error loading years:', error);
+                showError('Erro ao carregar anos do banco de dados');
+                return [];
+            }
+        }
+
+        async function loadDocumentTypes() {
+            try {
+                const { data, error } = await supabase
+                    .from('document_types')
+                    .select('*')
+                    .order('name');
+                
+                if (error) throw error;
+                
+                documentTypesCache = data;
+                return documentTypesCache;
+            } catch (error) {
+                console.error('Error loading document types:', error);
+                showError('Erro ao carregar tipos de documento');
+                return [];
+            }
+        }
+
+        async function loadDocuments(year, typeId) {
+            try {
+                showLoading();
+                
+                const { data, error } = await supabase
+                    .from('documents')
+                    .select(`
+                        *,
+                        document_types(name),
+                        files(*)
+                    `)
+                    .eq('year', year)
+                    .eq('type_id', typeId)
+                    .order('name');
+                
+                if (error) throw error;
+                
+                hideLoading();
+                return data;
+            } catch (error) {
+                console.error('Error loading documents:', error);
+                hideLoading();
+                showError('Erro ao carregar documentos');
+                return [];
+            }
+        }
+
+        async function searchDocuments(searchTerm) {
+            try {
+                showLoading();
+                
+                const { data, error } = await supabase
+                    .from('documents')
+                    .select(`
+                        *,
+                        document_types(name),
+                        files(*)
+                    `)
+                    .or(`name.ilike.%${searchTerm}%,birth_date.ilike.%${searchTerm}%`)
+                    .order('name');
+                
+                if (error) throw error;
+                
+                hideLoading();
+                return data;
+            } catch (error) {
+                console.error('Error searching documents:', error);
+                hideLoading();
+                showError('Erro ao buscar documentos');
+                return [];
+            }
+        }
+
+        async function saveDocument(documentData) {
+            try {
+                showLoading();
+                
+                if (isEditMode && selectedDocument) {
+                    // Update existing document
+                    const { data, error } = await supabase
+                        .from('documents')
+                        .update(documentData)
+                        .eq('id', selectedDocument)
+                        .select()
+                        .single();
+                    
+                    if (error) throw error;
+                    
+                    hideLoading();
+                    return data;
+                } else {
+                    // Create new document
+                    const { data, error } = await supabase
+                        .from('documents')
+                        .insert([documentData])
+                        .select()
+                        .single();
+                    
+                    if (error) throw error;
+                    
+                    hideLoading();
+                    return data;
+                }
+            } catch (error) {
+                console.error('Error saving document:', error);
+                hideLoading();
+                showError('Erro ao salvar documento');
+                throw error;
+            }
+        }
+
+        async function deleteDocument(documentId) {
+            try {
+                showLoading();
+                
+                const { error } = await supabase
+                    .from('documents')
+                    .delete()
+                    .eq('id', documentId);
+                
+                if (error) throw error;
+                
+                hideLoading();
+                return true;
+            } catch (error) {
+                console.error('Error deleting document:', error);
+                hideLoading();
+                showError('Erro ao excluir documento');
+                return false;
+            }
+        }
+
+        async function addYear(year) {
+            try {
+                showLoading();
+                
+                const { data, error } = await supabase
+                    .from('years')
+                    .insert([{ year: year }])
+                    .select()
+                    .single();
+                
+                if (error) throw error;
+                
+                hideLoading();
+                return data;
+            } catch (error) {
+                console.error('Error adding year:', error);
+                hideLoading();
+                showError('Erro ao adicionar ano');
+                throw error;
+            }
+        }
+
+        async function removeYears(years) {
+            try {
+                showLoading();
+                
+                const { error } = await supabase
+                    .from('years')
+                    .delete()
+                    .in('year', years);
+                
+                if (error) throw error;
+                
+                hideLoading();
+                return true;
+            } catch (error) {
+                console.error('Error removing years:', error);
+                hideLoading();
+                showError('Erro ao remover anos');
+                return false;
+            }
+        }
+
+        async function addDocumentType(docTypeData) {
+            try {
+                showLoading();
+                
+                const { data, error } = await supabase
+                    .from('document_types')
+                    .insert([docTypeData])
+                    .select()
+                    .single();
+                
+                if (error) throw error;
+                
+                hideLoading();
+                return data;
+            } catch (error) {
+                console.error('Error adding document type:', error);
+                hideLoading();
+                showError('Erro ao adicionar tipo de documento');
+                throw error;
+            }
+        }
+
+        async function removeDocumentTypes(typeIds) {
+            try {
+                showLoading();
+                
+                const { error } = await supabase
+                    .from('document_types')
+                    .delete()
+                    .in('id', typeIds);
+                
+                if (error) throw error;
+                
+                hideLoading();
+                return true;
+            } catch (error) {
+                console.error('Error removing document types:', error);
+                hideLoading();
+                showError('Erro ao remover tipos de documento');
+                return false;
+            }
+        }
 
         // Initialize years grid
-        function initializeYearsGrid() {
+        async function initializeYearsGrid() {
             const yearsGrid = document.getElementById('yearsGrid');
             yearsGrid.innerHTML = '';
             
-            db.years.forEach(year => {
+            const years = await loadYears();
+            
+            years.forEach(year => {
                 const card = document.createElement('div');
                 card.className = 'folder-card';
                 card.setAttribute('data-year', year);
@@ -1791,16 +1955,19 @@
         }
 
         // Initialize document types grid
-        function initializeDocumentTypesGrid() {
+        async function initializeDocumentTypesGrid() {
             const docTypesGrid = document.getElementById('documentTypesGrid');
             docTypesGrid.innerHTML = '';
             
-            db.documentTypes.forEach(docType => {
+            const docTypes = await loadDocumentTypes();
+            
+            docTypes.forEach(docType => {
                 const card = document.createElement('div');
                 card.className = 'folder-card';
                 card.setAttribute('data-type', docType.slug);
+                card.setAttribute('data-type-id', docType.id);
                 card.innerHTML = `
-                    <img src="${docType.icon}" alt="${docType.name}" class="folder-icon">
+                    <img src="${docType.icon || 'images/outros.png'}" alt="${docType.name}" class="folder-icon">
                     <h3>${docType.name}</h3>
                     <p>${docType.description}</p>
                 `;
@@ -1835,7 +2002,7 @@
             title.textContent = `Visualizar: ${file.name}`;
             content.innerHTML = '';
             
-            if (file.type.startsWith('image/')) {
+            if (file.type && file.type.startsWith('image/')) {
                 const img = document.createElement('img');
                 img.src = file.url || file.localUrl;
                 img.className = 'file-preview';
@@ -1853,8 +2020,8 @@
                 content.innerHTML = `
                     <div style="text-align: center; padding: 40px;">
                         <h3>Arquivo: ${file.name}</h3>
-                        <p>Tipo: ${file.type}</p>
-                        <p>Tamanho: ${file.size}</p>
+                        <p>Tipo: ${file.type || 'N/A'}</p>
+                        <p>Tamanho: ${file.size || 'N/A'}</p>
                         <p>Visualização não disponível para este tipo de arquivo.</p>
                     </div>
                 `;
@@ -1874,21 +2041,71 @@
         }
 
         // Login Functionality
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
             
-            const user = db.users.find(u => u.email === email && u.password === password);
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
             
-            if (user) {
-                currentUser = user;
+            console.log('Tentando login com:', { email, password }); // Debug
+            
+            try {
+                showLoading();
+                
+                // Primeiro, vamos verificar se existem usuários na tabela
+                const { data: allUsers, error: checkError } = await supabase
+                    .from('users')
+                    .select('*');
+                
+                console.log('Usuários encontrados:', allUsers); // Debug
+                
+                if (checkError) {
+                    console.error('Erro ao verificar usuários:', checkError);
+                    hideLoading();
+                    showError('Erro ao conectar com banco de dados: ' + checkError.message);
+                    return;
+                }
+                
+                if (!allUsers || allUsers.length === 0) {
+                    hideLoading();
+                    showError('Nenhum usuário encontrado. Execute o SQL de inicialização primeiro.');
+                    return;
+                }
+                
+                // Agora tentar o login
+                const { data, error } = await supabase
+                    .from('users')
+                    .select('*')
+                    .eq('email', email)
+                    .eq('password', password)
+                    .single();
+                
+                console.log('Resultado do login:', { data, error }); // Debug
+                
+                hideLoading();
+                
+                if (error) {
+                    console.error('Erro de login:', error);
+                    if (error.code === 'PGRST116') {
+                        showError('Email ou senha incorretos.');
+                    } else {
+                        showError('Erro ao fazer login: ' + error.message);
+                    }
+                    return;
+                }
+                
+                if (!data) {
+                    showError('Email ou senha incorretos.');
+                    return;
+                }
+                
+                currentUser = data;
                 document.getElementById('loginError').style.display = 'none';
                 
                 // Update user info in all headers
                 ['userName', 'userName2', 'userName3', 'welcomeUserName'].forEach(id => {
                     const element = document.getElementById(id);
-                    if (element) element.textContent = user.name;
+                    if (element) element.textContent = data.name;
                 });
                 
                 // Show dashboard
@@ -1897,11 +2114,13 @@
                 dashboardPage.classList.add('active');
                 
                 // Initialize grids
-                initializeYearsGrid();
-                initializeDocumentTypesGrid();
+                await initializeYearsGrid();
+                await initializeDocumentTypesGrid();
                 
-            } else {
-                document.getElementById('loginError').style.display = 'block';
+            } catch (error) {
+                hideLoading();
+                console.error('Erro geral de login:', error);
+                showError('Erro ao fazer login: ' + error.message);
             }
         });
 
@@ -1937,11 +2156,12 @@
         });
 
         // Document Type Selection
-        document.getElementById('documentTypesGrid').addEventListener('click', function(e) {
+        document.getElementById('documentTypesGrid').addEventListener('click', async function(e) {
             const card = e.target.closest('.folder-card');
             if (card) {
                 const typeSlug = card.getAttribute('data-type');
-                const docType = db.documentTypes.find(t => t.slug === typeSlug);
+                const typeId = parseInt(card.getAttribute('data-type-id'));
+                const docType = documentTypesCache.find(t => t.id === typeId);
                 
                 if (docType) {
                     selectedDocType = docType.name;
@@ -1954,7 +2174,7 @@
                     document.getElementById('backToDocTypes').textContent = selectedYear;
                     
                     // Load documents for this type and year
-                    loadDocuments(selectedYear, selectedDocTypeId);
+                    await loadDocumentsTable(selectedYear, selectedDocTypeId);
                     
                     // Show documents list page
                     documentTypesPage.style.display = 'none';
@@ -1964,8 +2184,8 @@
         });
 
         // Load Documents Function
-        function loadDocuments(year, typeId) {
-            const docs = db.documents.filter(d => d.year.toString() === year.toString() && d.typeId === typeId);
+        async function loadDocumentsTable(year, typeId) {
+            const docs = await loadDocuments(year, typeId);
             const tableBody = document.getElementById('documentsTable');
             tableBody.innerHTML = '';
             
@@ -1973,8 +2193,8 @@
                 const row = document.createElement('tr');
                 row.setAttribute('data-id', doc.id);
                 
-                const birthDate = new Date(doc.birthDate).toLocaleDateString('pt-BR');
-                const regDate = new Date(doc.registrationDate).toLocaleDateString('pt-BR');
+                const birthDate = new Date(doc.birth_date).toLocaleDateString('pt-BR');
+                const regDate = new Date(doc.registration_date).toLocaleDateString('pt-BR');
                 const filesCount = doc.files ? doc.files.length : 0;
                 
                 row.innerHTML = `
@@ -2019,7 +2239,7 @@
             const removeList = document.getElementById('removeYearList');
             removeList.innerHTML = '';
             
-            db.years.forEach(year => {
+            yearsCache.forEach(year => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'remove-item';
                 itemDiv.innerHTML = `
@@ -2037,7 +2257,7 @@
             const removeList = document.getElementById('removeDocTypeList');
             removeList.innerHTML = '';
             
-            db.documentTypes.forEach(docType => {
+            documentTypesCache.forEach(docType => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'remove-item';
                 itemDiv.innerHTML = `
@@ -2051,41 +2271,31 @@
         }
 
         // Confirmação de remoção de anos
-        document.getElementById('confirmRemoveYearBtn').addEventListener('click', function() {
+        document.getElementById('confirmRemoveYearBtn').addEventListener('click', async function() {
             const checkedYears = document.querySelectorAll('#removeYearList input[type="checkbox"]:checked');
+            const yearsToRemove = Array.from(checkedYears).map(cb => parseInt(cb.value));
             
-            checkedYears.forEach(checkbox => {
-                const year = parseInt(checkbox.value);
-                const index = db.years.indexOf(year);
-                if (index > -1) {
-                    db.years.splice(index, 1);
-                    // Remover documentos associados a este ano
-                    db.documents = db.documents.filter(doc => doc.year !== year);
+            if (yearsToRemove.length > 0) {
+                const success = await removeYears(yearsToRemove);
+                if (success) {
+                    await initializeYearsGrid();
+                    document.getElementById('removeYearModal').style.display = 'none';
                 }
-            });
-            
-            // Atualizar grid de anos
-            initializeYearsGrid();
-            document.getElementById('removeYearModal').style.display = 'none';
+            }
         });
 
         // Confirmação de remoção de tipos de documento
-        document.getElementById('confirmRemoveDocTypeBtn').addEventListener('click', function() {
+        document.getElementById('confirmRemoveDocTypeBtn').addEventListener('click', async function() {
             const checkedDocTypes = document.querySelectorAll('#removeDocTypeList input[type="checkbox"]:checked');
+            const docTypesToRemove = Array.from(checkedDocTypes).map(cb => parseInt(cb.value));
             
-            checkedDocTypes.forEach(checkbox => {
-                const docTypeId = parseInt(checkbox.value);
-                const index = db.documentTypes.findIndex(dt => dt.id === docTypeId);
-                if (index > -1) {
-                    db.documentTypes.splice(index, 1);
-                    // Remover documentos associados a este tipo
-                    db.documents = db.documents.filter(doc => doc.typeId !== docTypeId);
+            if (docTypesToRemove.length > 0) {
+                const success = await removeDocumentTypes(docTypesToRemove);
+                if (success) {
+                    await initializeDocumentTypesGrid();
+                    document.getElementById('removeDocTypeModal').style.display = 'none';
                 }
-            });
-            
-            // Atualizar grid de tipos de documento
-            initializeDocumentTypesGrid();
-            document.getElementById('removeDocTypeModal').style.display = 'none';
+            }
         });
 
         // Add Person Function
@@ -2107,7 +2317,7 @@
             document.getElementById('backToDocList').textContent = selectedDocType;
             
             // Show correct document fields
-            const docType = db.documentTypes.find(t => t.id === selectedDocTypeId);
+            const docType = documentTypesCache.find(t => t.id === selectedDocTypeId);
             if (docType) {
                 showDocumentFields(docType.slug);
             }
@@ -2126,141 +2336,106 @@
         // Add Person Button (alternative)
         document.getElementById('addPersonBtn').addEventListener('click', addNewPerson);
 
-        // Person Form Submit - CORRIGINDO A DUPLICAÇÃO
-        document.getElementById('personForm').addEventListener('submit', function(e) {
+        // Person Form Submit
+        document.getElementById('personForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const fullName = document.getElementById('fullName').value.trim();
             const birthDate = document.getElementById('birthDate').value;
             
             if (fullName && birthDate) {
-                if (isEditMode && selectedDocument) {
-                    // Update existing document - corrigindo duplicação
-                    const docIndex = db.documents.findIndex(d => d.id === selectedDocument);
-                    if (docIndex !== -1) {
-                        const doc = db.documents[docIndex];
-                        doc.name = fullName;
-                        doc.birthDate = birthDate;
-                        
-                        // Update specific fields based on document type
-                        updateDocumentSpecificFields(doc);
-                        doc.observations = document.getElementById('observations').value;
-                        
-                        // Update files if new ones were uploaded
-                        if (uploadedFiles.length > 0) {
-                            // Adicionar novos arquivos aos existentes, não substituir
-                            if (!doc.files) doc.files = [];
-                            
-                            // Gerar IDs únicos para novos arquivos
-                            uploadedFiles.forEach(file => {
-                                file.id = Date.now() + Math.random();
-                            });
-                            
-                            doc.files = [...doc.files, ...uploadedFiles];
-                        }
-                        
-                        console.log('Documento atualizado:', doc);
-                    }
-                } else {
-                    // Create new document
-                    const newId = db.documents.length > 0 ? Math.max(...db.documents.map(d => d.id)) + 1 : 1;
-                    const today = new Date().toISOString().split('T')[0];
-                    
-                    // Gerar IDs únicos para arquivos
-                    uploadedFiles.forEach(file => {
-                        file.id = Date.now() + Math.random();
-                    });
-                    
-                    const newDoc = {
-                        id: newId,
+                try {
+                    const documentData = {
                         year: parseInt(selectedYear),
-                        type: selectedDocType,
-                        typeId: selectedDocTypeId,
+                        type_id: selectedDocTypeId,
                         name: fullName,
-                        birthDate: birthDate,
-                        registrationDate: today,
-                        observations: document.getElementById('observations').value,
-                        files: [...uploadedFiles] // Criando nova array para evitar referência
+                        birth_date: birthDate,
+                        observations: document.getElementById('observations').value
                     };
                     
                     // Add specific fields based on document type
-                    updateDocumentSpecificFields(newDoc);
+                    updateDocumentSpecificFields(documentData);
                     
-                    db.documents.push(newDoc);
-                    console.log('Novo documento criado:', newDoc);
+                    const savedDoc = await saveDocument(documentData);
+                    
+                    // TODO: Handle file uploads to Supabase Storage if needed
+                    
+                    // Reset form state
+                    uploadedFiles = [];
+                    isEditMode = false;
+                    selectedDocument = null;
+                    
+                    // Reload documents list
+                    await loadDocumentsTable(selectedYear, selectedDocTypeId);
+                    
+                    // Return to documents list
+                    personFormContainer.style.display = 'none';
+                    documentsListPage.style.display = 'block';
+                    
+                } catch (error) {
+                    console.error('Error saving document:', error);
+                    showError('Erro ao salvar documento');
                 }
-                
-                // Reset uploaded files e form
-                uploadedFiles = [];
-                isEditMode = false;
-                selectedDocument = null;
-                
-                // Reload documents list
-                loadDocuments(selectedYear, selectedDocTypeId);
-                
-                // Return to documents list
-                personFormContainer.style.display = 'none';
-                documentsListPage.style.display = 'block';
             } else {
-                alert('Nome completo e data de nascimento são obrigatórios!');
+                showError('Nome completo e data de nascimento são obrigatórios!');
             }
         });
 
         // Function to update document specific fields
         function updateDocumentSpecificFields(doc) {
-            const docType = db.documentTypes.find(t => t.id === selectedDocTypeId);
+            const docType = documentTypesCache.find(t => t.id === selectedDocTypeId);
             if (!docType) return;
 
             switch (docType.slug) {
                 case 'batismo':
-                    doc.parentName1 = document.getElementById('parentName1').value;
-                    doc.parentName2 = document.getElementById('parentName2').value;
-                    doc.baptismDate = document.getElementById('baptismDate').value;
+                    doc.parent_name_1 = document.getElementById('parentName1').value;
+                    doc.parent_name_2 = document.getElementById('parentName2').value;
+                    doc.baptism_date = document.getElementById('baptismDate').value;
                     doc.celebrant = document.getElementById('celebrant').value;
-                    doc.godparent1 = document.getElementById('godparent1').value;
-                    doc.godparent2 = document.getElementById('godparent2').value;
-                    doc.baptismPlace = document.getElementById('baptismPlace').value;
+                    doc.godparent_1 = document.getElementById('godparent1').value;
+                    doc.godparent_2 = document.getElementById('godparent2').value;
+                    doc.baptism_place = document.getElementById('baptismPlace').value;
                     break;
                     
                 case 'crisma':
-                    doc.confirmationDate = document.getElementById('confirmationDate').value;
-                    doc.confirmationPlace = document.getElementById('confirmationPlace').value;
+                    doc.confirmation_date = document.getElementById('confirmationDate').value;
+                    doc.confirmation_place = document.getElementById('confirmationPlace').value;
                     doc.bishop = document.getElementById('bishop').value;
-                    doc.confirmationGodparent = document.getElementById('confirmationGodparent').value;
-                    doc.crismaParentName1 = document.getElementById('crismaParentName1').value;
-                    doc.crismaParentName2 = document.getElementById('crismaParentName2').value;
+                    doc.confirmation_godparent = document.getElementById('confirmationGodparent').value;
+                    doc.crisma_parent_name_1 = document.getElementById('crismaParentName1').value;
+                    doc.crisma_parent_name_2 = document.getElementById('crismaParentName2').value;
                     break;
                     
                 case 'comunhao':
-                    doc.communionDate = document.getElementById('communionDate').value;
-                    doc.communionPlace = document.getElementById('communionPlace').value;
-                    doc.communionPriest = document.getElementById('communionPriest').value;
+                    doc.communion_date = document.getElementById('communionDate').value;
+                    doc.communion_place = document.getElementById('communionPlace').value;
+                    doc.communion_priest = document.getElementById('communionPriest').value;
                     break;
                     
                 case 'casamento':
-                    doc.marriageDate = document.getElementById('marriageDate').value;
-                    doc.marriagePlace = document.getElementById('marriagePlace').value;
-                    doc.marriageCelebrant = document.getElementById('marriageCelebrant').value;
-                    doc.groomName = document.getElementById('groomName').value;
-                    doc.groomBirthDate = document.getElementById('groomBirthDate').value;
-                    doc.brideName = document.getElementById('brideName').value;
-                    doc.brideBirthDate = document.getElementById('brideBirthDate').value;
-                    doc.groomFather = document.getElementById('groomFather').value;
-                    doc.groomMother = document.getElementById('groomMother').value;
-                    doc.brideFather = document.getElementById('brideFather').value;
-                    doc.brideMother = document.getElementById('brideMother').value;
-                    doc.witness1 = document.getElementById('witness1').value;
-                    doc.witness2 = document.getElementById('witness2').value;
+                    doc.marriage_date = document.getElementById('marriageDate').value;
+                    doc.marriage_place = document.getElementById('marriagePlace').value;
+                    doc.marriage_celebrant = document.getElementById('marriageCelebrant').value;
+                    doc.groom_name = document.getElementById('groomName').value;
+                    doc.groom_birth_date = document.getElementById('groomBirthDate').value;
+                    doc.bride_name = document.getElementById('brideName').value;
+                    doc.bride_birth_date = document.getElementById('brideBirthDate').value;
+                    doc.groom_father = document.getElementById('groomFather').value;
+                    doc.groom_mother = document.getElementById('groomMother').value;
+                    doc.bride_father = document.getElementById('brideFather').value;
+                    doc.bride_mother = document.getElementById('brideMother').value;
+                    doc.witness_1 = document.getElementById('witness1').value;
+                    doc.witness_2 = document.getElementById('witness2').value;
                     break;
                     
                 case 'obito':
-                    doc.deathDate = document.getElementById('deathDate').value;
-                    doc.burialPlace = document.getElementById('burialPlace').value;
-                    doc.ritesPerformed = document.getElementById('ritesPerformed').value;
+                    doc.death_date = document.getElementById('deathDate').value;
+                    doc.burial_place = document.getElementById('burialPlace').value;
+                    doc.rites_performed = document.getElementById('ritesPerformed').value;
                     break;
                     
                 case 'admissao':
-                    doc.admissionDate = document.getElementById('admissionDate').value;
+                    doc.admission_date = document.getElementById('admissionDate').value;
                     doc.address = document.getElementById('address').value;
                     doc.ministries = document.getElementById('ministries').value;
                     break;
@@ -2269,7 +2444,7 @@
 
         // Function to fill form with document specific fields
         function fillDocumentSpecificFields(doc) {
-            const docType = db.documentTypes.find(t => t.id === doc.typeId);
+            const docType = documentTypesCache.find(t => t.id === doc.type_id);
             if (!docType) return;
 
             // Show correct fields
@@ -2277,54 +2452,54 @@
 
             switch (docType.slug) {
                 case 'batismo':
-                    document.getElementById('parentName1').value = doc.parentName1 || '';
-                    document.getElementById('parentName2').value = doc.parentName2 || '';
-                    document.getElementById('baptismDate').value = doc.baptismDate || '';
+                    document.getElementById('parentName1').value = doc.parent_name_1 || '';
+                    document.getElementById('parentName2').value = doc.parent_name_2 || '';
+                    document.getElementById('baptismDate').value = doc.baptism_date || '';
                     document.getElementById('celebrant').value = doc.celebrant || '';
-                    document.getElementById('godparent1').value = doc.godparent1 || '';
-                    document.getElementById('godparent2').value = doc.godparent2 || '';
-                    document.getElementById('baptismPlace').value = doc.baptismPlace || '';
+                    document.getElementById('godparent1').value = doc.godparent_1 || '';
+                    document.getElementById('godparent2').value = doc.godparent_2 || '';
+                    document.getElementById('baptismPlace').value = doc.baptism_place || '';
                     break;
                     
                 case 'crisma':
-                    document.getElementById('confirmationDate').value = doc.confirmationDate || '';
-                    document.getElementById('confirmationPlace').value = doc.confirmationPlace || '';
+                    document.getElementById('confirmationDate').value = doc.confirmation_date || '';
+                    document.getElementById('confirmationPlace').value = doc.confirmation_place || '';
                     document.getElementById('bishop').value = doc.bishop || '';
-                    document.getElementById('confirmationGodparent').value = doc.confirmationGodparent || '';
-                    document.getElementById('crismaParentName1').value = doc.crismaParentName1 || '';
-                    document.getElementById('crismaParentName2').value = doc.crismaParentName2 || '';
+                    document.getElementById('confirmationGodparent').value = doc.confirmation_godparent || '';
+                    document.getElementById('crismaParentName1').value = doc.crisma_parent_name_1 || '';
+                    document.getElementById('crismaParentName2').value = doc.crisma_parent_name_2 || '';
                     break;
                     
                 case 'comunhao':
-                    document.getElementById('communionDate').value = doc.communionDate || '';
-                    document.getElementById('communionPlace').value = doc.communionPlace || '';
-                    document.getElementById('communionPriest').value = doc.communionPriest || '';
+                    document.getElementById('communionDate').value = doc.communion_date || '';
+                    document.getElementById('communionPlace').value = doc.communion_place || '';
+                    document.getElementById('communionPriest').value = doc.communion_priest || '';
                     break;
                     
                 case 'casamento':
-                    document.getElementById('marriageDate').value = doc.marriageDate || '';
-                    document.getElementById('marriagePlace').value = doc.marriagePlace || '';
-                    document.getElementById('marriageCelebrant').value = doc.marriageCelebrant || '';
-                    document.getElementById('groomName').value = doc.groomName || '';
-                    document.getElementById('groomBirthDate').value = doc.groomBirthDate || '';
-                    document.getElementById('brideName').value = doc.brideName || '';
-                    document.getElementById('brideBirthDate').value = doc.brideBirthDate || '';
-                    document.getElementById('groomFather').value = doc.groomFather || '';
-                    document.getElementById('groomMother').value = doc.groomMother || '';
-                    document.getElementById('brideFather').value = doc.brideFather || '';
-                    document.getElementById('brideMother').value = doc.brideMother || '';
-                    document.getElementById('witness1').value = doc.witness1 || '';
-                    document.getElementById('witness2').value = doc.witness2 || '';
+                    document.getElementById('marriageDate').value = doc.marriage_date || '';
+                    document.getElementById('marriagePlace').value = doc.marriage_place || '';
+                    document.getElementById('marriageCelebrant').value = doc.marriage_celebrant || '';
+                    document.getElementById('groomName').value = doc.groom_name || '';
+                    document.getElementById('groomBirthDate').value = doc.groom_birth_date || '';
+                    document.getElementById('brideName').value = doc.bride_name || '';
+                    document.getElementById('brideBirthDate').value = doc.bride_birth_date || '';
+                    document.getElementById('groomFather').value = doc.groom_father || '';
+                    document.getElementById('groomMother').value = doc.groom_mother || '';
+                    document.getElementById('brideFather').value = doc.bride_father || '';
+                    document.getElementById('brideMother').value = doc.bride_mother || '';
+                    document.getElementById('witness1').value = doc.witness_1 || '';
+                    document.getElementById('witness2').value = doc.witness_2 || '';
                     break;
                     
                 case 'obito':
-                    document.getElementById('deathDate').value = doc.deathDate || '';
-                    document.getElementById('burialPlace').value = doc.burialPlace || '';
-                    document.getElementById('ritesPerformed').value = doc.ritesPerformed || '';
+                    document.getElementById('deathDate').value = doc.death_date || '';
+                    document.getElementById('burialPlace').value = doc.burial_place || '';
+                    document.getElementById('ritesPerformed').value = doc.rites_performed || '';
                     break;
                     
                 case 'admissao':
-                    document.getElementById('admissionDate').value = doc.admissionDate || '';
+                    document.getElementById('admissionDate').value = doc.admission_date || '';
                     document.getElementById('address').value = doc.address || '';
                     document.getElementById('ministries').value = doc.ministries || '';
                     break;
@@ -2332,18 +2507,33 @@
         }
 
         // Document Actions (View, Edit, Delete)
-        document.getElementById('documentsTable').addEventListener('click', function(e) {
+        document.getElementById('documentsTable').addEventListener('click', async function(e) {
             if (e.target.classList.contains('view-btn') || e.target.classList.contains('edit-btn')) {
                 const row = e.target.closest('tr');
                 const docId = parseInt(row.getAttribute('data-id'));
-                const doc = db.documents.find(d => d.id === docId);
                 
-                if (doc) {
+                try {
+                    showLoading();
+                    
+                    const { data: doc, error } = await supabase
+                        .from('documents')
+                        .select(`
+                            *,
+                            document_types(name),
+                            files(*)
+                        `)
+                        .eq('id', docId)
+                        .single();
+                    
+                    hideLoading();
+                    
+                    if (error) throw error;
+                    
                     selectedDocument = docId;
                     
                     // Fill form with document data
                     document.getElementById('fullName').value = doc.name;
-                    document.getElementById('birthDate').value = doc.birthDate;
+                    document.getElementById('birthDate').value = doc.birth_date;
                     document.getElementById('observations').value = doc.observations || '';
                     
                     // Fill document-specific fields
@@ -2358,7 +2548,7 @@
                             const fileItem = document.createElement('div');
                             fileItem.className = 'file-item';
                             fileItem.innerHTML = `
-                                <span class="file-name">${file.name} (${file.size})</span>
+                                <span class="file-name">${file.name} (${file.size || 'N/A'})</span>
                                 <div class="file-actions">
                                     <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
                                     <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
@@ -2372,7 +2562,7 @@
                     // Set up form mode
                     isEditMode = e.target.classList.contains('edit-btn');
                     document.getElementById('formTitle').textContent = isEditMode ? 'Editar Registro' : 'Visualizar Registro';
-                    document.getElementById('formHeaderTitle').textContent = `${isEditMode ? 'Editar' : 'Visualizar'} Registro de ${doc.type}`;
+                    document.getElementById('formHeaderTitle').textContent = `${isEditMode ? 'Editar' : 'Visualizar'} Registro de ${doc.document_types.name}`;
                     
                     // Make fields readonly in view mode
                     const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
@@ -2382,11 +2572,16 @@
                     
                     // Set up breadcrumb navigation
                     document.getElementById('backToDocTypes2').textContent = doc.year;
-                    document.getElementById('backToDocList').textContent = doc.type;
+                    document.getElementById('backToDocList').textContent = doc.document_types.name;
                     
                     // Show the person form
                     documentsListPage.style.display = 'none';
                     personFormContainer.style.display = 'block';
+                    
+                } catch (error) {
+                    hideLoading();
+                    console.error('Error loading document:', error);
+                    showError('Erro ao carregar documento');
                 }
             } else if (e.target.classList.contains('delete-btn')) {
                 const row = e.target.closest('tr');
@@ -2402,32 +2597,16 @@
         document.getElementById('fileList').addEventListener('click', function(e) {
             if (e.target.classList.contains('view-file-btn')) {
                 const fileId = parseInt(e.target.getAttribute('data-file-id'));
-                const doc = db.documents.find(d => d.id === selectedDocument);
-                if (doc && doc.files) {
-                    const file = doc.files.find(f => f.id === fileId);
-                    if (file) {
-                        viewFile(file);
-                    }
-                }
+                // TODO: Implement file viewing with Supabase Storage
+                console.log('View file:', fileId);
             } else if (e.target.classList.contains('download-file-btn')) {
                 const fileId = parseInt(e.target.getAttribute('data-file-id'));
-                const doc = db.documents.find(d => d.id === selectedDocument);
-                if (doc && doc.files) {
-                    const file = doc.files.find(f => f.id === fileId);
-                    if (file) {
-                        downloadFile(file);
-                    }
-                }
+                // TODO: Implement file download with Supabase Storage
+                console.log('Download file:', fileId);
             } else if (e.target.classList.contains('remove-file-btn')) {
                 const fileId = parseInt(e.target.getAttribute('data-file-id'));
-                const doc = db.documents.find(d => d.id === selectedDocument);
-                if (doc && doc.files) {
-                    doc.files = doc.files.filter(f => f.id !== fileId);
-                    // Refresh file list
-                    const fileList = document.getElementById('fileList');
-                    const fileItem = e.target.closest('.file-item');
-                    fileItem.remove();
-                }
+                // TODO: Implement file removal with Supabase Storage
+                console.log('Remove file:', fileId);
             } else if (e.target.classList.contains('remove-file')) {
                 const index = parseInt(e.target.getAttribute('data-index'));
                 uploadedFiles.splice(index, 1);
@@ -2502,7 +2681,7 @@
             if (searchTerm.length >= 2) {
                 performSearch(searchTerm, inForm);
             } else if (searchTerm.length > 0) {
-                alert('Por favor, digite pelo menos 2 caracteres para buscar.');
+                showError('Por favor, digite pelo menos 2 caracteres para buscar.');
             }
         }
         
@@ -2525,48 +2704,14 @@
             });
         });
 
-        function performSearch(term, inForm = false) {
+        async function performSearch(term, inForm = false) {
             console.log('Searching for:', term);
             
-            // Enhanced search in documents - search by name, birth date, and combined name+date
-            const results = db.documents.filter(doc => {
-                const docName = doc.name.toLowerCase();
-                const docBirthDate = doc.birthDate ? new Date(doc.birthDate).toLocaleDateString('pt-BR') : '';
-                
-                // Simple name match
-                const nameMatch = docName.includes(term);
-                
-                // Birth date match (multiple formats)
-                const birthDateMatch = doc.birthDate && (
-                    doc.birthDate.includes(term) || 
-                    docBirthDate.includes(term) ||
-                    doc.birthDate.replace(/-/g, '/').includes(term)
-                );
-                
-                // Combined search: name + date (e.g., "paulo henrique silva 12/03/1998")
-                const combinedText = `${docName} ${docBirthDate}`.toLowerCase();
-                const combinedMatch = combinedText.includes(term);
-                
-                // Search for partial date formats
-                let partialDateMatch = false;
-                if (doc.birthDate) {
-                    const [year, month, day] = doc.birthDate.split('-');
-                    const dateFormats = [
-                        `${day}/${month}/${year}`,
-                        `${day}/${month}`,
-                        `${month}/${year}`,
-                        `${day}/${month}/${year.slice(-2)}`,
-                        day, month, year
-                    ];
-                    partialDateMatch = dateFormats.some(format => format.includes(term));
-                }
-                
-                return nameMatch || birthDateMatch || combinedMatch || partialDateMatch;
-            });
+            const results = await searchDocuments(term);
             
             console.log('Search results:', results);
             
-            // CORRIGINDO: Mostrar resultados da busca
+            // Show search results
             const searchTermElement = document.getElementById(inForm ? 'searchTermForm' : 'searchTerm');
             const resultsTable = document.getElementById(inForm ? 'searchResultsFormTable' : 'searchResultsTable');
             const noResultsElement = document.getElementById(inForm ? 'noResultsForm' : 'noResults');
@@ -2580,14 +2725,14 @@
                     const row = document.createElement('tr');
                     row.setAttribute('data-id', doc.id);
                     row.setAttribute('data-year', doc.year);
-                    row.setAttribute('data-type-id', doc.typeId);
+                    row.setAttribute('data-type-id', doc.type_id);
                     
-                    const birthDate = new Date(doc.birthDate).toLocaleDateString('pt-BR');
-                    const regDate = new Date(doc.registrationDate).toLocaleDateString('pt-BR');
+                    const birthDate = new Date(doc.birth_date).toLocaleDateString('pt-BR');
+                    const regDate = new Date(doc.registration_date).toLocaleDateString('pt-BR');
                     
                     row.innerHTML = `
                         <td>${doc.name}</td>
-                        <td>${doc.type}</td>
+                        <td>${doc.document_types.name}</td>
                         <td>${birthDate}</td>
                         <td>${regDate}</td>
                         <td>${doc.year}</td>
@@ -2622,73 +2767,97 @@
                 
                 selectedYear = year;
                 selectedDocTypeId = typeId;
-                const docType = db.documentTypes.find(t => t.id === typeId);
+                const docType = documentTypesCache.find(t => t.id === typeId);
                 selectedDocType = docType ? docType.name : 'Documento';
                 
-                // Find the document
-                const doc = db.documents.find(d => d.id === docId);
-                if (doc) {
-                    selectedDocument = docId;
-                    
-                    // Fill form with document data
-                    document.getElementById('fullName').value = doc.name;
-                    document.getElementById('birthDate').value = doc.birthDate;
-                    document.getElementById('observations').value = doc.observations || '';
-                    
-                    // Fill document-specific fields
-                    fillDocumentSpecificFields(doc);
-                    
-                    // Display attached files
-                    const fileList = document.getElementById('fileList');
-                    fileList.innerHTML = '';
-                    
-                    if (doc.files && doc.files.length > 0) {
-                        doc.files.forEach(file => {
-                            const fileItem = document.createElement('div');
-                            fileItem.className = 'file-item';
-                            fileItem.innerHTML = `
-                                <span class="file-name">${file.name} (${file.size})</span>
-                                <div class="file-actions">
-                                    <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
-                                    <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
-                                    <button type="button" class="btn btn-sm btn-danger remove-file-btn" data-file-id="${file.id}">Remover</button>
-                                </div>
-                            `;
-                            fileList.appendChild(fileItem);
-                        });
-                    }
-                    
-                    // Set up form mode
-                    isEditMode = false;
-                    document.getElementById('formTitle').textContent = 'Visualizar Registro';
-                    document.getElementById('formHeaderTitle').textContent = `Visualizar Registro de ${doc.type}`;
-                    
-                    // Make fields readonly in view mode
-                    const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
-                    formInputs.forEach(input => {
-                        input.readOnly = true;
+                // Load and show the document
+                loadAndShowDocument(docId);
+            }
+        }
+
+        async function loadAndShowDocument(docId) {
+            try {
+                showLoading();
+                
+                const { data: doc, error } = await supabase
+                    .from('documents')
+                    .select(`
+                        *,
+                        document_types(name),
+                        files(*)
+                    `)
+                    .eq('id', docId)
+                    .single();
+                
+                hideLoading();
+                
+                if (error) throw error;
+                
+                selectedDocument = docId;
+                
+                // Fill form with document data
+                document.getElementById('fullName').value = doc.name;
+                document.getElementById('birthDate').value = doc.birth_date;
+                document.getElementById('observations').value = doc.observations || '';
+                
+                // Fill document-specific fields
+                fillDocumentSpecificFields(doc);
+                
+                // Display attached files
+                const fileList = document.getElementById('fileList');
+                fileList.innerHTML = '';
+                
+                if (doc.files && doc.files.length > 0) {
+                    doc.files.forEach(file => {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'file-item';
+                        fileItem.innerHTML = `
+                            <span class="file-name">${file.name} (${file.size || 'N/A'})</span>
+                            <div class="file-actions">
+                                <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
+                                <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
+                                <button type="button" class="btn btn-sm btn-danger remove-file-btn" data-file-id="${file.id}">Remover</button>
+                            </div>
+                        `;
+                        fileList.appendChild(fileItem);
                     });
-                    
-                    // Set up breadcrumb navigation
-                    document.getElementById('backToDocTypes2').textContent = doc.year;
-                    document.getElementById('backToDocList').textContent = doc.type;
-                    
-                    // MOSTRANDO A BUSCA NO FORMULÁRIO: copiar resultados da busca
-                    const searchTermDashboard = document.getElementById('searchTerm').textContent;
-                    if (searchTermDashboard) {
-                        document.getElementById('searchTermForm').textContent = searchTermDashboard;
-                        const dashboardTable = document.getElementById('searchResultsTable').innerHTML;
-                        document.getElementById('searchResultsFormTable').innerHTML = dashboardTable;
-                        searchResultsFormSection.style.display = 'block';
-                    }
-                    
-                    // Hide other sections and show form
-                    dashboardPage.style.display = 'none';
-                    documentsListPage.style.display = 'none';
-                    documentTypesPage.style.display = 'none';
-                    searchResultsSection.style.display = 'none';
-                    personFormContainer.style.display = 'block';
                 }
+                
+                // Set up form mode
+                isEditMode = false;
+                document.getElementById('formTitle').textContent = 'Visualizar Registro';
+                document.getElementById('formHeaderTitle').textContent = `Visualizar Registro de ${doc.document_types.name}`;
+                
+                // Make fields readonly in view mode
+                const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
+                formInputs.forEach(input => {
+                    input.readOnly = true;
+                });
+                
+                // Set up breadcrumb navigation
+                document.getElementById('backToDocTypes2').textContent = doc.year;
+                document.getElementById('backToDocList').textContent = doc.document_types.name;
+                
+                // Copy search results to form if coming from search
+                const searchTermDashboard = document.getElementById('searchTerm').textContent;
+                if (searchTermDashboard) {
+                    document.getElementById('searchTermForm').textContent = searchTermDashboard;
+                    const dashboardTable = document.getElementById('searchResultsTable').innerHTML;
+                    document.getElementById('searchResultsFormTable').innerHTML = dashboardTable;
+                    searchResultsFormSection.style.display = 'block';
+                }
+                
+                // Hide other sections and show form
+                dashboardPage.style.display = 'none';
+                documentsListPage.style.display = 'none';
+                documentTypesPage.style.display = 'none';
+                searchResultsSection.style.display = 'none';
+                personFormContainer.style.display = 'block';
+                
+            } catch (error) {
+                hideLoading();
+                console.error('Error loading document:', error);
+                showError('Erro ao carregar documento');
             }
         }
 
@@ -2810,56 +2979,58 @@
             }
         });
 
-        document.getElementById('saveYearBtn').addEventListener('click', function() {
+        document.getElementById('saveYearBtn').addEventListener('click', async function() {
             const newYear = parseInt(document.getElementById('newYear').value);
-            if (newYear && !db.years.includes(newYear)) {
-                db.years.push(newYear);
-                db.years.sort((a, b) => b - a);
-                
-                // Update the years grid
-                initializeYearsGrid();
-                
-                document.getElementById('addYearModal').style.display = 'none';
+            
+            if (newYear && !yearsCache.includes(newYear)) {
+                try {
+                    await addYear(newYear);
+                    await initializeYearsGrid();
+                    document.getElementById('addYearModal').style.display = 'none';
+                    document.getElementById('newYear').value = '';
+                } catch (error) {
+                    console.error('Error adding year:', error);
+                }
             } else {
-                alert('Ano inválido ou já existente!');
+                showError('Ano inválido ou já existente!');
             }
         });
 
-        document.getElementById('saveDocTypeBtn').addEventListener('click', function() {
+        document.getElementById('saveDocTypeBtn').addEventListener('click', async function() {
             const newDocTypeName = document.getElementById('newDocType').value.trim();
             const newDocTypeDesc = document.getElementById('docTypeDescription').value.trim();
             
-            if (newDocTypeName && !db.documentTypes.find(t => t.name.toLowerCase() === newDocTypeName.toLowerCase())) {
-                const newId = Math.max(...db.documentTypes.map(t => t.id)) + 1;
+            if (newDocTypeName && !documentTypesCache.find(t => t.name.toLowerCase() === newDocTypeName.toLowerCase())) {
                 const newSlug = newDocTypeName.toLowerCase().replace(/\s+/g, '-');
                 
-                db.documentTypes.push({
-                    id: newId,
+                const docTypeData = {
                     name: newDocTypeName,
                     slug: newSlug,
                     description: newDocTypeDesc || `Registros de ${newDocTypeName.toLowerCase()}`,
                     icon: 'images/outros.png'
-                });
+                };
                 
-                // Update the document types grid
-                initializeDocumentTypesGrid();
-                
-                document.getElementById('addDocTypeModal').style.display = 'none';
-                document.getElementById('newDocType').value = '';
-                document.getElementById('docTypeDescription').value = '';
+                try {
+                    await addDocumentType(docTypeData);
+                    await initializeDocumentTypesGrid();
+                    document.getElementById('addDocTypeModal').style.display = 'none';
+                    document.getElementById('newDocType').value = '';
+                    document.getElementById('docTypeDescription').value = '';
+                } catch (error) {
+                    console.error('Error adding document type:', error);
+                }
             } else {
-                alert('Nome inválido ou tipo de documento já existente!');
+                showError('Nome inválido ou tipo de documento já existente!');
             }
         });
 
         // Delete confirmation
-        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+        document.getElementById('confirmDeleteBtn').addEventListener('click', async function() {
             if (selectedDocument) {
-                const index = db.documents.findIndex(d => d.id === selectedDocument);
+                const success = await deleteDocument(selectedDocument);
                 
-                if (index !== -1) {
-                    db.documents.splice(index, 1);
-                    loadDocuments(selectedYear, selectedDocTypeId);
+                if (success) {
+                    await loadDocumentsTable(selectedYear, selectedDocTypeId);
                     document.getElementById('deleteConfirmModal').style.display = 'none';
                 }
             }
@@ -2899,12 +3070,9 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            // Set current year as default login
+            // Set current year as default in add year modal
             const currentYear = new Date().getFullYear();
-            if (!db.years.includes(currentYear)) {
-                db.years.push(currentYear);
-                db.years.sort((a, b) => b - a);
-            }
+            document.getElementById('newYear').value = currentYear;
         });
     </script>
 </body>
