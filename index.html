@@ -222,9 +222,15 @@
         }
 
         .btn:disabled {
-            opacity: 0.6;
+            background-color: #94a3b8;
             cursor: not-allowed;
             transform: none;
+        }
+
+        .btn:disabled:hover {
+            background-color: #94a3b8;
+            transform: none;
+            box-shadow: none;
         }
 
         .btn::before {
@@ -245,16 +251,11 @@
             height: 350px;
         }
 
-        .btn:disabled:hover::before {
-            width: 0;
-            height: 0;
-        }
-
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
         }
 
-        .btn-primary:hover:not(:disabled) {
+        .btn-primary:hover {
             background: linear-gradient(135deg, #A00000, #E6144C);
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(139, 0, 0, 0.4);
@@ -1676,7 +1677,7 @@
         let currentPage = 'dashboard';
         let uploadedFiles = [];
         let selectedFileForView = null;
-        let isSaving = false; // Flag to prevent duplicate saves
+        let isSubmitting = false; // Flag para prevenir múltiplas submissões
 
         // Cache for database data
         let yearsCache = [];
@@ -1835,13 +1836,12 @@
 
         async function saveDocument(documentData) {
             try {
-                console.log('Starting document save process...', documentData);
+                showLoading();
                 
                 let savedDoc;
                 
                 if (isEditMode && selectedDocument) {
                     // Update existing document
-                    console.log('Updating existing document with ID:', selectedDocument);
                     const { data, error } = await supabase
                         .from('documents')
                         .update(documentData)
@@ -1853,7 +1853,6 @@
                     savedDoc = data;
                 } else {
                     // Create new document
-                    console.log('Creating new document...');
                     const { data, error } = await supabase
                         .from('documents')
                         .insert([documentData])
@@ -1864,106 +1863,108 @@
                     savedDoc = data;
                 }
                 
-                console.log('Document saved successfully:', savedDoc);
-                
                 // Save uploaded files if any
                 if (uploadedFiles.length > 0) {
-                    console.log('Saving', uploadedFiles.length, 'files...');
                     await saveDocumentFiles(savedDoc.id, uploadedFiles);
-                } else {
-                    console.log('No files to save.');
                 }
                 
+                hideLoading();
                 return savedDoc;
             } catch (error) {
                 console.error('Error saving document:', error);
+                hideLoading();
+                showError('Erro ao salvar documento: ' + error.message);
                 throw error;
             }
         }
 
         async function saveDocumentFiles(documentId, files) {
-            console.log('saveDocumentFiles called with:', documentId, files.length, 'files');
-            
-            for (let i = 0; i < files.length; i++) {
-                const fileData = files[i];
-                console.log(`Processing file ${i + 1}/${files.length}:`, fileData.name);
+            try {
+                const savedFiles = [];
                 
-                try {
-                    // Create a unique filename
-                    const timestamp = Date.now();
-                    const cleanFileName = fileData.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-                    const fileName = `${documentId}_${timestamp}_${i}_${cleanFileName}`;
-                    
-                    console.log('Generated filename:', fileName);
-                    
-                    let fileUrl = null;
-                    let uploadSuccess = false;
-                    
+                for (const fileData of files) {
                     try {
-                        console.log('Attempting file upload to Supabase Storage...');
+                        // Create a unique filename
+                        const timestamp = Date.now();
+                        const randomSuffix = Math.random().toString(36).substring(2, 8);
+                        const cleanFileName = fileData.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+                        const fileName = `${documentId}_${timestamp}_${randomSuffix}_${cleanFileName}`;
+                        
+                        let fileUrl = null;
+                        let uploadSuccess = false;
                         
                         // Try to upload file to Supabase Storage
-                        const { data: uploadData, error: uploadError } = await supabase.storage
-                            .from('document-files')
-                            .upload(fileName, fileData.file, {
-                                cacheControl: '3600',
-                                upsert: false
-                            });
-                        
-                        if (uploadError) {
-                            console.warn('Storage upload failed:', uploadError);
-                        } else if (uploadData) {
-                            console.log('Storage upload successful:', uploadData);
-                            
-                            // Get public URL if upload successful
-                            const { data: { publicUrl } } = supabase.storage
+                        try {
+                            const { data: uploadData, error: uploadError } = await supabase.storage
                                 .from('document-files')
-                                .getPublicUrl(fileName);
+                                .upload(fileName, fileData.file, {
+                                    cacheControl: '3600',
+                                    upsert: false
+                                });
                             
-                            fileUrl = publicUrl;
-                            uploadSuccess = true;
-                            console.log('File URL generated:', fileUrl);
+                            if (!uploadError && uploadData) {
+                                // Get public URL if upload successful
+                                const { data: { publicUrl } } = supabase.storage
+                                    .from('document-files')
+                                    .getPublicUrl(fileName);
+                                
+                                fileUrl = publicUrl;
+                                uploadSuccess = true;
+                                console.log('File uploaded successfully:', fileName);
+                            } else {
+                                console.warn('File upload failed:', uploadError);
+                            }
+                        } catch (storageError) {
+                            console.warn('Storage upload error:', storageError);
                         }
-                    } catch (storageError) {
-                        console.warn('Storage operation failed:', storageError);
+                        
+                        // Save file reference in database regardless of upload status
+                        const fileRecord = {
+                            document_id: documentId,
+                            name: fileData.name,
+                            file_path: fileName,
+                            file_url: fileUrl,
+                            file_type: fileData.file.type || 'application/octet-stream',
+                            file_size: fileData.file.size,
+                            uploaded_at: new Date().toISOString(),
+                            upload_success: uploadSuccess
+                        };
+                        
+                        const { data: dbData, error: dbError } = await supabase
+                            .from('files')
+                            .insert([fileRecord])
+                            .select()
+                            .single();
+                        
+                        if (dbError) {
+                            console.error('Error saving file reference to database:', dbError);
+                            throw dbError;
+                        } else {
+                            savedFiles.push(dbData);
+                            console.log('File reference saved to database:', dbData);
+                        }
+                        
+                    } catch (fileError) {
+                        console.error('Error processing file:', fileData.name, fileError);
+                        showError(`Erro ao processar arquivo ${fileData.name}: ${fileError.message}`);
+                        // Continue with other files even if one fails
+                        continue;
                     }
-                    
-                    // Always save file reference in database, even if storage upload failed
-                    console.log('Saving file reference to database...');
-                    
-                    const fileRecord = {
-                        document_id: documentId,
-                        name: fileData.name,
-                        file_path: fileName,
-                        file_url: fileUrl,
-                        file_type: fileData.type || 'application/octet-stream',
-                        file_size: fileData.file.size,
-                        uploaded_at: new Date().toISOString(),
-                        upload_success: uploadSuccess
-                    };
-                    
-                    console.log('File record to insert:', fileRecord);
-                    
-                    const { data: dbData, error: dbError } = await supabase
-                        .from('files')
-                        .insert([fileRecord])
-                        .select()
-                        .single();
-                    
-                    if (dbError) {
-                        console.error('Database insert failed for file:', fileData.name, dbError);
-                        throw dbError;
-                    } else {
-                        console.log('File reference saved successfully:', dbData);
-                    }
-                    
-                } catch (fileError) {
-                    console.error('Error processing file:', fileData.name, fileError);
-                    throw fileError; // Re-throw to stop the save process
                 }
+                
+                console.log(`Successfully processed ${savedFiles.length} of ${files.length} files`);
+                
+                if (savedFiles.length === 0 && files.length > 0) {
+                    throw new Error('Nenhum arquivo foi salvo com sucesso');
+                }
+                
+                return savedFiles;
+                
+            } catch (error) {
+                console.error('Error saving files:', error);
+                showError('Erro ao salvar arquivos: ' + error.message);
+                throw error;
             }
-            
-            console.log('All files processed successfully');
         }
 
         async function deleteDocument(documentId) {
@@ -2475,81 +2476,78 @@
         // Add Person Button (alternative)
         document.getElementById('addPersonBtn').addEventListener('click', addNewPerson);
 
-        // Person Form Submit - FIXED VERSION
+        // Person Form Submit - CORRIGIDO
         document.getElementById('personForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Prevent double submission
-            if (isSaving) {
-                console.log('Already saving, ignoring duplicate submission');
+            // Prevenir múltiplas submissões
+            if (isSubmitting) {
+                console.log('Submit already in progress, ignoring...');
                 return;
             }
             
+            const submitBtn = this.querySelector('button[type="submit"]');
             const fullName = document.getElementById('fullName').value.trim();
             const birthDate = document.getElementById('birthDate').value;
             
-            if (fullName && birthDate) {
-                try {
-                    isSaving = true;
-                    
-                    // Disable submit button and show loading
-                    const submitBtn = this.querySelector('button[type="submit"]');
-                    const originalText = submitBtn.textContent;
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = 'Salvando...';
-                    
-                    showLoading();
-                    
-                    const documentData = {
-                        year: parseInt(selectedYear),
-                        type_id: selectedDocTypeId,
-                        name: fullName,
-                        birth_date: birthDate,
-                        registration_date: new Date().toISOString().split('T')[0],
-                        observations: document.getElementById('observations').value
-                    };
-                    
-                    // Add specific fields based on document type
-                    updateDocumentSpecificFields(documentData);
-                    
-                    console.log('Saving document with data:', documentData);
-                    console.log('Uploaded files count:', uploadedFiles.length);
-                    
-                    const savedDoc = await saveDocument(documentData);
-                    
-                    console.log('Document saved successfully:', savedDoc);
-                    
-                    // Reset form state
-                    uploadedFiles = [];
-                    isEditMode = false;
-                    selectedDocument = null;
-                    
-                    // Reload documents list
-                    await loadDocumentsTable(selectedYear, selectedDocTypeId);
-                    
-                    hideLoading();
-                    
-                    // Show success message
-                    alert('Registro salvo com sucesso!');
-                    
-                    // Return to documents list
-                    personFormContainer.style.display = 'none';
-                    documentsListPage.style.display = 'block';
-                    
-                } catch (error) {
-                    console.error('Error saving document:', error);
-                    hideLoading();
-                    showError('Erro ao salvar documento: ' + error.message);
-                } finally {
-                    isSaving = false;
-                    
-                    // Re-enable submit button
-                    const submitBtn = this.querySelector('button[type="submit"]');
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalText;
-                }
-            } else {
+            if (!fullName || !birthDate) {
                 showError('Nome completo e data de nascimento são obrigatórios!');
+                return;
+            }
+            
+            try {
+                // Marcar que a submissão está em progresso
+                isSubmitting = true;
+                
+                // Desabilitar botão de submit
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Salvando...';
+                
+                const documentData = {
+                    year: parseInt(selectedYear),
+                    type_id: selectedDocTypeId,
+                    name: fullName,
+                    birth_date: birthDate,
+                    registration_date: new Date().toISOString().split('T')[0],
+                    observations: document.getElementById('observations').value || null
+                };
+                
+                // Add specific fields based on document type
+                updateDocumentSpecificFields(documentData);
+                
+                console.log('Saving document with data:', documentData);
+                console.log('Uploaded files:', uploadedFiles);
+                
+                const savedDoc = await saveDocument(documentData);
+                
+                console.log('Document saved successfully:', savedDoc);
+                
+                // Reset form state apenas após sucesso
+                uploadedFiles = [];
+                isEditMode = false;
+                selectedDocument = null;
+                
+                // Reload documents list
+                await loadDocumentsTable(selectedYear, selectedDocTypeId);
+                
+                // Return to documents list
+                personFormContainer.style.display = 'none';
+                documentsListPage.style.display = 'block';
+                
+                // Reset form
+                document.getElementById('personForm').reset();
+                document.getElementById('fileList').innerHTML = '';
+                
+                console.log('Form reset and returned to documents list');
+                
+            } catch (error) {
+                console.error('Error saving document:', error);
+                showError('Erro ao salvar documento: ' + error.message);
+            } finally {
+                // Re-habilitar botão de submit e marcar submissão como concluída
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Salvar Registro';
             }
         });
 
@@ -2560,56 +2558,56 @@
 
             switch (docType.slug) {
                 case 'batismo':
-                    doc.parent_name_1 = document.getElementById('parentName1').value;
-                    doc.parent_name_2 = document.getElementById('parentName2').value;
-                    doc.baptism_date = document.getElementById('baptismDate').value;
-                    doc.celebrant = document.getElementById('celebrant').value;
-                    doc.godparent_1 = document.getElementById('godparent1').value;
-                    doc.godparent_2 = document.getElementById('godparent2').value;
-                    doc.baptism_place = document.getElementById('baptismPlace').value;
+                    doc.parent_name_1 = document.getElementById('parentName1').value || null;
+                    doc.parent_name_2 = document.getElementById('parentName2').value || null;
+                    doc.baptism_date = document.getElementById('baptismDate').value || null;
+                    doc.celebrant = document.getElementById('celebrant').value || null;
+                    doc.godparent_1 = document.getElementById('godparent1').value || null;
+                    doc.godparent_2 = document.getElementById('godparent2').value || null;
+                    doc.baptism_place = document.getElementById('baptismPlace').value || null;
                     break;
                     
                 case 'crisma':
-                    doc.confirmation_date = document.getElementById('confirmationDate').value;
-                    doc.confirmation_place = document.getElementById('confirmationPlace').value;
-                    doc.bishop = document.getElementById('bishop').value;
-                    doc.confirmation_godparent = document.getElementById('confirmationGodparent').value;
-                    doc.crisma_parent_name_1 = document.getElementById('crismaParentName1').value;
-                    doc.crisma_parent_name_2 = document.getElementById('crismaParentName2').value;
+                    doc.confirmation_date = document.getElementById('confirmationDate').value || null;
+                    doc.confirmation_place = document.getElementById('confirmationPlace').value || null;
+                    doc.bishop = document.getElementById('bishop').value || null;
+                    doc.confirmation_godparent = document.getElementById('confirmationGodparent').value || null;
+                    doc.crisma_parent_name_1 = document.getElementById('crismaParentName1').value || null;
+                    doc.crisma_parent_name_2 = document.getElementById('crismaParentName2').value || null;
                     break;
                     
                 case 'comunhao':
-                    doc.communion_date = document.getElementById('communionDate').value;
-                    doc.communion_place = document.getElementById('communionPlace').value;
-                    doc.communion_priest = document.getElementById('communionPriest').value;
+                    doc.communion_date = document.getElementById('communionDate').value || null;
+                    doc.communion_place = document.getElementById('communionPlace').value || null;
+                    doc.communion_priest = document.getElementById('communionPriest').value || null;
                     break;
                     
                 case 'casamento':
-                    doc.marriage_date = document.getElementById('marriageDate').value;
-                    doc.marriage_place = document.getElementById('marriagePlace').value;
-                    doc.marriage_celebrant = document.getElementById('marriageCelebrant').value;
-                    doc.groom_name = document.getElementById('groomName').value;
-                    doc.groom_birth_date = document.getElementById('groomBirthDate').value;
-                    doc.bride_name = document.getElementById('brideName').value;
-                    doc.bride_birth_date = document.getElementById('brideBirthDate').value;
-                    doc.groom_father = document.getElementById('groomFather').value;
-                    doc.groom_mother = document.getElementById('groomMother').value;
-                    doc.bride_father = document.getElementById('brideFather').value;
-                    doc.bride_mother = document.getElementById('brideMother').value;
-                    doc.witness_1 = document.getElementById('witness1').value;
-                    doc.witness_2 = document.getElementById('witness2').value;
+                    doc.marriage_date = document.getElementById('marriageDate').value || null;
+                    doc.marriage_place = document.getElementById('marriagePlace').value || null;
+                    doc.marriage_celebrant = document.getElementById('marriageCelebrant').value || null;
+                    doc.groom_name = document.getElementById('groomName').value || null;
+                    doc.groom_birth_date = document.getElementById('groomBirthDate').value || null;
+                    doc.bride_name = document.getElementById('brideName').value || null;
+                    doc.bride_birth_date = document.getElementById('brideBirthDate').value || null;
+                    doc.groom_father = document.getElementById('groomFather').value || null;
+                    doc.groom_mother = document.getElementById('groomMother').value || null;
+                    doc.bride_father = document.getElementById('brideFather').value || null;
+                    doc.bride_mother = document.getElementById('brideMother').value || null;
+                    doc.witness_1 = document.getElementById('witness1').value || null;
+                    doc.witness_2 = document.getElementById('witness2').value || null;
                     break;
                     
                 case 'obito':
-                    doc.death_date = document.getElementById('deathDate').value;
-                    doc.burial_place = document.getElementById('burialPlace').value;
-                    doc.rites_performed = document.getElementById('ritesPerformed').value;
+                    doc.death_date = document.getElementById('deathDate').value || null;
+                    doc.burial_place = document.getElementById('burialPlace').value || null;
+                    doc.rites_performed = document.getElementById('ritesPerformed').value || null;
                     break;
                     
                 case 'admissao':
-                    doc.admission_date = document.getElementById('admissionDate').value;
-                    doc.address = document.getElementById('address').value;
-                    doc.ministries = document.getElementById('ministries').value;
+                    doc.admission_date = document.getElementById('admissionDate').value || null;
+                    doc.address = document.getElementById('address').value || null;
+                    doc.ministries = document.getElementById('ministries').value || null;
                     break;
             }
         }
@@ -2800,6 +2798,16 @@
 
         // Cancel Form Button
         document.getElementById('cancelFormBtn').addEventListener('click', function() {
+            // Reset form state
+            uploadedFiles = [];
+            isEditMode = false;
+            selectedDocument = null;
+            isSubmitting = false;
+            
+            // Reset form
+            document.getElementById('personForm').reset();
+            document.getElementById('fileList').innerHTML = '';
+            
             personFormContainer.style.display = 'none';
             searchResultsFormSection.style.display = 'none';
             documentsListPage.style.display = 'block';
@@ -3043,7 +3051,7 @@
         document.getElementById('searchResultsTable').addEventListener('click', handleSearchViewBtn);
         document.getElementById('searchResultsFormTable').addEventListener('click', handleSearchViewBtn);
 
-        // File Upload Enhanced Functionality
+        // File Upload Enhanced Functionality - CORRIGIDO
         document.getElementById('fileUpload').addEventListener('change', function(e) {
             const fileList = document.getElementById('fileList');
             
@@ -3075,6 +3083,8 @@
                     `;
                     fileList.appendChild(fileItem);
                 }
+                
+                console.log('Files added to uploadedFiles:', uploadedFiles);
             }
             
             // Reset file input
@@ -3110,9 +3120,15 @@
             
             const files = e.dataTransfer.files;
             if (files.length > 0) {
-                // Trigger the same logic as file input change
+                // Simulate file input change event
                 const fileInput = document.getElementById('fileUpload');
-                fileInput.files = files;
+                const dt = new DataTransfer();
+                
+                for (let i = 0; i < files.length; i++) {
+                    dt.items.add(files[i]);
+                }
+                
+                fileInput.files = dt.files;
                 fileInput.dispatchEvent(new Event('change'));
             }
         });
