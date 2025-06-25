@@ -2006,6 +2006,190 @@
             }
         }
 
+        // Função para visualizar arquivo salvo
+        async function viewSavedFile(fileId) {
+            try {
+                showLoading();
+                
+                // Buscar informações do arquivo no banco de dados
+                const { data: fileData, error } = await supabase
+                    .from('files')
+                    .select('*')
+                    .eq('id', fileId)
+                    .single();
+                
+                hideLoading();
+                
+                if (error) {
+                    console.error('Error loading file data:', error);
+                    showError('Erro ao carregar dados do arquivo');
+                    return;
+                }
+                
+                if (!fileData.file_url || !fileData.upload_success) {
+                    showError('Arquivo não está disponível para visualização');
+                    return;
+                }
+                
+                // Preparar arquivo para visualização
+                const fileForView = {
+                    id: fileData.id,
+                    name: fileData.name,
+                    type: fileData.file_type,
+                    size: fileData.file_size,
+                    url: fileData.file_url
+                };
+                
+                viewFile(fileForView);
+                
+            } catch (error) {
+                hideLoading();
+                console.error('Error viewing saved file:', error);
+                showError('Erro ao visualizar arquivo');
+            }
+        }
+
+        // Função para baixar arquivo salvo
+        async function downloadSavedFile(fileId) {
+            try {
+                showLoading();
+                
+                // Buscar informações do arquivo no banco de dados
+                const { data: fileData, error } = await supabase
+                    .from('files')
+                    .select('*')
+                    .eq('id', fileId)
+                    .single();
+                
+                hideLoading();
+                
+                if (error) {
+                    console.error('Error loading file data:', error);
+                    showError('Erro ao carregar dados do arquivo');
+                    return;
+                }
+                
+                if (!fileData.file_url || !fileData.upload_success) {
+                    showError('Arquivo não está disponível para download');
+                    return;
+                }
+                
+                // Fazer download do arquivo
+                const link = document.createElement('a');
+                link.href = fileData.file_url;
+                link.download = fileData.name;
+                link.target = '_blank';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showSuccess('Download iniciado com sucesso!');
+                
+            } catch (error) {
+                hideLoading();
+                console.error('Error downloading saved file:', error);
+                showError('Erro ao baixar arquivo');
+            }
+        }
+
+        // Função para remover arquivo salvo
+        async function removeSavedFile(fileId) {
+            try {
+                const confirmRemove = confirm('Tem certeza que deseja remover este arquivo? Esta ação não pode ser desfeita.');
+                
+                if (!confirmRemove) return;
+                
+                showLoading();
+                
+                // Buscar informações do arquivo primeiro
+                const { data: fileData, error: fileError } = await supabase
+                    .from('files')
+                    .select('*')
+                    .eq('id', fileId)
+                    .single();
+                
+                if (fileError) {
+                    console.error('Error loading file data:', fileError);
+                    hideLoading();
+                    showError('Erro ao carregar dados do arquivo');
+                    return;
+                }
+                
+                // Tentar remover do storage (se existir)
+                if (fileData.file_path && fileData.upload_success) {
+                    try {
+                        const { error: storageError } = await supabase.storage
+                            .from('document-files')
+                            .remove([fileData.file_path]);
+                        
+                        if (storageError) {
+                            console.warn('Error removing file from storage:', storageError);
+                        } else {
+                            console.log('File removed from storage successfully');
+                        }
+                    } catch (storageError) {
+                        console.warn('Storage removal error:', storageError);
+                    }
+                }
+                
+                // Remover registro do banco de dados
+                const { error: dbError } = await supabase
+                    .from('files')
+                    .delete()
+                    .eq('id', fileId);
+                
+                hideLoading();
+                
+                if (dbError) {
+                    console.error('Error removing file from database:', dbError);
+                    showError('Erro ao remover arquivo do banco de dados');
+                    return;
+                }
+                
+                showSuccess('Arquivo removido com sucesso!');
+                
+                // Recarregar o documento para atualizar a lista de arquivos
+                if (selectedDocument) {
+                    const { data: doc, error } = await supabase
+                        .from('documents')
+                        .select(`
+                            *,
+                            document_types(name),
+                            files(*)
+                        `)
+                        .eq('id', selectedDocument)
+                        .single();
+                    
+                    if (!error && doc) {
+                        // Atualizar lista de arquivos na tela
+                        const fileList = document.getElementById('fileList');
+                        fileList.innerHTML = '';
+                        
+                        if (doc.files && doc.files.length > 0) {
+                            doc.files.forEach(file => {
+                                const fileItem = document.createElement('div');
+                                fileItem.className = 'file-item';
+                                fileItem.innerHTML = `
+                                    <span class="file-name">${file.name} (${file.file_size ? Math.round(file.file_size / 1024) + ' KB' : 'N/A'})</span>
+                                    <div class="file-actions">
+                                        <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
+                                        <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
+                                        ${isEditMode ? `<button type="button" class="btn btn-sm btn-danger remove-file-btn" data-file-id="${file.id}">Remover</button>` : ''}
+                                    </div>
+                                `;
+                                fileList.appendChild(fileItem);
+                            });
+                        }
+                    }
+                }
+                
+            } catch (error) {
+                hideLoading();
+                console.error('Error removing saved file:', error);
+                showError('Erro ao remover arquivo');
+            }
+        }
+
         async function deleteDocument(documentId) {
             try {
                 showLoading();
@@ -2842,20 +3026,17 @@
             }
         });
 
-        // File actions in file list
-        document.getElementById('fileList').addEventListener('click', function(e) {
+        // File actions in file list - ATUALIZADO COM AS NOVAS FUNÇÕES
+        document.getElementById('fileList').addEventListener('click', async function(e) {
             if (e.target.classList.contains('view-file-btn')) {
                 const fileId = parseInt(e.target.getAttribute('data-file-id'));
-                // TODO: Implement file viewing with Supabase Storage
-                console.log('View file:', fileId);
+                await viewSavedFile(fileId);
             } else if (e.target.classList.contains('download-file-btn')) {
                 const fileId = parseInt(e.target.getAttribute('data-file-id'));
-                // TODO: Implement file download with Supabase Storage
-                console.log('Download file:', fileId);
+                await downloadSavedFile(fileId);
             } else if (e.target.classList.contains('remove-file-btn')) {
                 const fileId = parseInt(e.target.getAttribute('data-file-id'));
-                // TODO: Implement file removal with Supabase Storage
-                console.log('Remove file:', fileId);
+                await removeSavedFile(fileId);
             } else if (e.target.classList.contains('remove-file')) {
                 const index = parseInt(e.target.getAttribute('data-index'));
                 uploadedFiles.splice(index, 1);
