@@ -42,7 +42,7 @@
 
         body {
             background: linear-gradient(rgba(139, 0, 0, 0.1), rgba(139, 0, 0, 0.05)), 
-                        url("images/igreja.jpg") center/cover;
+                        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-opacity='0.03'%3E%3Cpath d='M50 30L70 70H30z' fill='%238B0000'/%3E%3C/g%3E%3C/svg%3E") center/cover;
             background-attachment: fixed;
             color: var(--dark);
             min-height: 100vh;
@@ -151,6 +151,7 @@
             object-fit: cover;
             box-shadow: 0 10px 30px rgba(139, 0, 0, 0.4);
             border: 4px solid var(--gold);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
         }
 
         .login-header h1 {
@@ -281,6 +282,12 @@
             border-left-color: #ef4444;
         }
 
+        .alert-success {
+            background-color: #dcfce7;
+            color: #166534;
+            border-left-color: #22c55e;
+        }
+
         /* DASHBOARD */
         .dashboard {
             display: none;
@@ -318,6 +325,7 @@
             object-fit: cover;
             box-shadow: 0 6px 18px rgba(0,0,0,0.4);
             border: 3px solid var(--gold);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
         }
 
         .logo h1 {
@@ -368,19 +376,6 @@
             transform: translateY(-1px);
         }
 
-        .search-bar::after {
-            content: '';
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            background-image: url("images/igreja1.jpg");
-            background-size: contain;
-            opacity: 0.7;
-        }
-
         .search-bar input::placeholder {
             color: rgba(255, 255, 255, 0.8);
             font-weight: 500;
@@ -406,6 +401,7 @@
             object-fit: cover;
             box-shadow: 0 6px 18px rgba(255, 215, 0, 0.4);
             border: 2px solid var(--gold);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
         }
 
         .user-menu .user-name {
@@ -512,6 +508,7 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.25);
             transition: transform 0.3s ease;
             border: 2px solid rgba(139, 0, 0, 0.1);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
         }
 
         .folder-card:hover .folder-icon {
@@ -949,6 +946,25 @@
             flex: 1;
         }
 
+        /* Success message */
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            z-index: 9999;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .header-content {
@@ -1019,7 +1035,7 @@
     <div class="login-container" id="loginPage">
         <div class="login-card">
             <div class="login-header">
-                <img src="images/igreja1.jpg" alt="Logo Paróquia" class="church-logo">
+                <div class="church-logo"></div>
                 <h1>Gerenciamento Paroquial</h1>
                 <p>Sistema Profissional de Gestão</p>
             </div>
@@ -1046,7 +1062,7 @@
             <div class="container">
                 <div class="header-content">
                     <div class="logo">
-                        <img src="images/igreja1.jpg" alt="Logo Paróquia" class="church-logo">
+                        <div class="church-logo"></div>
                         <h1>Gerenciamento Paroquial</h1>
                     </div>
                     <div class="search-bar">
@@ -1054,7 +1070,7 @@
                         <button type="button" class="search-btn" id="searchBtn">🔍</button>
                     </div>
                     <div class="user-menu">
-                        <img src="images/igreja1.jpg" alt="Avatar" class="avatar" id="userAvatar">
+                        <div class="avatar" id="userAvatar"></div>
                         <span class="user-name" id="userName">Administrador</span>
                         <button class="logout-btn" id="logoutBtn">Sair</button>
                     </div>
@@ -1122,7 +1138,7 @@
             <div class="container">
                 <div class="header-content">
                     <div class="logo">
-                        <img src="images/igreja1.jpg" alt="Logo Paróquia" class="church-logo">
+                        <div class="church-logo"></div>
                         <h1>Gerenciamento Paroquial</h1>
                     </div>
                     <div class="search-bar">
@@ -1130,7 +1146,7 @@
                         <button type="button" class="search-btn" id="searchBtn2">🔍</button>
                     </div>
                     <div class="user-menu">
-                        <img src="images/igreja1.jpg" alt="Avatar" class="avatar" id="userAvatar2">
+                        <div class="avatar" id="userAvatar2"></div>
                         <span class="user-name" id="userName2">Administrador</span>
                         <button class="logout-btn" id="logoutBtn2">Sair</button>
                     </div>
@@ -1166,7 +1182,7 @@
             <div class="container">
                 <div class="header-content">
                     <div class="logo">
-                        <img src="images/igreja1.jpg" alt="Logo Paróquia" class="church-logo">
+                        <div class="church-logo"></div>
                         <h1>Gerenciamento Paroquial</h1>
                     </div>
                     <div class="search-bar">
@@ -1174,7 +1190,7 @@
                         <button type="button" class="search-btn" id="searchBtn3">🔍</button>
                     </div>
                     <div class="user-menu">
-                        <img src="images/igreja1.jpg" alt="Avatar" class="avatar" id="userAvatar3">
+                        <div class="avatar" id="userAvatar3"></div>
                         <span class="user-name" id="userName3">Administrador</span>
                         <button class="logout-btn" id="logoutBtn3">Sair</button>
                     </div>
@@ -1539,7 +1555,7 @@
 
                 <div class="form-actions">
                     <button type="button" class="btn btn-danger" id="cancelFormBtn">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Salvar Registro</button>
+                    <button type="submit" class="btn btn-primary" id="submitFormBtn">Salvar Registro</button>
                 </div>
             </form>
         </div>
@@ -1677,7 +1693,7 @@
         let currentPage = 'dashboard';
         let uploadedFiles = [];
         let selectedFileForView = null;
-        let isSubmitting = false; // Flag para prevenir múltiplas submissões
+        let isSubmitting = false;
 
         // Cache for database data
         let yearsCache = [];
@@ -1710,6 +1726,21 @@
             setTimeout(() => {
                 errorDiv.style.display = 'none';
             }, 5000);
+        }
+
+        function showSuccess(message) {
+            // Create success message element
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.textContent = message;
+            document.body.appendChild(successDiv);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                if (successDiv.parentNode) {
+                    successDiv.parentNode.removeChild(successDiv);
+                }
+            }, 3000);
         }
 
         // Database functions
@@ -1842,6 +1873,7 @@
                 
                 if (isEditMode && selectedDocument) {
                     // Update existing document
+                    console.log('Updating document with ID:', selectedDocument);
                     const { data, error } = await supabase
                         .from('documents')
                         .update(documentData)
@@ -1851,8 +1883,10 @@
                     
                     if (error) throw error;
                     savedDoc = data;
+                    console.log('Document updated successfully:', savedDoc);
                 } else {
                     // Create new document
+                    console.log('Creating new document:', documentData);
                     const { data, error } = await supabase
                         .from('documents')
                         .insert([documentData])
@@ -1861,10 +1895,12 @@
                     
                     if (error) throw error;
                     savedDoc = data;
+                    console.log('New document created successfully:', savedDoc);
                 }
                 
                 // Save uploaded files if any
                 if (uploadedFiles.length > 0) {
+                    console.log('Saving files for document ID:', savedDoc.id);
                     await saveDocumentFiles(savedDoc.id, uploadedFiles);
                 }
                 
@@ -1881,6 +1917,7 @@
         async function saveDocumentFiles(documentId, files) {
             try {
                 const savedFiles = [];
+                console.log(`Starting to save ${files.length} files for document ${documentId}`);
                 
                 for (const fileData of files) {
                     try {
@@ -1895,6 +1932,7 @@
                         
                         // Try to upload file to Supabase Storage
                         try {
+                            console.log('Uploading file to storage:', fileName);
                             const { data: uploadData, error: uploadError } = await supabase.storage
                                 .from('document-files')
                                 .upload(fileName, fileData.file, {
@@ -1910,9 +1948,9 @@
                                 
                                 fileUrl = publicUrl;
                                 uploadSuccess = true;
-                                console.log('File uploaded successfully:', fileName);
+                                console.log('File uploaded to storage successfully:', fileName);
                             } else {
-                                console.warn('File upload failed:', uploadError);
+                                console.warn('File upload to storage failed:', uploadError);
                             }
                         } catch (storageError) {
                             console.warn('Storage upload error:', storageError);
@@ -1930,6 +1968,7 @@
                             upload_success: uploadSuccess
                         };
                         
+                        console.log('Saving file record to database:', fileRecord);
                         const { data: dbData, error: dbError } = await supabase
                             .from('files')
                             .insert([fileRecord])
@@ -1941,7 +1980,7 @@
                             throw dbError;
                         } else {
                             savedFiles.push(dbData);
-                            console.log('File reference saved to database:', dbData);
+                            console.log('File reference saved to database successfully:', dbData);
                         }
                         
                     } catch (fileError) {
@@ -2086,7 +2125,7 @@
                 card.className = 'folder-card';
                 card.setAttribute('data-year', year);
                 card.innerHTML = `
-                    <img src="images/ano.png" alt="Ano ${year}" class="folder-icon">
+                    <div class="folder-icon"></div>
                     <h3>${year}</h3>
                     <p>Registros do ano</p>
                 `;
@@ -2107,7 +2146,7 @@
                 card.setAttribute('data-type', docType.slug);
                 card.setAttribute('data-type-id', docType.id);
                 card.innerHTML = `
-                    <img src="${docType.icon || 'images/outros.png'}" alt="${docType.name}" class="folder-icon">
+                    <div class="folder-icon"></div>
                     <h3>${docType.name}</h3>
                     <p>${docType.description}</p>
                 `;
@@ -2187,7 +2226,7 @@
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value.trim();
             
-            console.log('Tentando login com:', { email, password }); // Debug
+            console.log('Tentando login com:', { email, password });
             
             try {
                 showLoading();
@@ -2197,7 +2236,7 @@
                     .from('users')
                     .select('*');
                 
-                console.log('Usuários encontrados:', allUsers); // Debug
+                console.log('Usuários encontrados:', allUsers);
                 
                 if (checkError) {
                     console.error('Erro ao verificar usuários:', checkError);
@@ -2220,7 +2259,7 @@
                     .eq('password', password)
                     .single();
                 
-                console.log('Resultado do login:', { data, error }); // Debug
+                console.log('Resultado do login:', { data, error });
                 
                 hideLoading();
                 
@@ -2440,11 +2479,15 @@
 
         // Add Person Function
         function addNewPerson() {
+            console.log('Adding new person');
+            
+            // Reset all states
             isEditMode = false;
             selectedDocument = null;
             uploadedFiles = [];
+            isSubmitting = false;
             
-            // Reset form
+            // Reset form completely
             document.getElementById('personForm').reset();
             document.getElementById('fileList').innerHTML = '';
             
@@ -2468,9 +2511,17 @@
                 input.readOnly = false;
             });
             
+            // Re-enable submit button
+            const submitBtn = document.getElementById('submitFormBtn');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Salvar Registro';
+            
             // Show the person form
             documentsListPage.style.display = 'none';
+            searchResultsFormSection.style.display = 'none';
             personFormContainer.style.display = 'block';
+            
+            console.log('New person form initialized');
         }
 
         // Add Person Button (alternative)
@@ -2486,7 +2537,7 @@
                 return;
             }
             
-            const submitBtn = this.querySelector('button[type="submit"]');
+            const submitBtn = document.getElementById('submitFormBtn');
             const fullName = document.getElementById('fullName').value.trim();
             const birthDate = document.getElementById('birthDate').value;
             
@@ -2503,24 +2554,36 @@
                 submitBtn.disabled = true;
                 submitBtn.textContent = 'Salvando...';
                 
+                console.log('Starting form submission...');
+                console.log('Is edit mode:', isEditMode);
+                console.log('Selected document ID:', selectedDocument);
+                
                 const documentData = {
                     year: parseInt(selectedYear),
                     type_id: selectedDocTypeId,
                     name: fullName,
                     birth_date: birthDate,
-                    registration_date: new Date().toISOString().split('T')[0],
                     observations: document.getElementById('observations').value || null
                 };
+                
+                // Só adicionar registration_date se for um novo documento
+                if (!isEditMode || !selectedDocument) {
+                    documentData.registration_date = new Date().toISOString().split('T')[0];
+                }
                 
                 // Add specific fields based on document type
                 updateDocumentSpecificFields(documentData);
                 
-                console.log('Saving document with data:', documentData);
-                console.log('Uploaded files:', uploadedFiles);
+                console.log('Document data to save:', documentData);
+                console.log('Uploaded files count:', uploadedFiles.length);
                 
                 const savedDoc = await saveDocument(documentData);
                 
                 console.log('Document saved successfully:', savedDoc);
+                
+                // Show success message
+                const action = isEditMode ? 'atualizado' : 'criado';
+                showSuccess(`Documento ${action} com sucesso!`);
                 
                 // Reset form state apenas após sucesso
                 uploadedFiles = [];
@@ -2532,13 +2595,14 @@
                 
                 // Return to documents list
                 personFormContainer.style.display = 'none';
+                searchResultsFormSection.style.display = 'none';
                 documentsListPage.style.display = 'block';
                 
                 // Reset form
                 document.getElementById('personForm').reset();
                 document.getElementById('fileList').innerHTML = '';
                 
-                console.log('Form reset and returned to documents list');
+                console.log('Form submitted and reset successfully');
                 
             } catch (error) {
                 console.error('Error saving document:', error);
@@ -2699,7 +2763,14 @@
                     
                     if (error) throw error;
                     
+                    // Reset all form states
+                    uploadedFiles = [];
+                    isSubmitting = false;
+                    
                     selectedDocument = docId;
+                    isEditMode = e.target.classList.contains('edit-btn');
+                    
+                    console.log('Loading document for', isEditMode ? 'edit' : 'view', ':', doc);
                     
                     // Fill form with document data
                     document.getElementById('fullName').value = doc.name;
@@ -2722,7 +2793,7 @@
                                 <div class="file-actions">
                                     <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
                                     <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
-                                    <button type="button" class="btn btn-sm btn-danger remove-file-btn" data-file-id="${file.id}">Remover</button>
+                                    ${isEditMode ? `<button type="button" class="btn btn-sm btn-danger remove-file-btn" data-file-id="${file.id}">Remover</button>` : ''}
                                 </div>
                             `;
                             fileList.appendChild(fileItem);
@@ -2730,7 +2801,6 @@
                     }
                     
                     // Set up form mode
-                    isEditMode = e.target.classList.contains('edit-btn');
                     document.getElementById('formTitle').textContent = isEditMode ? 'Editar Registro' : 'Visualizar Registro';
                     document.getElementById('formHeaderTitle').textContent = `${isEditMode ? 'Editar' : 'Visualizar'} Registro de ${doc.document_types.name}`;
                     
@@ -2740,13 +2810,22 @@
                         input.readOnly = !isEditMode;
                     });
                     
+                    // Control submit button
+                    const submitBtn = document.getElementById('submitFormBtn');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = isEditMode ? 'Salvar Alterações' : 'Salvar Registro';
+                    submitBtn.style.display = isEditMode ? 'inline-block' : 'none';
+                    
                     // Set up breadcrumb navigation
                     document.getElementById('backToDocTypes2').textContent = doc.year;
                     document.getElementById('backToDocList').textContent = doc.document_types.name;
                     
                     // Show the person form
                     documentsListPage.style.display = 'none';
+                    searchResultsFormSection.style.display = 'none';
                     personFormContainer.style.display = 'block';
+                    
+                    console.log('Document loaded successfully for', isEditMode ? 'editing' : 'viewing');
                     
                 } catch (error) {
                     hideLoading();
@@ -2782,11 +2861,7 @@
                 uploadedFiles.splice(index, 1);
                 
                 // Refresh file list display
-                const fileList = document.getElementById('fileList');
-                const fileItem = e.target.closest('.file-item');
-                if (fileItem) {
-                    fileItem.remove();
-                }
+                refreshUploadedFilesList();
             } else if (e.target.classList.contains('view-uploaded-file')) {
                 const index = parseInt(e.target.getAttribute('data-index'));
                 const file = uploadedFiles[index];
@@ -2796,8 +2871,34 @@
             }
         });
 
+        // Function to refresh uploaded files list display
+        function refreshUploadedFilesList() {
+            const fileList = document.getElementById('fileList');
+            const existingFiles = fileList.querySelectorAll('.file-item[data-uploaded="true"]');
+            
+            // Remove existing uploaded files display
+            existingFiles.forEach(item => item.remove());
+            
+            // Re-add current uploaded files
+            uploadedFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.setAttribute('data-uploaded', 'true');
+                fileItem.innerHTML = `
+                    <span class="file-name">${file.name} (${file.size})</span>
+                    <div class="file-actions">
+                        <button type="button" class="btn btn-sm btn-info view-uploaded-file" data-index="${index}">Visualizar</button>
+                        <button type="button" class="btn btn-sm btn-danger remove-file" data-index="${index}">Remover</button>
+                    </div>
+                `;
+                fileList.appendChild(fileItem);
+            });
+        }
+
         // Cancel Form Button
         document.getElementById('cancelFormBtn').addEventListener('click', function() {
+            console.log('Canceling form');
+            
             // Reset form state
             uploadedFiles = [];
             isEditMode = false;
@@ -2808,9 +2909,16 @@
             document.getElementById('personForm').reset();
             document.getElementById('fileList').innerHTML = '';
             
+            // Re-enable submit button
+            const submitBtn = document.getElementById('submitFormBtn');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Salvar Registro';
+            
             personFormContainer.style.display = 'none';
             searchResultsFormSection.style.display = 'none';
             documentsListPage.style.display = 'block';
+            
+            console.log('Form canceled and reset');
         });
 
         // Breadcrumb Navigation
@@ -2979,7 +3087,12 @@
                 
                 if (error) throw error;
                 
+                // Reset form states
+                uploadedFiles = [];
+                isSubmitting = false;
+                
                 selectedDocument = docId;
+                isEditMode = false; // Always open in view mode from search
                 
                 // Fill form with document data
                 document.getElementById('fullName').value = doc.name;
@@ -3002,7 +3115,6 @@
                             <div class="file-actions">
                                 <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
                                 <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
-                                <button type="button" class="btn btn-sm btn-danger remove-file-btn" data-file-id="${file.id}">Remover</button>
                             </div>
                         `;
                         fileList.appendChild(fileItem);
@@ -3010,7 +3122,6 @@
                 }
                 
                 // Set up form mode
-                isEditMode = false;
                 document.getElementById('formTitle').textContent = 'Visualizar Registro';
                 document.getElementById('formHeaderTitle').textContent = `Visualizar Registro de ${doc.document_types.name}`;
                 
@@ -3019,6 +3130,10 @@
                 formInputs.forEach(input => {
                     input.readOnly = true;
                 });
+                
+                // Hide submit button in view mode
+                const submitBtn = document.getElementById('submitFormBtn');
+                submitBtn.style.display = 'none';
                 
                 // Set up breadcrumb navigation
                 document.getElementById('backToDocTypes2').textContent = doc.year;
@@ -3053,7 +3168,7 @@
 
         // File Upload Enhanced Functionality - CORRIGIDO
         document.getElementById('fileUpload').addEventListener('change', function(e) {
-            const fileList = document.getElementById('fileList');
+            console.log('File upload triggered, files selected:', this.files.length);
             
             if (this.files.length > 0) {
                 for (let i = 0; i < this.files.length; i++) {
@@ -3071,20 +3186,13 @@
                     };
                     
                     uploadedFiles.push(uploadedFile);
-                    
-                    const fileItem = document.createElement('div');
-                    fileItem.className = 'file-item';
-                    fileItem.innerHTML = `
-                        <span class="file-name">${file.name} (${size})</span>
-                        <div class="file-actions">
-                            <button type="button" class="btn btn-sm btn-info view-uploaded-file" data-index="${uploadedFiles.length - 1}">Visualizar</button>
-                            <button type="button" class="btn btn-sm btn-danger remove-file" data-index="${uploadedFiles.length - 1}">Remover</button>
-                        </div>
-                    `;
-                    fileList.appendChild(fileItem);
+                    console.log('File added to upload queue:', uploadedFile.name);
                 }
                 
-                console.log('Files added to uploadedFiles:', uploadedFiles);
+                // Refresh the file list display
+                refreshUploadedFilesList();
+                
+                console.log('Total files in upload queue:', uploadedFiles.length);
             }
             
             // Reset file input
@@ -3171,6 +3279,7 @@
                     await initializeYearsGrid();
                     document.getElementById('addYearModal').style.display = 'none';
                     document.getElementById('newYear').value = '';
+                    showSuccess('Ano adicionado com sucesso!');
                 } catch (error) {
                     console.error('Error adding year:', error);
                 }
@@ -3199,6 +3308,7 @@
                     document.getElementById('addDocTypeModal').style.display = 'none';
                     document.getElementById('newDocType').value = '';
                     document.getElementById('docTypeDescription').value = '';
+                    showSuccess('Tipo de documento adicionado com sucesso!');
                 } catch (error) {
                     console.error('Error adding document type:', error);
                 }
@@ -3215,6 +3325,7 @@
                 if (success) {
                     await loadDocumentsTable(selectedYear, selectedDocTypeId);
                     document.getElementById('deleteConfirmModal').style.display = 'none';
+                    showSuccess('Documento excluído com sucesso!');
                 }
             }
         });
