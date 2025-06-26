@@ -42,7 +42,7 @@
 
         body {
             background: linear-gradient(rgba(139, 0, 0, 0.1), rgba(139, 0, 0, 0.05)), 
-                        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-opacity='0.03'%3E%3Cpath d='M50 30L70 70H30z' fill='%238B0000'/%3E%3C/g%3E%3C/svg%3E") center/cover;
+                        url("images/igreja.jpg") center/cover;
             background-attachment: fixed;
             color: var(--dark);
             min-height: 100vh;
@@ -144,8 +144,8 @@
         }
 
         .login-header .church-logo {
-            width: 140px;
-            height: 140px;
+            width: 120px;
+            height: 120px;
             margin: 0 auto 25px;
             border-radius: 50%;
             object-fit: cover;
@@ -155,6 +155,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+        }
+
+        .login-header .church-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .login-header h1 {
@@ -321,8 +329,8 @@
         }
 
         .logo .church-logo {
-            width: 65px;
-            height: 65px;
+            width: 60px;
+            height: 60px;
             margin-right: 18px;
             border-radius: 50%;
             object-fit: cover;
@@ -332,6 +340,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+        }
+
+        .logo .church-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .logo h1 {
@@ -375,11 +391,20 @@
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-left: none;
             backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .search-btn:hover {
             background-color: rgba(255, 255, 255, 0.35);
             transform: translateY(-1px);
+        }
+
+        .search-btn img {
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) invert(1);
         }
 
         .search-bar input::placeholder {
@@ -400,8 +425,8 @@
         }
 
         .user-menu .avatar {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             margin-right: 15px;
             object-fit: cover;
@@ -411,6 +436,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+        }
+
+        .user-menu .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .user-menu .user-name {
@@ -509,8 +542,8 @@
         }
 
         .folder-icon {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             margin: 0 auto 25px;
             border-radius: 15px;
             display: flex;
@@ -525,10 +558,10 @@
         }
 
         .folder-icon img {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
-            filter: brightness(0) invert(1);
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
         }
 
         .folder-card:hover .folder-icon {
@@ -1190,8 +1223,13 @@
             }
 
             .folder-icon {
-                width: 60px;
-                height: 60px;
+                width: 70px;
+                height: 70px;
+            }
+
+            .folder-icon img {
+                width: 50px;
+                height: 50px;
             }
 
             .welcome-section {
@@ -1229,6 +1267,21 @@
             .file-view-iframe {
                 height: 50vh;
             }
+
+            .login-header .church-logo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .logo .church-logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .user-menu .avatar {
+                width: 40px;
+                height: 40px;
+            }
         }
     </style>
 </head>
@@ -1243,7 +1296,7 @@
         <div class="login-card">
             <div class="login-header">
                 <div class="church-logo">
-                    <img src="https://img.icons8.com/fluency/96/church.png" alt="Igreja" />
+                    <img src="images/igreja1.jpg" alt="Igreja" />
                 </div>
                 <h1>Gerenciamento Paroquial</h1>
                 <p>Sistema Profissional de Gestão</p>
@@ -1272,19 +1325,19 @@
                 <div class="header-content">
                     <div class="logo">
                         <div class="church-logo">
-                            <img src="https://img.icons8.com/fluency/96/church.png" alt="Igreja" />
+                            <img src="images/igreja1.jpg" alt="Igreja" />
                         </div>
                         <h1>Gerenciamento Paroquial</h1>
                     </div>
                     <div class="search-bar">
                         <input type="text" id="globalSearch" placeholder="Buscar por nome ou data de nascimento...">
                         <button type="button" class="search-btn" id="searchBtn">
-                            <img src="https://img.icons8.com/fluency/24/search.png" alt="Buscar" style="filter: brightness(0) invert(1);" />
+                            <img src="https://img.icons8.com/fluency/24/search.png" alt="Buscar" />
                         </button>
                     </div>
                     <div class="user-menu">
                         <div class="avatar" id="userAvatar">
-                            <img src="https://img.icons8.com/fluency/48/user.png" alt="Usuário" />
+                            <img src="images/igreja1.jpg" alt="Usuário" />
                         </div>
                         <span class="user-name" id="userName">Administrador</span>
                         <button class="logout-btn" id="logoutBtn">Sair</button>
@@ -1354,19 +1407,19 @@
                 <div class="header-content">
                     <div class="logo">
                         <div class="church-logo">
-                            <img src="https://img.icons8.com/fluency/96/church.png" alt="Igreja" />
+                            <img src="images/igreja1.jpg" alt="Igreja" />
                         </div>
                         <h1>Gerenciamento Paroquial</h1>
                     </div>
                     <div class="search-bar">
                         <input type="text" id="globalSearch2" placeholder="Buscar por nome ou data de nascimento...">
                         <button type="button" class="search-btn" id="searchBtn2">
-                            <img src="https://img.icons8.com/fluency/24/search.png" alt="Buscar" style="filter: brightness(0) invert(1);" />
+                            <img src="https://img.icons8.com/fluency/24/search.png" alt="Buscar" />
                         </button>
                     </div>
                     <div class="user-menu">
                         <div class="avatar" id="userAvatar2">
-                            <img src="https://img.icons8.com/fluency/48/user.png" alt="Usuário" />
+                            <img src="images/igreja1.jpg" alt="Usuário" />
                         </div>
                         <span class="user-name" id="userName2">Administrador</span>
                         <button class="logout-btn" id="logoutBtn2">Sair</button>
@@ -1404,19 +1457,19 @@
                 <div class="header-content">
                     <div class="logo">
                         <div class="church-logo">
-                            <img src="https://img.icons8.com/fluency/96/church.png" alt="Igreja" />
+                            <img src="images/igreja1.jpg" alt="Igreja" />
                         </div>
                         <h1>Gerenciamento Paroquial</h1>
                     </div>
                     <div class="search-bar">
                         <input type="text" id="globalSearch3" placeholder="Buscar por nome ou data de nascimento...">
                         <button type="button" class="search-btn" id="searchBtn3">
-                            <img src="https://img.icons8.com/fluency/24/search.png" alt="Buscar" style="filter: brightness(0) invert(1);" />
+                            <img src="https://img.icons8.com/fluency/24/search.png" alt="Buscar" />
                         </button>
                     </div>
                     <div class="user-menu">
                         <div class="avatar" id="userAvatar3">
-                            <img src="https://img.icons8.com/fluency/48/user.png" alt="Usuário" />
+                            <img src="images/igreja1.jpg" alt="Usuário" />
                         </div>
                         <span class="user-name" id="userName3">Administrador</span>
                         <button class="logout-btn" id="logoutBtn3">Sair</button>
@@ -1509,38 +1562,33 @@
             </div>
 
             <form id="personForm">
-                <!-- Dados Básicos -->
-                <div class="form-section">
-                    <h3>Dados Básicos da Pessoa</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="fullName">Nome Completo *</label>
-                            <input type="text" id="fullName" name="fullName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="birthDate">Data de Nascimento *</label>
-                            <input type="date" id="birthDate" name="birthDate" required>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Campos específicos para Batismo -->
                 <div class="document-fields active" id="batismoFields">
                     <div class="form-section">
                         <h3>Dados do Batismo</h3>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="baptismDate">Data do Batismo *</label>
+                                <label for="batismoFullName">Nome Completo *</label>
+                                <input type="text" id="batismoFullName" name="batismoFullName">
+                            </div>
+                            <div class="form-group">
+                                <label for="batismoBirthDate">Data de Nascimento *</label>
+                                <input type="date" id="batismoBirthDate" name="batismoBirthDate">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="baptismDate">Data do Batismo</label>
                                 <input type="date" id="baptismDate" name="baptismDate">
                             </div>
                             <div class="form-group">
-                                <label for="baptismPlace">Local do Batismo *</label>
+                                <label for="baptismPlace">Local do Batismo</label>
                                 <input type="text" id="baptismPlace" name="baptismPlace" placeholder="Ex: Paróquia São Cristóvão">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="celebrant">Nome do Celebrante *</label>
+                                <label for="celebrant">Nome do Celebrante</label>
                                 <input type="text" id="celebrant" name="celebrant" placeholder="Ex: Pe. João Paulo">
                             </div>
                         </div>
@@ -1581,17 +1629,27 @@
                         <h3>Dados da Crisma</h3>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="confirmationDate">Data da Crisma *</label>
+                                <label for="crismaFullName">Nome Completo *</label>
+                                <input type="text" id="crismaFullName" name="crismaFullName">
+                            </div>
+                            <div class="form-group">
+                                <label for="crismaBirthDate">Data de Nascimento *</label>
+                                <input type="date" id="crismaBirthDate" name="crismaBirthDate">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="confirmationDate">Data da Crisma</label>
                                 <input type="date" id="confirmationDate" name="confirmationDate">
                             </div>
                             <div class="form-group">
-                                <label for="confirmationPlace">Local da Crisma *</label>
+                                <label for="confirmationPlace">Local da Crisma</label>
                                 <input type="text" id="confirmationPlace" name="confirmationPlace">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="bishop">Nome do Bispo/Celebrante *</label>
+                                <label for="bishop">Nome do Bispo/Celebrante</label>
                                 <input type="text" id="bishop" name="bishop">
                             </div>
                             <div class="form-group">
@@ -1622,16 +1680,26 @@
                         <h3>Dados da Primeira Comunhão</h3>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="communionDate">Data da Primeira Comunhão *</label>
+                                <label for="comunhaoFullName">Nome Completo *</label>
+                                <input type="text" id="comunhaoFullName" name="comunhaoFullName">
+                            </div>
+                            <div class="form-group">
+                                <label for="comunhaoBirthDate">Data de Nascimento *</label>
+                                <input type="date" id="comunhaoBirthDate" name="comunhaoBirthDate">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="communionDate">Data da Primeira Comunhão</label>
                                 <input type="date" id="communionDate" name="communionDate">
                             </div>
                             <div class="form-group">
-                                <label for="communionPlace">Local da Celebração *</label>
+                                <label for="communionPlace">Local da Celebração</label>
                                 <input type="text" id="communionPlace" name="communionPlace">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="communionPriest">Nome do Sacerdote Responsável *</label>
+                            <label for="communionPriest">Nome do Sacerdote Responsável</label>
                             <input type="text" id="communionPriest" name="communionPriest">
                         </div>
                     </div>
@@ -1643,16 +1711,16 @@
                         <h3>Dados do Casamento</h3>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="marriageDate">Data do Casamento *</label>
+                                <label for="marriageDate">Data do Casamento</label>
                                 <input type="date" id="marriageDate" name="marriageDate">
                             </div>
                             <div class="form-group">
-                                <label for="marriagePlace">Local do Casamento *</label>
+                                <label for="marriagePlace">Local do Casamento</label>
                                 <input type="text" id="marriagePlace" name="marriagePlace">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="marriageCelebrant">Nome do Celebrante *</label>
+                            <label for="marriageCelebrant">Nome do Celebrante</label>
                             <input type="text" id="marriageCelebrant" name="marriageCelebrant">
                         </div>
                     </div>
@@ -1726,11 +1794,21 @@
                         <h3>Dados do Falecimento</h3>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="deathDate">Data do Falecimento *</label>
+                                <label for="obitoFullName">Nome Completo *</label>
+                                <input type="text" id="obitoFullName" name="obitoFullName">
+                            </div>
+                            <div class="form-group">
+                                <label for="obituBirthDate">Data de Nascimento *</label>
+                                <input type="date" id="obituBirthDate" name="obituBirthDate">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="deathDate">Data do Falecimento</label>
                                 <input type="date" id="deathDate" name="deathDate">
                             </div>
                             <div class="form-group">
-                                <label for="burialPlace">Local do Sepultamento *</label>
+                                <label for="burialPlace">Local do Sepultamento</label>
                                 <input type="text" id="burialPlace" name="burialPlace">
                             </div>
                         </div>
@@ -1747,7 +1825,17 @@
                         <h3>Dados de Admissão</h3>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="admissionDate">Data de Ingresso *</label>
+                                <label for="admissaoFullName">Nome Completo *</label>
+                                <input type="text" id="admissaoFullName" name="admissaoFullName">
+                            </div>
+                            <div class="form-group">
+                                <label for="admissaoBirthDate">Data de Nascimento *</label>
+                                <input type="date" id="admissaoBirthDate" name="admissaoBirthDate">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="admissionDate">Data de Ingresso</label>
                                 <input type="date" id="admissionDate" name="admissionDate">
                             </div>
                             <div class="form-group">
@@ -1788,7 +1876,7 @@
         </div>
     </div>
 
-    <!-- Modals -->
+    <!-- Modais -->
     <div class="modal-overlay" id="addYearModal">
         <div class="modal">
             <div class="modal-header">
@@ -1929,13 +2017,13 @@
 
         // Mapa de ícones para tipos de documento
         const documentTypeIcons = {
-            'batismo': 'https://img.icons8.com/fluency/96/church.png',
-            'crisma': 'https://img.icons8.com/fluency/96/christian-cross.png',
-            'comunhao': 'https://img.icons8.com/fluency/96/bread.png',
-            'casamento': 'https://img.icons8.com/fluency/96/wedding-rings.png',
-            'obito': 'https://img.icons8.com/fluency/96/dove.png',
-            'admissao': 'https://img.icons8.com/fluency/96/group.png',
-            'default': 'https://img.icons8.com/fluency/96/document.png'
+            'batismo': 'images/batismo.png',
+            'crisma': 'images/crisma.png',
+            'comunhao': 'images/comunhao.png',
+            'casamento': 'images/casamento.png',
+            'obito': 'images/obito.png',
+            'admissao': 'images/membros.png',
+            'default': 'images/outros.png'
         };
 
         // DOM Elements
@@ -1984,11 +2072,299 @@
             }, 3000);
         }
 
-        // FUNÇÕES CORRIGIDAS DE BANCO DE DADOS
+        // FUNÇÕES DE VALIDAÇÃO E OBTENÇÃO DE DADOS DOS CAMPOS
+        function getFieldValue(fieldId) {
+            const field = document.getElementById(fieldId);
+            return field ? field.value.trim() : '';
+        }
 
-        // Carregar anos
+        function setFieldValue(fieldId, value) {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                field.value = value || '';
+            }
+        }
+
+        function validateDocumentData() {
+            console.log('=== VALIDAÇÃO INICIADA ===');
+            console.log('selectedDocTypeId:', selectedDocTypeId);
+            console.log('selectedDocType:', selectedDocType);
+
+            // Verificar se há tipo de documento selecionado
+            if (!selectedDocTypeId || !selectedDocType) {
+                console.error('Nenhum tipo de documento selecionado');
+                return { valid: false, missing: ['Tipo de documento não selecionado'] };
+            }
+
+            const docType = documentTypesCache.find(t => t.id === selectedDocTypeId);
+            if (!docType) {
+                console.error('Tipo de documento não encontrado no cache');
+                return { valid: false, missing: ['Tipo de documento inválido'] };
+            }
+
+            console.log('Validando para tipo:', docType.slug);
+
+            // Identificar qual seção de campos está ativa
+            const activeFields = document.querySelector('.document-fields.active');
+            if (!activeFields) {
+                console.error('Nenhuma seção de campos ativa');
+                return { valid: false, missing: ['Nenhuma seção de campos ativa'] };
+            }
+
+            const fieldId = activeFields.id;
+            console.log('Seção ativa:', fieldId);
+
+            let requiredFields = [];
+            let fieldsToCheck = [];
+
+            // Definir campos obrigatórios baseado na seção ativa
+            switch (fieldId) {
+                case 'batismoFields':
+                    requiredFields = ['batismoFullName', 'batismoBirthDate'];
+                    fieldsToCheck = ['batismoFullName', 'batismoBirthDate'];
+                    break;
+                case 'crismaFields':
+                    requiredFields = ['crismaFullName', 'crismaBirthDate'];
+                    fieldsToCheck = ['crismaFullName', 'crismaBirthDate'];
+                    break;
+                case 'comunhaoFields':
+                    requiredFields = ['comunhaoFullName', 'comunhaoBirthDate'];
+                    fieldsToCheck = ['comunhaoFullName', 'comunhaoBirthDate'];
+                    break;
+                case 'casamentoFields':
+                    requiredFields = ['groomName', 'brideName'];
+                    fieldsToCheck = ['groomName', 'brideName'];
+                    break;
+                case 'obitoFields':
+                    requiredFields = ['obitoFullName', 'obituBirthDate'];
+                    fieldsToCheck = ['obitoFullName', 'obituBirthDate'];
+                    break;
+                case 'admissaoFields':
+                    requiredFields = ['admissaoFullName', 'admissaoBirthDate'];
+                    fieldsToCheck = ['admissaoFullName', 'admissaoBirthDate'];
+                    break;
+                default:
+                    console.warn('Seção de campos não reconhecida:', fieldId);
+                    return { valid: false, missing: ['Seção de campos não reconhecida'] };
+            }
+
+            console.log('Campos obrigatórios:', requiredFields);
+
+            let missingFields = [];
+            fieldsToCheck.forEach(fieldName => {
+                const value = getFieldValue(fieldName);
+                console.log(`Campo ${fieldName}:`, value);
+                if (!value && requiredFields.includes(fieldName)) {
+                    missingFields.push(fieldName);
+                }
+            });
+
+            console.log('Campos faltando:', missingFields);
+            console.log('=== VALIDAÇÃO FINALIZADA ===');
+
+            return {
+                valid: missingFields.length === 0,
+                missing: missingFields,
+                activeSection: fieldId
+            };
+        }
+
+        function getDocumentData() {
+            console.log('=== PREPARANDO DADOS DO DOCUMENTO ===');
+            
+            if (!selectedDocTypeId) {
+                throw new Error('Nenhum tipo de documento selecionado');
+            }
+
+            const docType = documentTypesCache.find(t => t.id === selectedDocTypeId);
+            if (!docType) {
+                throw new Error('Tipo de documento não encontrado');
+            }
+
+            // Identificar qual seção de campos está ativa
+            const activeFields = document.querySelector('.document-fields.active');
+            if (!activeFields) {
+                throw new Error('Nenhuma seção de campos ativa');
+            }
+
+            const documentData = {
+                year: parseInt(selectedYear),
+                type_id: selectedDocTypeId,
+                observations: getFieldValue('observations') || null
+            };
+
+            console.log('Preparando dados para seção:', activeFields.id);
+
+            const fieldId = activeFields.id;
+            
+            // Definir dados baseado na seção ativa
+            switch (fieldId) {
+                case 'batismoFields':
+                    documentData.name = getFieldValue('batismoFullName');
+                    documentData.birth_date = getFieldValue('batismoBirthDate');
+                    documentData.parent_name_1 = getFieldValue('parentName1') || null;
+                    documentData.parent_name_2 = getFieldValue('parentName2') || null;
+                    documentData.baptism_date = getFieldValue('baptismDate') || null;
+                    documentData.celebrant = getFieldValue('celebrant') || null;
+                    documentData.godparent_1 = getFieldValue('godparent1') || null;
+                    documentData.godparent_2 = getFieldValue('godparent2') || null;
+                    documentData.baptism_place = getFieldValue('baptismPlace') || null;
+                    break;
+
+                case 'crismaFields':
+                    documentData.name = getFieldValue('crismaFullName');
+                    documentData.birth_date = getFieldValue('crismaBirthDate');
+                    documentData.confirmation_date = getFieldValue('confirmationDate') || null;
+                    documentData.confirmation_place = getFieldValue('confirmationPlace') || null;
+                    documentData.bishop = getFieldValue('bishop') || null;
+                    documentData.confirmation_godparent = getFieldValue('confirmationGodparent') || null;
+                    documentData.crisma_parent_name_1 = getFieldValue('crismaParentName1') || null;
+                    documentData.crisma_parent_name_2 = getFieldValue('crismaParentName2') || null;
+                    break;
+
+                case 'comunhaoFields':
+                    documentData.name = getFieldValue('comunhaoFullName');
+                    documentData.birth_date = getFieldValue('comunhaoBirthDate');
+                    documentData.communion_date = getFieldValue('communionDate') || null;
+                    documentData.communion_place = getFieldValue('communionPlace') || null;
+                    documentData.communion_priest = getFieldValue('communionPriest') || null;
+                    break;
+
+                case 'casamentoFields':
+                    const groomName = getFieldValue('groomName');
+                    const brideName = getFieldValue('brideName');
+                    documentData.name = `${groomName} & ${brideName}`;
+                    documentData.birth_date = getFieldValue('groomBirthDate') || getFieldValue('brideBirthDate') || null;
+                    documentData.marriage_date = getFieldValue('marriageDate') || null;
+                    documentData.marriage_place = getFieldValue('marriagePlace') || null;
+                    documentData.marriage_celebrant = getFieldValue('marriageCelebrant') || null;
+                    documentData.groom_name = groomName || null;
+                    documentData.groom_birth_date = getFieldValue('groomBirthDate') || null;
+                    documentData.bride_name = brideName || null;
+                    documentData.bride_birth_date = getFieldValue('brideBirthDate') || null;
+                    documentData.groom_father = getFieldValue('groomFather') || null;
+                    documentData.groom_mother = getFieldValue('groomMother') || null;
+                    documentData.bride_father = getFieldValue('brideFather') || null;
+                    documentData.bride_mother = getFieldValue('brideMother') || null;
+                    documentData.witness_1 = getFieldValue('witness1') || null;
+                    documentData.witness_2 = getFieldValue('witness2') || null;
+                    break;
+
+                case 'obitoFields':
+                    documentData.name = getFieldValue('obitoFullName');
+                    documentData.birth_date = getFieldValue('obituBirthDate');
+                    documentData.death_date = getFieldValue('deathDate') || null;
+                    documentData.burial_place = getFieldValue('burialPlace') || null;
+                    documentData.rites_performed = getFieldValue('ritesPerformed') || null;
+                    break;
+
+                case 'admissaoFields':
+                    documentData.name = getFieldValue('admissaoFullName');
+                    documentData.birth_date = getFieldValue('admissaoBirthDate');
+                    documentData.admission_date = getFieldValue('admissionDate') || null;
+                    documentData.address = getFieldValue('address') || null;
+                    documentData.ministries = getFieldValue('ministries') || null;
+                    break;
+
+                default:
+                    throw new Error('Seção de campos não reconhecida: ' + fieldId);
+            }
+
+            // Validar se os campos principais foram preenchidos
+            if (!documentData.name || !documentData.name.trim()) {
+                throw new Error('Nome é obrigatório');
+            }
+
+            // Adicionar data de registro apenas para novos documentos
+            if (!isEditMode || !selectedDocument) {
+                documentData.registration_date = new Date().toISOString().split('T')[0];
+            }
+
+            console.log('Dados do documento preparados:', documentData);
+            console.log('=== PREPARAÇÃO DE DADOS FINALIZADA ===');
+            return documentData;
+        }
+
+        function populateForm(doc) {
+            const docType = documentTypesCache.find(t => t.id === doc.type_id);
+            if (!docType) return;
+
+            console.log('Preenchendo formulário para tipo:', docType.slug);
+            showDocumentFields(docType.slug);
+
+            // Preencher observações
+            setFieldValue('observations', doc.observations);
+
+            const docSlug = docType.slug.toLowerCase();
+
+            // Identificar tipo baseado no slug ou nos dados disponíveis
+            if (docSlug.includes('batismo') || docSlug === 'batismo' || doc.baptism_date || doc.godparent_1) {
+                setFieldValue('batismoFullName', doc.name);
+                setFieldValue('batismoBirthDate', doc.birth_date);
+                setFieldValue('parentName1', doc.parent_name_1);
+                setFieldValue('parentName2', doc.parent_name_2);
+                setFieldValue('baptismDate', doc.baptism_date);
+                setFieldValue('celebrant', doc.celebrant);
+                setFieldValue('godparent1', doc.godparent_1);
+                setFieldValue('godparent2', doc.godparent_2);
+                setFieldValue('baptismPlace', doc.baptism_place);
+            } else if (docSlug.includes('crisma') || docSlug === 'crisma' || doc.confirmation_date || doc.bishop) {
+                setFieldValue('crismaFullName', doc.name);
+                setFieldValue('crismaBirthDate', doc.birth_date);
+                setFieldValue('confirmationDate', doc.confirmation_date);
+                setFieldValue('confirmationPlace', doc.confirmation_place);
+                setFieldValue('bishop', doc.bishop);
+                setFieldValue('confirmationGodparent', doc.confirmation_godparent);
+                setFieldValue('crismaParentName1', doc.crisma_parent_name_1);
+                setFieldValue('crismaParentName2', doc.crisma_parent_name_2);
+            } else if (docSlug.includes('comunhao') || docSlug === 'comunhao' || docSlug.includes('primeira-comunhao') || doc.communion_date) {
+                setFieldValue('comunhaoFullName', doc.name);
+                setFieldValue('comunhaoBirthDate', doc.birth_date);
+                setFieldValue('communionDate', doc.communion_date);
+                setFieldValue('communionPlace', doc.communion_place);
+                setFieldValue('communionPriest', doc.communion_priest);
+            } else if (docSlug.includes('casamento') || docSlug === 'casamento' || doc.marriage_date || doc.groom_name || doc.bride_name) {
+                setFieldValue('groomName', doc.groom_name);
+                setFieldValue('groomBirthDate', doc.groom_birth_date);
+                setFieldValue('brideName', doc.bride_name);
+                setFieldValue('brideBirthDate', doc.bride_birth_date);
+                setFieldValue('marriageDate', doc.marriage_date);
+                setFieldValue('marriagePlace', doc.marriage_place);
+                setFieldValue('marriageCelebrant', doc.marriage_celebrant);
+                setFieldValue('groomFather', doc.groom_father);
+                setFieldValue('groomMother', doc.groom_mother);
+                setFieldValue('brideFather', doc.bride_father);
+                setFieldValue('brideMother', doc.bride_mother);
+                setFieldValue('witness1', doc.witness_1);
+                setFieldValue('witness2', doc.witness_2);
+            } else if (docSlug.includes('obito') || docSlug === 'obito' || docSlug.includes('óbito') || doc.death_date) {
+                setFieldValue('obitoFullName', doc.name);
+                setFieldValue('obituBirthDate', doc.birth_date);
+                setFieldValue('deathDate', doc.death_date);
+                setFieldValue('burialPlace', doc.burial_place);
+                setFieldValue('ritesPerformed', doc.rites_performed);
+            } else if (docSlug.includes('admissao') || docSlug === 'admissao' || docSlug.includes('admissão') || doc.admission_date) {
+                setFieldValue('admissaoFullName', doc.name);
+                setFieldValue('admissaoBirthDate', doc.birth_date);
+                setFieldValue('admissionDate', doc.admission_date);
+                setFieldValue('address', doc.address);
+                setFieldValue('ministries', doc.ministries);
+            } else {
+                // Fallback - usar batismo como padrão
+                console.log('Usando fallback para batismo');
+                setFieldValue('batismoFullName', doc.name);
+                setFieldValue('batismoBirthDate', doc.birth_date);
+                showDocumentFields('batismo');
+            }
+        }
+
+        // FUNÇÕES DE BANCO DE DADOS
         async function loadYears() {
             try {
+                if (yearsCache.length > 0) {
+                    return yearsCache;
+                }
+                
                 console.log('Carregando anos...');
                 const { data, error } = await supabase
                     .from('years')
@@ -2001,7 +2377,7 @@
                 }
                 
                 console.log('Anos carregados:', data);
-                yearsCache = data ? data.map(y => y.year) : [];
+                yearsCache = data || [];
                 return yearsCache;
             } catch (error) {
                 console.error('Error loading years:', error);
@@ -2010,9 +2386,12 @@
             }
         }
 
-        // Carregar tipos de documento
         async function loadDocumentTypes() {
             try {
+                if (documentTypesCache.length > 0) {
+                    return documentTypesCache;
+                }
+                
                 console.log('Carregando tipos de documento...');
                 const { data, error } = await supabase
                     .from('document_types')
@@ -2034,7 +2413,6 @@
             }
         }
 
-        // Carregar documentos
         async function loadDocuments(year, typeId) {
             try {
                 showLoading();
@@ -2067,7 +2445,6 @@
             }
         }
 
-        // Buscar documentos
         async function searchDocuments(searchTerm) {
             try {
                 showLoading();
@@ -2107,7 +2484,7 @@
                     query = query.ilike('name', `%${searchTerm}%`);
                 }
                 
-                const { data, error } = await query.order('name');
+                const { data, error } = await query.order('name').limit(50);
                 
                 if (error) {
                     console.error('Erro na busca:', error);
@@ -2125,7 +2502,6 @@
             }
         }
 
-        // FUNÇÃO CORRIGIDA PARA SALVAR DOCUMENTO
         async function saveDocument(documentData) {
             try {
                 showLoading();
@@ -2164,7 +2540,7 @@
                 
                 console.log('Documento salvo:', savedDoc);
                 
-                // Upload de arquivos apenas se existirem
+                // Fazer upload de arquivos se houver
                 if (uploadedFiles.length > 0) {
                     console.log('Fazendo upload de arquivos...');
                     await saveDocumentFiles(savedDoc.id, uploadedFiles);
@@ -2179,91 +2555,68 @@
             }
         }
 
-        // FUNÇÃO CORRIGIDA PARA SALVAR ARQUIVOS DIRETAMENTE NO BANCO
         async function saveDocumentFiles(documentId, files) {
             try {
                 console.log('Salvando arquivos para documento:', documentId);
                 const savedFiles = [];
                 let uploadErrors = [];
                 
-                for (const fileData of files) {
-                    try {
-                        console.log('Processando arquivo:', fileData.name);
-                        
-                        // Validação básica
-                        if (!fileData.file || fileData.file.size === 0) {
-                            throw new Error('Arquivo inválido ou vazio');
-                        }
-                        
-                        if (fileData.file.size > 10 * 1024 * 1024) { // 10MB limit
-                            throw new Error('Arquivo muito grande (máximo 10MB)');
-                        }
-                        
-                        // Converter arquivo para ArrayBuffer e depois para bytes
-                        const arrayBuffer = await fileData.file.arrayBuffer();
-                        const uint8Array = new Uint8Array(arrayBuffer);
-                        
-                        // Criar registro no banco com o arquivo
-                        const fileRecord = {
-                            document_id: documentId,
-                            name: fileData.name,
-                            file_type: fileData.file.type || 'application/octet-stream',
-                            file_size: fileData.file.size,
-                            file_data: Array.from(uint8Array), // Converter para array para inserção
-                            uploaded_at: new Date().toISOString(),
-                            upload_success: true,
-                            upload_error: null
-                        };
-                        
-                        console.log('Salvando arquivo no banco:', fileRecord.name);
-                        
-                        const { data: dbData, error: dbError } = await supabase
-                            .from('files')
-                            .insert([fileRecord])
-                            .select()
-                            .single();
-                        
-                        if (dbError) {
-                            console.error('Erro no banco:', dbError);
-                            throw new Error(`Erro no banco de dados: ${dbError.message}`);
-                        }
-                        
-                        savedFiles.push(dbData);
-                        console.log('Arquivo salvo com sucesso:', fileData.name);
-                        
-                    } catch (fileError) {
-                        console.error('Erro ao processar arquivo:', fileData.name, fileError);
-                        uploadErrors.push(`${fileData.name}: ${fileError.message}`);
-                        
-                        // Salvar registro de erro
+                const batchSize = 3;
+                for (let i = 0; i < files.length; i += batchSize) {
+                    const batch = files.slice(i, i + batchSize);
+                    
+                    const batchPromises = batch.map(async (fileData) => {
                         try {
-                            const errorRecord = {
-                                document_id: documentId,
-                                name: fileData.name,
-                                file_type: fileData.file ? fileData.file.type : 'unknown',
-                                file_size: fileData.file ? fileData.file.size : 0,
-                                uploaded_at: new Date().toISOString(),
-                                upload_success: false,
-                                upload_error: fileError.message
-                            };
+                            console.log('Processando arquivo:', fileData.name);
                             
-                            const { data: errorDbData } = await supabase
+                            if (!fileData.file || fileData.file.size === 0) {
+                                throw new Error('Arquivo inválido ou vazio');
+                            }
+                            
+                            if (fileData.file.size > 10 * 1024 * 1024) {
+                                throw new Error('Arquivo muito grande (máximo 10MB)');
+                            }
+                            
+                            const fileDataUrl = await new Promise((resolve, reject) => {
+                                const reader = new FileReader();
+                                reader.onload = (e) => resolve(e.target.result);
+                                reader.onerror = (e) => reject(new Error('Erro ao ler arquivo'));
+                                reader.readAsDataURL(fileData.file);
+                            });
+                            
+                            console.log('Arquivo convertido para base64. Tamanho:', fileDataUrl.length);
+                            
+                            const { data: dbData, error: dbError } = await supabase
                                 .from('files')
-                                .insert([errorRecord])
+                                .insert([{
+                                    document_id: documentId,
+                                    name: fileData.name,
+                                    file_type: fileData.file.type || 'application/octet-stream',
+                                    file_data: fileDataUrl
+                                }])
                                 .select()
                                 .single();
                             
-                            if (errorDbData) {
-                                savedFiles.push(errorDbData);
+                            if (dbError) {
+                                console.error('Erro no banco:', dbError);
+                                throw new Error(`Erro no banco de dados: ${dbError.message}`);
                             }
-                        } catch (dbError) {
-                            console.error('Erro ao salvar registro de erro:', dbError);
+                            
+                            savedFiles.push(dbData);
+                            console.log('Arquivo salvo com sucesso:', fileData.name);
+                            return dbData;
+                            
+                        } catch (fileError) {
+                            console.error('Erro ao processar arquivo:', fileData.name, fileError);
+                            uploadErrors.push(`${fileData.name}: ${fileError.message}`);
+                            return null;
                         }
-                    }
+                    });
+                    
+                    await Promise.all(batchPromises);
                 }
                 
-                // Mostrar resultados
-                const successCount = savedFiles.filter(f => f.upload_success).length;
+                const successCount = savedFiles.length;
                 const errorCount = uploadErrors.length;
                 
                 if (successCount > 0) {
@@ -2283,7 +2636,40 @@
             }
         }
 
-        // FUNÇÃO CORRIGIDA PARA VISUALIZAR ARQUIVO
+        async function loadDocumentForEdit(docId) {
+            try {
+                showLoading();
+                console.log('Carregando documento para edição:', docId);
+                
+                const { data: doc, error } = await supabase
+                    .from('documents')
+                    .select(`
+                        *,
+                        document_types(name),
+                        files(*)
+                    `)
+                    .eq('id', docId)
+                    .single();
+                
+                hideLoading();
+                
+                if (error) {
+                    console.error('Erro ao carregar documento:', error);
+                    throw error;
+                }
+                
+                console.log('Documento carregado:', doc);
+                return doc;
+                
+            } catch (error) {
+                hideLoading();
+                console.error('Error loading document:', error);
+                showError('Erro ao carregar documento: ' + error.message);
+                return null;
+            }
+        }
+
+        // FUNÇÃO PARA VISUALIZAR ARQUIVO
         async function viewSavedFile(fileId) {
             try {
                 showLoading();
@@ -2308,16 +2694,12 @@
                     return;
                 }
                 
-                console.log('Dados do arquivo:', fileData);
-                
                 selectedFileForView = {
                     id: fileData.id,
                     name: fileData.name,
                     type: fileData.file_type,
-                    size: fileData.file_size,
                     data: fileData.file_data,
-                    uploadSuccess: fileData.upload_success,
-                    uploadError: fileData.upload_error
+                    blobUrl: fileData.file_data
                 };
                 
                 showFileViewModal();
@@ -2329,7 +2711,6 @@
             }
         }
 
-        // FUNÇÃO CORRIGIDA PARA MOSTRAR MODAL DE VISUALIZAÇÃO
         function showFileViewModal() {
             const modal = document.getElementById('fileViewModal');
             const title = document.getElementById('fileViewTitle');
@@ -2343,18 +2724,10 @@
             title.textContent = `Visualizar: ${selectedFileForView.name}`;
             content.innerHTML = '';
             
-            // Verificar se arquivo foi carregado com sucesso
-            if (!selectedFileForView.uploadSuccess || !selectedFileForView.data) {
-                const errorMsg = selectedFileForView.uploadError || 'Arquivo não disponível';
+            if (!selectedFileForView.data) {
                 content.innerHTML = `
                     <div class="file-view-error">
                         <h3>⚠️ Arquivo Não Disponível</h3>
-                        <div class="file-info">
-                            <p><strong>Nome:</strong> ${selectedFileForView.name}</p>
-                            <p><strong>Tipo:</strong> ${selectedFileForView.type || 'N/A'}</p>
-                            <p><strong>Tamanho:</strong> ${selectedFileForView.size ? Math.round(selectedFileForView.size / 1024) + ' KB' : 'N/A'}</p>
-                            <p><strong>Erro:</strong> ${errorMsg}</p>
-                        </div>
                         <p style="margin: 20px 0; color: #dc3545;">
                             O arquivo não foi carregado corretamente no sistema.
                         </p>
@@ -2365,60 +2738,23 @@
             }
             
             try {
-                // Criar blob do arquivo a partir dos dados binários
-                const uint8Array = new Uint8Array(selectedFileForView.data);
-                const blob = new Blob([uint8Array], { type: selectedFileForView.type });
-                const url = URL.createObjectURL(blob);
-                
-                // Exibir arquivo baseado no tipo
                 if (selectedFileForView.type && selectedFileForView.type.startsWith('image/')) {
-                    // Imagem
                     const img = document.createElement('img');
-                    img.src = url;
+                    img.src = selectedFileForView.data;
                     img.className = 'file-view-image';
                     img.alt = selectedFileForView.name;
-                    img.onload = () => console.log('Imagem carregada');
-                    img.onerror = () => {
-                        content.innerHTML = createErrorHTML('Erro ao carregar imagem');
-                    };
                     content.appendChild(img);
                     
                 } else if (selectedFileForView.type === 'application/pdf') {
-                    // PDF
                     const iframe = document.createElement('iframe');
-                    iframe.src = url;
+                    iframe.src = selectedFileForView.data;
                     iframe.className = 'file-view-iframe';
-                    iframe.onload = () => console.log('PDF carregado');
-                    iframe.onerror = () => {
-                        content.innerHTML = createErrorHTML('Erro ao carregar PDF');
-                    };
                     content.appendChild(iframe);
                     
-                } else if (selectedFileForView.type && selectedFileForView.type.startsWith('text/')) {
-                    // Arquivo de texto
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        content.innerHTML = `
-                            <div class="file-view-text">
-                                <h4 style="margin-bottom: 15px; color: var(--primary);">${selectedFileForView.name}</h4>
-                                <pre>${e.target.result}</pre>
-                            </div>
-                        `;
-                    };
-                    reader.onerror = function() {
-                        content.innerHTML = createErrorHTML('Erro ao carregar arquivo de texto');
-                    };
-                    reader.readAsText(blob);
-                    
                 } else {
-                    // Tipo não suportado para visualização
                     content.innerHTML = `
                         <div class="file-view-error">
                             <h3>📄 ${selectedFileForView.name}</h3>
-                            <div class="file-info">
-                                <p><strong>Tipo:</strong> ${selectedFileForView.type || 'Desconhecido'}</p>
-                                <p><strong>Tamanho:</strong> ${selectedFileForView.size ? Math.round(selectedFileForView.size / 1024) + ' KB' : 'N/A'}</p>
-                            </div>
                             <p style="margin: 20px 0;">
                                 Este tipo de arquivo não pode ser visualizado no navegador.
                             </p>
@@ -2429,30 +2765,19 @@
                     `;
                 }
                 
-                // Armazenar URL para download
-                selectedFileForView.blobUrl = url;
-                
             } catch (error) {
                 console.error('Erro ao processar arquivo:', error);
-                content.innerHTML = createErrorHTML('Erro ao processar dados do arquivo');
+                content.innerHTML = `
+                    <div class="file-view-error">
+                        <h3>❌ Erro</h3>
+                        <p style="margin: 20px 0; color: #dc3545;">Erro ao processar dados do arquivo: ${error.message}</p>
+                    </div>
+                `;
             }
             
             modal.style.display = 'flex';
         }
 
-        function createErrorHTML(message) {
-            return `
-                <div class="file-view-error">
-                    <h3>❌ Erro</h3>
-                    <p style="margin: 20px 0; color: #dc3545;">${message}</p>
-                    <p style="color: #6c757d;">
-                        Tente fazer o download do arquivo ou entre em contato com o administrador.
-                    </p>
-                </div>
-            `;
-        }
-
-        // FUNÇÃO CORRIGIDA PARA DOWNLOAD
         async function downloadSavedFile(fileId) {
             try {
                 showLoading();
@@ -2472,28 +2797,21 @@
                     return;
                 }
                 
-                if (!fileData.upload_success || !fileData.file_data) {
-                    showError('Arquivo não está disponível para download - ' + (fileData.upload_error || 'Dados não encontrados'));
+                if (!fileData.file_data) {
+                    showError('Arquivo não está disponível para download');
                     return;
                 }
                 
-                // Criar download
                 try {
                     console.log('Criando download para:', fileData.name);
-                    const uint8Array = new Uint8Array(fileData.file_data);
-                    const blob = new Blob([uint8Array], { type: fileData.file_type });
-                    const url = URL.createObjectURL(blob);
                     
                     const link = document.createElement('a');
-                    link.href = url;
+                    link.href = fileData.file_data;
                     link.download = fileData.name;
                     
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                    
-                    // Limpar URL após download
-                    setTimeout(() => URL.revokeObjectURL(url), 100);
                     
                     showSuccess('Download iniciado!');
                 } catch (downloadError) {
@@ -2508,7 +2826,6 @@
             }
         }
 
-        // FUNÇÃO CORRIGIDA PARA REMOVER ARQUIVO
         async function removeSavedFile(fileId) {
             if (!confirm('Tem certeza que deseja remover este arquivo? Esta ação não pode ser desfeita.')) {
                 return;
@@ -2518,7 +2835,6 @@
                 showLoading();
                 console.log('Removendo arquivo ID:', fileId);
                 
-                // Remover registro do banco
                 const { error: dbError } = await supabase
                     .from('files')
                     .delete()
@@ -2534,7 +2850,6 @@
                 
                 showSuccess('Arquivo removido com sucesso!');
                 
-                // Recarregar lista de arquivos se estiver editando
                 if (selectedDocument) {
                     loadDocumentForEdit(selectedDocument);
                 }
@@ -2546,7 +2861,7 @@
             }
         }
 
-        // Outras funções de banco continuam iguais...
+        // Outras funções de banco de dados
         async function deleteDocument(documentId) {
             try {
                 showLoading();
@@ -2589,6 +2904,7 @@
                 }
                 
                 console.log('Ano adicionado:', data);
+                yearsCache = [];
                 hideLoading();
                 return data;
             } catch (error) {
@@ -2614,6 +2930,7 @@
                     throw error;
                 }
                 
+                yearsCache = [];
                 hideLoading();
                 return true;
             } catch (error) {
@@ -2641,6 +2958,7 @@
                 }
                 
                 console.log('Tipo adicionado:', data);
+                documentTypesCache = [];
                 hideLoading();
                 return data;
             } catch (error) {
@@ -2666,6 +2984,7 @@
                     throw error;
                 }
                 
+                documentTypesCache = [];
                 hideLoading();
                 return true;
             } catch (error) {
@@ -2689,19 +3008,23 @@
                 return;
             }
             
+            const fragment = document.createDocumentFragment();
+            
             years.forEach(year => {
                 const card = document.createElement('div');
                 card.className = 'folder-card';
-                card.setAttribute('data-year', year);
+                card.setAttribute('data-year', year.year);
                 card.innerHTML = `
                     <div class="folder-icon">
-                        <img src="https://img.icons8.com/fluency/96/calendar.png" alt="Calendário" />
+                        <img src="images/ano.png" alt="Calendário" />
                     </div>
-                    <h3>${year}</h3>
+                    <h3>${year.year}</h3>
                     <p>Registros do ano</p>
                 `;
-                yearsGrid.appendChild(card);
+                fragment.appendChild(card);
             });
+            
+            yearsGrid.appendChild(fragment);
         }
 
         // Initialize document types grid
@@ -2717,6 +3040,8 @@
                 return;
             }
             
+            const fragment = document.createDocumentFragment();
+            
             docTypes.forEach(docType => {
                 const iconUrl = documentTypeIcons[docType.slug] || documentTypeIcons.default;
                 const card = document.createElement('div');
@@ -2730,39 +3055,76 @@
                     <h3>${docType.name}</h3>
                     <p>${docType.description}</p>
                 `;
-                docTypesGrid.appendChild(card);
-            });
-        }
-
-        // Função para mostrar campos específicos do tipo de documento
-        function showDocumentFields(docType) {
-            document.querySelectorAll('.document-fields').forEach(field => {
-                field.classList.remove('active');
+                fragment.appendChild(card);
             });
             
-            const fieldsToShow = document.getElementById(docType + 'Fields');
+            docTypesGrid.appendChild(fragment);
+        }
+
+        // Função para mostrar campos específicos do tipo de documento - CORRIGIDA
+        function showDocumentFields(docType) {
+            console.log('Mostrando campos para tipo:', docType);
+            
+            // Primeiro remove a classe active de todas as seções e gerencia required
+            document.querySelectorAll('.document-fields').forEach(field => {
+                field.classList.remove('active');
+                // Remove required de todos os campos da seção que será escondida
+                field.querySelectorAll('input[required], textarea[required]').forEach(input => {
+                    input.removeAttribute('required');
+                    input.setAttribute('data-was-required', 'true');
+                });
+            });
+            
+            const docSlug = docType.toLowerCase();
+            let fieldsToShow = null;
+            
+            if (docSlug.includes('batismo') || docSlug === 'batismo') {
+                fieldsToShow = document.getElementById('batismoFields');
+            } else if (docSlug.includes('crisma') || docSlug === 'crisma') {
+                fieldsToShow = document.getElementById('crismaFields');
+            } else if (docSlug.includes('comunhao') || docSlug === 'comunhao' || docSlug.includes('primeira-comunhao')) {
+                fieldsToShow = document.getElementById('comunhaoFields');
+            } else if (docSlug.includes('casamento') || docSlug === 'casamento') {
+                fieldsToShow = document.getElementById('casamentoFields');
+            } else if (docSlug.includes('obito') || docSlug === 'obito' || docSlug.includes('óbito')) {
+                fieldsToShow = document.getElementById('obitoFields');
+            } else if (docSlug.includes('admissao') || docSlug === 'admissao' || docSlug.includes('admissão')) {
+                fieldsToShow = document.getElementById('admissaoFields');
+            } else {
+                // Para tipos personalizados, usar batismo como padrão
+                fieldsToShow = document.getElementById('batismoFields');
+                console.log('Usando batismo como fallback para tipo personalizado:', docType);
+            }
+            
             if (fieldsToShow) {
                 fieldsToShow.classList.add('active');
+                // Reativa required apenas nos campos da seção ativa que tinham required antes
+                fieldsToShow.querySelectorAll('input[data-was-required], textarea[data-was-required]').forEach(input => {
+                    input.setAttribute('required', 'required');
+                });
+                console.log('Campos ativados para:', docType, '- Seção:', fieldsToShow.id);
+            } else {
+                console.error('Campos não encontrados para tipo:', docType);
+                // Como fallback, ativar batismo
+                const batismoFields = document.getElementById('batismoFields');
+                if (batismoFields) {
+                    batismoFields.classList.add('active');
+                    batismoFields.querySelectorAll('input[data-was-required], textarea[data-was-required]').forEach(input => {
+                        input.setAttribute('required', 'required');
+                    });
+                    console.log('Fallback: ativado batismoFields');
+                }
             }
         }
 
-        // Função para criar URL de blob para upload de arquivos
-        function createFileURL(file) {
-            return URL.createObjectURL(file);
-        }
-
-        // Função para visualizar arquivo de upload
+        // FUNCTIONS PARA MANIPULAR ARQUIVOS
         function viewUploadedFile(file) {
             try {
-                const blob = new Blob([file.file], { type: file.type });
-                const url = URL.createObjectURL(blob);
-                
                 selectedFileForView = {
                     name: file.name,
                     type: file.type,
-                    size: file.size,
-                    blobUrl: url,
-                    uploadSuccess: true
+                    data: file.dataUrl,
+                    blobUrl: file.dataUrl
                 };
                 
                 showFileViewModal();
@@ -2772,12 +3134,11 @@
             }
         }
 
-        // Função para download de arquivo
         function downloadFile(file) {
             try {
-                if (file.blobUrl) {
+                if (file.blobUrl || file.data) {
                     const link = document.createElement('a');
-                    link.href = file.blobUrl;
+                    link.href = file.blobUrl || file.data;
                     link.download = file.name;
                     document.body.appendChild(link);
                     link.click();
@@ -2794,7 +3155,32 @@
             }
         }
 
-        // Login Functionality
+        function refreshUploadedFilesList() {
+            const fileList = document.getElementById('fileList');
+            const existingFiles = fileList.querySelectorAll('.file-item[data-uploaded="true"]');
+            
+            existingFiles.forEach(item => item.remove());
+            
+            const fragment = document.createDocumentFragment();
+            
+            uploadedFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.setAttribute('data-uploaded', 'true');
+                fileItem.innerHTML = `
+                    <span class="file-name">${file.name} (${Math.round(file.file.size / 1024)} KB)</span>
+                    <div class="file-actions">
+                        <button type="button" class="btn btn-sm btn-info view-uploaded-file" data-index="${index}">Visualizar</button>
+                        <button type="button" class="btn btn-sm btn-danger remove-file" data-index="${index}">Remover</button>
+                    </div>
+                `;
+                fragment.appendChild(fileItem);
+            });
+            
+            fileList.appendChild(fragment);
+        }
+
+        // LOGIN FUNCTIONALITY
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -2838,8 +3224,10 @@
                 dashboardPage.style.display = 'block';
                 dashboardPage.classList.add('active');
                 
-                await initializeYearsGrid();
-                await initializeDocumentTypesGrid();
+                await Promise.all([
+                    initializeYearsGrid(),
+                    initializeDocumentTypesGrid()
+                ]);
                 
             } catch (error) {
                 hideLoading();
@@ -2848,11 +3236,15 @@
             }
         });
 
-        // Logout Functionality
+        // LOGOUT FUNCTIONALITY
         const logoutButtons = document.querySelectorAll('#logoutBtn, #logoutBtn2, #logoutBtn3');
         logoutButtons.forEach(button => {
             button.addEventListener('click', function() {
                 currentUser = null;
+                yearsCache = [];
+                documentTypesCache = [];
+                documentsCache = [];
+                
                 loginPage.style.display = 'flex';
                 dashboardPage.style.display = 'none';
                 documentTypesPage.style.display = 'none';
@@ -2864,11 +3256,12 @@
             });
         });
 
-        // Year Selection
+        // YEAR SELECTION
         document.getElementById('yearsGrid').addEventListener('click', function(e) {
             const card = e.target.closest('.folder-card');
             if (card) {
                 selectedYear = card.getAttribute('data-year');
+                console.log('Ano selecionado:', selectedYear);
                 document.getElementById('yearTitle').textContent = selectedYear;
                 document.getElementById('yearHeaderTitle').textContent = selectedYear;
                 
@@ -2878,7 +3271,7 @@
             }
         });
 
-        // Document Type Selection
+        // DOCUMENT TYPE SELECTION - CORRIGIDO
         document.getElementById('documentTypesGrid').addEventListener('click', async function(e) {
             const card = e.target.closest('.folder-card');
             if (card) {
@@ -2889,6 +3282,8 @@
                 if (docType) {
                     selectedDocType = docType.name;
                     selectedDocTypeId = docType.id;
+                    console.log('Tipo de documento selecionado:', selectedDocType, 'ID:', selectedDocTypeId);
+                    
                     document.getElementById('docTypeTitle').textContent = selectedDocType;
                     document.getElementById('docTypeHeaderTitle').textContent = selectedDocType;
                     document.getElementById('yearHeaderTitle2').textContent = selectedYear;
@@ -2903,7 +3298,7 @@
             }
         });
 
-        // Load Documents Function
+        // LOAD DOCUMENTS TABLE
         async function loadDocumentsTable(year, typeId) {
             console.log('Carregando tabela de documentos...');
             const docs = await loadDocuments(year, typeId);
@@ -2917,6 +3312,8 @@
                 return;
             }
             
+            const fragment = document.createDocumentFragment();
+            
             docs.forEach(doc => {
                 const row = document.createElement('tr');
                 row.setAttribute('data-id', doc.id);
@@ -2924,9 +3321,8 @@
                 const birthDate = new Date(doc.birth_date).toLocaleDateString('pt-BR');
                 const regDate = new Date(doc.registration_date).toLocaleDateString('pt-BR');
                 const filesCount = doc.files ? doc.files.length : 0;
-                const availableFiles = doc.files ? doc.files.filter(f => f.upload_success).length : 0;
                 const filesText = filesCount > 0 ? 
-                    `${availableFiles}/${filesCount} ${filesCount === 1 ? 'arquivo' : 'arquivos'}` :
+                    `${filesCount} ${filesCount === 1 ? 'arquivo' : 'arquivos'}` :
                     'Nenhum arquivo';
                 
                 row.innerHTML = `
@@ -2942,11 +3338,306 @@
                         </div>
                     </td>
                 `;
-                tableBody.appendChild(row);
+                fragment.appendChild(row);
             });
+            
+            tableBody.appendChild(fragment);
         }
 
-        // Header button actions
+        // ADD NEW PERSON - CORRIGIDO
+        function addNewPerson() {
+            console.log('=== ADICIONANDO NOVA PESSOA ===');
+            console.log('Selected Doc Type ID:', selectedDocTypeId);
+            console.log('Selected Doc Type:', selectedDocType);
+            console.log('Selected Year:', selectedYear);
+            
+            // Verificar se temos um tipo de documento selecionado
+            if (!selectedDocTypeId || !selectedDocType) {
+                showError('Erro: Tipo de documento não identificado. Tente navegar novamente pela interface.');
+                return;
+            }
+            
+            // Verificar se temos um ano selecionado
+            if (!selectedYear) {
+                showError('Erro: Ano não identificado. Tente navegar novamente pela interface.');
+                return;
+            }
+            
+            isEditMode = false;
+            selectedDocument = null;
+            uploadedFiles = [];
+            isSubmitting = false;
+            
+            document.getElementById('personForm').reset();
+            document.getElementById('fileList').innerHTML = '';
+            
+            document.getElementById('formTitle').textContent = 'Novo Registro';
+            document.getElementById('formHeaderTitle').textContent = `Adicionar Registro de ${selectedDocType}`;
+            
+            document.getElementById('backToDocTypes2').textContent = selectedYear;
+            document.getElementById('backToDocList').textContent = selectedDocType;
+            
+            const docType = documentTypesCache.find(t => t.id === selectedDocTypeId);
+            if (docType) {
+                console.log('Mostrando campos para tipo:', docType.slug);
+                showDocumentFields(docType.slug);
+            } else {
+                console.error('Tipo de documento não encontrado no cache');
+                showError('Erro: Tipo de documento não encontrado no cache');
+                return;
+            }
+            
+            const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
+            formInputs.forEach(input => {
+                input.readOnly = false;
+            });
+            
+            const submitBtn = document.getElementById('submitFormBtn');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Salvar Registro';
+            submitBtn.style.display = 'inline-block';
+            
+            documentsListPage.style.display = 'none';
+            searchResultsFormSection.style.display = 'none';
+            personFormContainer.style.display = 'block';
+            
+            console.log('=== FORMULÁRIO PRONTO PARA USO ===');
+        }
+
+        document.getElementById('addPersonBtn').addEventListener('click', addNewPerson);
+
+        // PERSON FORM SUBMIT - COM DEBUG AVANÇADO
+        document.getElementById('personForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            console.log('=== FORMULÁRIO ENVIADO ===');
+            console.log('Event triggered successfully');
+            
+            // Debug: verificar estado atual
+            console.log('Estado atual:');
+            console.log('- isSubmitting:', isSubmitting);
+            console.log('- selectedYear:', selectedYear);
+            console.log('- selectedDocType:', selectedDocType);
+            console.log('- selectedDocTypeId:', selectedDocTypeId);
+            console.log('- isEditMode:', isEditMode);
+            
+            if (isSubmitting) {
+                console.log('Já está enviando, ignorando...');
+                showError('Já estamos processando. Aguarde...');
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submitFormBtn');
+            
+            // Verificação de segurança
+            if (!submitBtn) {
+                console.error('Botão de submit não encontrado!');
+                showError('Erro interno: botão não encontrado');
+                return;
+            }
+            
+            try {
+                console.log('Iniciando validação...');
+                
+                // Debug: verificar se temos os dados necessários
+                if (!selectedDocTypeId) {
+                    console.error('ERRO: selectedDocTypeId não definido');
+                    showError('Erro: Tipo de documento não selecionado. Navegue pela interface novamente.');
+                    return;
+                }
+                
+                if (!selectedYear) {
+                    console.error('ERRO: selectedYear não definido');
+                    showError('Erro: Ano não selecionado. Navegue pela interface novamente.');
+                    return;
+                }
+                
+                // Validar dados
+                const validation = validateDocumentData();
+                console.log('Resultado da validação:', validation);
+                
+                if (!validation.valid) {
+                    console.log('Validação falhou:', validation.missing);
+                    showError(`Campos obrigatórios não preenchidos: ${validation.missing.join(', ')}`);
+                    return;
+                }
+                
+                console.log('Validação passou! Iniciando submissão...');
+                
+                // Indicar que estamos processando
+                isSubmitting = true;
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Salvando...';
+                submitBtn.style.opacity = '0.7';
+                
+                console.log('Preparando dados do documento...');
+                
+                let documentData;
+                try {
+                    documentData = getDocumentData();
+                    console.log('Dados preparados com sucesso:', documentData);
+                } catch (dataError) {
+                    console.error('Erro ao preparar dados:', dataError);
+                    throw new Error('Erro ao preparar dados: ' + dataError.message);
+                }
+                
+                // Verificar conexão antes de salvar
+                console.log('Verificando conexão com Supabase...');
+                try {
+                    const { data: testConnection, error: connectionError } = await supabase
+                        .from('users')
+                        .select('id')
+                        .limit(1);
+                    
+                    if (connectionError) {
+                        console.error('Erro de conexão:', connectionError);
+                        throw new Error('Erro de conexão com o banco de dados');
+                    }
+                    console.log('Conexão OK');
+                } catch (connError) {
+                    console.error('Falha na conexão:', connError);
+                    throw new Error('Não foi possível conectar ao banco de dados');
+                }
+                
+                console.log('Salvando documento...');
+                showLoading();
+                
+                const savedDoc = await saveDocument(documentData);
+                
+                hideLoading();
+                console.log('Documento salvo com sucesso:', savedDoc);
+                
+                const action = isEditMode ? 'atualizado' : 'criado';
+                showSuccess(`Documento ${action} com sucesso!`);
+                
+                // Limpar estado
+                uploadedFiles = [];
+                isEditMode = false;
+                selectedDocument = null;
+                
+                // Aguardar um pouco antes de recarregar
+                setTimeout(async () => {
+                    try {
+                        // Recarregar lista de documentos
+                        await loadDocumentsTable(selectedYear, selectedDocTypeId);
+                        
+                        // Voltar para lista
+                        personFormContainer.style.display = 'none';
+                        searchResultsFormSection.style.display = 'none';
+                        documentsListPage.style.display = 'block';
+                        
+                        // Limpar formulário
+                        document.getElementById('personForm').reset();
+                        document.getElementById('fileList').innerHTML = '';
+                        
+                        console.log('Processo concluído com sucesso!');
+                    } catch (reloadError) {
+                        console.error('Erro ao recarregar lista:', reloadError);
+                        showError('Documento salvo, mas houve erro ao recarregar a lista');
+                    }
+                }, 500);
+                
+            } catch (error) {
+                hideLoading();
+                console.error('ERRO DURANTE SALVAMENTO:', error);
+                console.error('Stack trace:', error.stack);
+                
+                let errorMessage = 'Erro desconhecido ao salvar documento';
+                if (error.message) {
+                    errorMessage = error.message;
+                } else if (error.error && error.error.message) {
+                    errorMessage = error.error.message;
+                }
+                
+                showError('Erro ao salvar: ' + errorMessage);
+            } finally {
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                submitBtn.textContent = isEditMode ? 'Salvar Alterações' : 'Salvar Registro';
+                hideLoading();
+                console.log('=== PROCESSO FINALIZADO ===');
+            }
+        });
+
+        // DOCUMENT ACTIONS (VIEW, EDIT, DELETE)
+        document.getElementById('documentsTable').addEventListener('click', async function(e) {
+            if (e.target.classList.contains('view-btn') || e.target.classList.contains('edit-btn')) {
+                const row = e.target.closest('tr');
+                const docId = parseInt(row.getAttribute('data-id'));
+                
+                console.log('Ação em documento ID:', docId);
+                
+                const doc = await loadDocumentForEdit(docId);
+                if (!doc) return;
+                
+                uploadedFiles = [];
+                isSubmitting = false;
+                
+                selectedDocument = docId;
+                isEditMode = e.target.classList.contains('edit-btn');
+                
+                console.log('Modo edição:', isEditMode);
+                
+                populateForm(doc);
+                
+                const fileList = document.getElementById('fileList');
+                fileList.innerHTML = '';
+                
+                if (doc.files && doc.files.length > 0) {
+                    doc.files.forEach(file => {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'file-item';
+                        
+                        fileItem.innerHTML = `
+                            <span class="file-name">
+                                ${file.name}
+                            </span>
+                            <div class="file-actions">
+                                <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
+                                <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
+                                ${isEditMode ? `<button type="button" class="btn btn-sm btn-danger remove-file-btn" data-file-id="${file.id}">Remover</button>` : ''}
+                            </div>
+                        `;
+                        fileList.appendChild(fileItem);
+                    });
+                }
+                
+                document.getElementById('formTitle').textContent = isEditMode ? 'Editar Registro' : 'Visualizar Registro';
+                document.getElementById('formHeaderTitle').textContent = `${isEditMode ? 'Editar' : 'Visualizar'} Registro de ${doc.document_types.name}`;
+                
+                const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
+                formInputs.forEach(input => {
+                    input.readOnly = !isEditMode;
+                });
+                
+                const submitBtn = document.getElementById('submitFormBtn');
+                if (isEditMode) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Salvar Alterações';
+                    submitBtn.style.display = 'inline-block';
+                } else {
+                    // Esconder o botão salvar no modo visualização
+                    submitBtn.style.display = 'none';
+                }
+                
+                document.getElementById('backToDocTypes2').textContent = doc.year;
+                document.getElementById('backToDocList').textContent = doc.document_types.name;
+                
+                documentsListPage.style.display = 'none';
+                searchResultsFormSection.style.display = 'none';
+                personFormContainer.style.display = 'block';
+                
+            } else if (e.target.classList.contains('delete-btn')) {
+                const row = e.target.closest('tr');
+                const docId = parseInt(row.getAttribute('data-id'));
+                selectedDocument = docId;
+                
+                document.getElementById('deleteConfirmModal').style.display = 'flex';
+            }
+        });
+
+        // HEADER BUTTON ACTIONS
         document.getElementById('addYearBtnHeader').addEventListener('click', function() {
             document.getElementById('newYear').value = new Date().getFullYear();
             document.getElementById('addYearModal').style.display = 'flex';
@@ -2972,8 +3663,8 @@
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'remove-item';
                 itemDiv.innerHTML = `
-                    <input type="checkbox" id="year_${year}" value="${year}">
-                    <label for="year_${year}">${year}</label>
+                    <input type="checkbox" id="year_${year.year}" value="${year.year}">
+                    <label for="year_${year.year}">${year.year}</label>
                 `;
                 removeList.appendChild(itemDiv);
             });
@@ -3024,410 +3715,7 @@
             }
         });
 
-        // Add Person Function
-        function addNewPerson() {
-            isEditMode = false;
-            selectedDocument = null;
-            uploadedFiles = [];
-            isSubmitting = false;
-            
-            document.getElementById('personForm').reset();
-            document.getElementById('fileList').innerHTML = '';
-            
-            document.getElementById('formTitle').textContent = 'Novo Registro';
-            document.getElementById('formHeaderTitle').textContent = `Adicionar Registro de ${selectedDocType}`;
-            
-            document.getElementById('backToDocTypes2').textContent = selectedYear;
-            document.getElementById('backToDocList').textContent = selectedDocType;
-            
-            const docType = documentTypesCache.find(t => t.id === selectedDocTypeId);
-            if (docType) {
-                showDocumentFields(docType.slug);
-            }
-            
-            const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
-            formInputs.forEach(input => {
-                input.readOnly = false;
-            });
-            
-            const submitBtn = document.getElementById('submitFormBtn');
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Salvar Registro';
-            
-            documentsListPage.style.display = 'none';
-            searchResultsFormSection.style.display = 'none';
-            personFormContainer.style.display = 'block';
-        }
-
-        document.getElementById('addPersonBtn').addEventListener('click', addNewPerson);
-
-        // FUNÇÃO CORRIGIDA PARA CARREGAR DOCUMENTO PARA EDIÇÃO
-        async function loadDocumentForEdit(docId) {
-            try {
-                showLoading();
-                console.log('Carregando documento para edição:', docId);
-                
-                const { data: doc, error } = await supabase
-                    .from('documents')
-                    .select(`
-                        *,
-                        document_types(name),
-                        files(*)
-                    `)
-                    .eq('id', docId)
-                    .single();
-                
-                hideLoading();
-                
-                if (error) {
-                    console.error('Erro ao carregar documento:', error);
-                    throw error;
-                }
-                
-                console.log('Documento carregado:', doc);
-                return doc;
-                
-            } catch (error) {
-                hideLoading();
-                console.error('Error loading document:', error);
-                showError('Erro ao carregar documento: ' + error.message);
-                return null;
-            }
-        }
-
-        // Person Form Submit
-        document.getElementById('personForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            if (isSubmitting) {
-                console.log('Já está enviando, ignorando...');
-                return;
-            }
-            
-            const submitBtn = document.getElementById('submitFormBtn');
-            const fullName = document.getElementById('fullName').value.trim();
-            const birthDate = document.getElementById('birthDate').value;
-            
-            if (!fullName || !birthDate) {
-                showError('Nome completo e data de nascimento são obrigatórios!');
-                return;
-            }
-            
-            try {
-                isSubmitting = true;
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Salvando...';
-                
-                console.log('Preparando dados do documento...');
-                
-                const documentData = {
-                    year: parseInt(selectedYear),
-                    type_id: selectedDocTypeId,
-                    name: fullName,
-                    birth_date: birthDate,
-                    observations: document.getElementById('observations').value || null
-                };
-                
-                if (!isEditMode || !selectedDocument) {
-                    documentData.registration_date = new Date().toISOString().split('T')[0];
-                }
-                
-                updateDocumentSpecificFields(documentData);
-                
-                console.log('Dados preparados:', documentData);
-                
-                const savedDoc = await saveDocument(documentData);
-                
-                console.log('Documento salvo com sucesso:', savedDoc);
-                
-                const action = isEditMode ? 'atualizado' : 'criado';
-                showSuccess(`Documento ${action} com sucesso!`);
-                
-                // Limpar estado
-                uploadedFiles = [];
-                isEditMode = false;
-                selectedDocument = null;
-                
-                // Recarregar lista de documentos
-                await loadDocumentsTable(selectedYear, selectedDocTypeId);
-                
-                // Voltar para lista
-                personFormContainer.style.display = 'none';
-                searchResultsFormSection.style.display = 'none';
-                documentsListPage.style.display = 'block';
-                
-                // Limpar formulário
-                document.getElementById('personForm').reset();
-                document.getElementById('fileList').innerHTML = '';
-                
-            } catch (error) {
-                console.error('Error saving document:', error);
-                showError('Erro ao salvar documento: ' + error.message);
-            } finally {
-                isSubmitting = false;
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Salvar Registro';
-            }
-        });
-
-        // Function to update document specific fields
-        function updateDocumentSpecificFields(doc) {
-            const docType = documentTypesCache.find(t => t.id === selectedDocTypeId);
-            if (!docType) return;
-
-            switch (docType.slug) {
-                case 'batismo':
-                    doc.parent_name_1 = document.getElementById('parentName1').value || null;
-                    doc.parent_name_2 = document.getElementById('parentName2').value || null;
-                    doc.baptism_date = document.getElementById('baptismDate').value || null;
-                    doc.celebrant = document.getElementById('celebrant').value || null;
-                    doc.godparent_1 = document.getElementById('godparent1').value || null;
-                    doc.godparent_2 = document.getElementById('godparent2').value || null;
-                    doc.baptism_place = document.getElementById('baptismPlace').value || null;
-                    break;
-                    
-                case 'crisma':
-                    doc.confirmation_date = document.getElementById('confirmationDate').value || null;
-                    doc.confirmation_place = document.getElementById('confirmationPlace').value || null;
-                    doc.bishop = document.getElementById('bishop').value || null;
-                    doc.confirmation_godparent = document.getElementById('confirmationGodparent').value || null;
-                    doc.crisma_parent_name_1 = document.getElementById('crismaParentName1').value || null;
-                    doc.crisma_parent_name_2 = document.getElementById('crismaParentName2').value || null;
-                    break;
-                    
-                case 'comunhao':
-                    doc.communion_date = document.getElementById('communionDate').value || null;
-                    doc.communion_place = document.getElementById('communionPlace').value || null;
-                    doc.communion_priest = document.getElementById('communionPriest').value || null;
-                    break;
-                    
-                case 'casamento':
-                    doc.marriage_date = document.getElementById('marriageDate').value || null;
-                    doc.marriage_place = document.getElementById('marriagePlace').value || null;
-                    doc.marriage_celebrant = document.getElementById('marriageCelebrant').value || null;
-                    doc.groom_name = document.getElementById('groomName').value || null;
-                    doc.groom_birth_date = document.getElementById('groomBirthDate').value || null;
-                    doc.bride_name = document.getElementById('brideName').value || null;
-                    doc.bride_birth_date = document.getElementById('brideBirthDate').value || null;
-                    doc.groom_father = document.getElementById('groomFather').value || null;
-                    doc.groom_mother = document.getElementById('groomMother').value || null;
-                    doc.bride_father = document.getElementById('brideFather').value || null;
-                    doc.bride_mother = document.getElementById('brideMother').value || null;
-                    doc.witness_1 = document.getElementById('witness1').value || null;
-                    doc.witness_2 = document.getElementById('witness2').value || null;
-                    break;
-                    
-                case 'obito':
-                    doc.death_date = document.getElementById('deathDate').value || null;
-                    doc.burial_place = document.getElementById('burialPlace').value || null;
-                    doc.rites_performed = document.getElementById('ritesPerformed').value || null;
-                    break;
-                    
-                case 'admissao':
-                    doc.admission_date = document.getElementById('admissionDate').value || null;
-                    doc.address = document.getElementById('address').value || null;
-                    doc.ministries = document.getElementById('ministries').value || null;
-                    break;
-            }
-        }
-
-        // Function to fill form with document specific fields
-        function fillDocumentSpecificFields(doc) {
-            const docType = documentTypesCache.find(t => t.id === doc.type_id);
-            if (!docType) return;
-
-            showDocumentFields(docType.slug);
-
-            switch (docType.slug) {
-                case 'batismo':
-                    document.getElementById('parentName1').value = doc.parent_name_1 || '';
-                    document.getElementById('parentName2').value = doc.parent_name_2 || '';
-                    document.getElementById('baptismDate').value = doc.baptism_date || '';
-                    document.getElementById('celebrant').value = doc.celebrant || '';
-                    document.getElementById('godparent1').value = doc.godparent_1 || '';
-                    document.getElementById('godparent2').value = doc.godparent_2 || '';
-                    document.getElementById('baptismPlace').value = doc.baptism_place || '';
-                    break;
-                    
-                case 'crisma':
-                    document.getElementById('confirmationDate').value = doc.confirmation_date || '';
-                    document.getElementById('confirmationPlace').value = doc.confirmation_place || '';
-                    document.getElementById('bishop').value = doc.bishop || '';
-                    document.getElementById('confirmationGodparent').value = doc.confirmation_godparent || '';
-                    document.getElementById('crismaParentName1').value = doc.crisma_parent_name_1 || '';
-                    document.getElementById('crismaParentName2').value = doc.crisma_parent_name_2 || '';
-                    break;
-                    
-                case 'comunhao':
-                    document.getElementById('communionDate').value = doc.communion_date || '';
-                    document.getElementById('communionPlace').value = doc.communion_place || '';
-                    document.getElementById('communionPriest').value = doc.communion_priest || '';
-                    break;
-                    
-                case 'casamento':
-                    document.getElementById('marriageDate').value = doc.marriage_date || '';
-                    document.getElementById('marriagePlace').value = doc.marriage_place || '';
-                    document.getElementById('marriageCelebrant').value = doc.marriage_celebrant || '';
-                    document.getElementById('groomName').value = doc.groom_name || '';
-                    document.getElementById('groomBirthDate').value = doc.groom_birth_date || '';
-                    document.getElementById('brideName').value = doc.bride_name || '';
-                    document.getElementById('brideBirthDate').value = doc.bride_birth_date || '';
-                    document.getElementById('groomFather').value = doc.groom_father || '';
-                    document.getElementById('groomMother').value = doc.groom_mother || '';
-                    document.getElementById('brideFather').value = doc.bride_father || '';
-                    document.getElementById('brideMother').value = doc.bride_mother || '';
-                    document.getElementById('witness1').value = doc.witness_1 || '';
-                    document.getElementById('witness2').value = doc.witness_2 || '';
-                    break;
-                    
-                case 'obito':
-                    document.getElementById('deathDate').value = doc.death_date || '';
-                    document.getElementById('burialPlace').value = doc.burial_place || '';
-                    document.getElementById('ritesPerformed').value = doc.rites_performed || '';
-                    break;
-                    
-                case 'admissao':
-                    document.getElementById('admissionDate').value = doc.admission_date || '';
-                    document.getElementById('address').value = doc.address || '';
-                    document.getElementById('ministries').value = doc.ministries || '';
-                    break;
-            }
-        }
-
-        // Document Actions (View, Edit, Delete)
-        document.getElementById('documentsTable').addEventListener('click', async function(e) {
-            if (e.target.classList.contains('view-btn') || e.target.classList.contains('edit-btn')) {
-                const row = e.target.closest('tr');
-                const docId = parseInt(row.getAttribute('data-id'));
-                
-                console.log('Ação em documento ID:', docId);
-                
-                const doc = await loadDocumentForEdit(docId);
-                if (!doc) return;
-                
-                uploadedFiles = [];
-                isSubmitting = false;
-                
-                selectedDocument = docId;
-                isEditMode = e.target.classList.contains('edit-btn');
-                
-                console.log('Modo edição:', isEditMode);
-                
-                document.getElementById('fullName').value = doc.name;
-                document.getElementById('birthDate').value = doc.birth_date;
-                document.getElementById('observations').value = doc.observations || '';
-                
-                fillDocumentSpecificFields(doc);
-                
-                const fileList = document.getElementById('fileList');
-                fileList.innerHTML = '';
-                
-                if (doc.files && doc.files.length > 0) {
-                    doc.files.forEach(file => {
-                        const fileItem = document.createElement('div');
-                        fileItem.className = 'file-item';
-                        const statusClass = file.upload_success ? 'available' : 'unavailable';
-                        const statusText = file.upload_success ? 'Disponível' : 'Indisponível';
-                        
-                        fileItem.innerHTML = `
-                            <span class="file-name">
-                                ${file.name} 
-                                <span class="file-status ${statusClass}">${statusText}</span>
-                                (${file.file_size ? Math.round(file.file_size / 1024) + ' KB' : 'N/A'})
-                            </span>
-                            <div class="file-actions">
-                                <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
-                                <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}" ${!file.upload_success ? 'disabled' : ''}>Download</button>
-                                ${isEditMode ? `<button type="button" class="btn btn-sm btn-danger remove-file-btn" data-file-id="${file.id}">Remover</button>` : ''}
-                            </div>
-                        `;
-                        fileList.appendChild(fileItem);
-                    });
-                }
-                
-                document.getElementById('formTitle').textContent = isEditMode ? 'Editar Registro' : 'Visualizar Registro';
-                document.getElementById('formHeaderTitle').textContent = `${isEditMode ? 'Editar' : 'Visualizar'} Registro de ${doc.document_types.name}`;
-                
-                const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
-                formInputs.forEach(input => {
-                    input.readOnly = !isEditMode;
-                });
-                
-                const submitBtn = document.getElementById('submitFormBtn');
-                submitBtn.disabled = false;
-                submitBtn.textContent = isEditMode ? 'Salvar Alterações' : 'Salvar Registro';
-                submitBtn.style.display = isEditMode ? 'inline-block' : 'none';
-                
-                document.getElementById('backToDocTypes2').textContent = doc.year;
-                document.getElementById('backToDocList').textContent = doc.document_types.name;
-                
-                documentsListPage.style.display = 'none';
-                searchResultsFormSection.style.display = 'none';
-                personFormContainer.style.display = 'block';
-                
-            } else if (e.target.classList.contains('delete-btn')) {
-                const row = e.target.closest('tr');
-                const docId = parseInt(row.getAttribute('data-id'));
-                selectedDocument = docId;
-                
-                document.getElementById('deleteConfirmModal').style.display = 'flex';
-            }
-        });
-
-        // EVENTOS CORRIGIDOS PARA OS BOTÕES DE ARQUIVO
-        document.getElementById('fileList').addEventListener('click', function(e) {
-            if (e.target.classList.contains('view-file-btn')) {
-                const fileId = parseInt(e.target.getAttribute('data-file-id'));
-                console.log('Visualizando arquivo ID:', fileId);
-                viewSavedFile(fileId);
-            } else if (e.target.classList.contains('download-file-btn')) {
-                const fileId = parseInt(e.target.getAttribute('data-file-id'));
-                if (!e.target.disabled) {
-                    console.log('Fazendo download do arquivo ID:', fileId);
-                    downloadSavedFile(fileId);
-                } else {
-                    showError('Este arquivo não está disponível para download');
-                }
-            } else if (e.target.classList.contains('remove-file-btn')) {
-                const fileId = parseInt(e.target.getAttribute('data-file-id'));
-                console.log('Removendo arquivo ID:', fileId);
-                removeSavedFile(fileId);
-            } else if (e.target.classList.contains('remove-file')) {
-                const index = parseInt(e.target.getAttribute('data-index'));
-                uploadedFiles.splice(index, 1);
-                refreshUploadedFilesList();
-            } else if (e.target.classList.contains('view-uploaded-file')) {
-                const index = parseInt(e.target.getAttribute('data-index'));
-                const file = uploadedFiles[index];
-                if (file) {
-                    viewUploadedFile(file);
-                }
-            }
-        });
-
-        // Function to refresh uploaded files list display
-        function refreshUploadedFilesList() {
-            const fileList = document.getElementById('fileList');
-            const existingFiles = fileList.querySelectorAll('.file-item[data-uploaded="true"]');
-            
-            existingFiles.forEach(item => item.remove());
-            
-            uploadedFiles.forEach((file, index) => {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
-                fileItem.setAttribute('data-uploaded', 'true');
-                fileItem.innerHTML = `
-                    <span class="file-name">${file.name} (${Math.round(file.file.size / 1024)} KB)</span>
-                    <div class="file-actions">
-                        <button type="button" class="btn btn-sm btn-info view-uploaded-file" data-index="${index}">Visualizar</button>
-                        <button type="button" class="btn btn-sm btn-danger remove-file" data-index="${index}">Remover</button>
-                    </div>
-                `;
-                fileList.appendChild(fileItem);
-            });
-        }
-
-        // Cancel Form Button
+        // CANCEL FORM BUTTON
         document.getElementById('cancelFormBtn').addEventListener('click', function() {
             uploadedFiles = [];
             isEditMode = false;
@@ -3446,7 +3734,7 @@
             documentsListPage.style.display = 'block';
         });
 
-        // Breadcrumb Navigation
+        // BREADCRUMB NAVIGATION
         document.getElementById('backToDashboard').addEventListener('click', function(e) {
             e.preventDefault();
             documentTypesPage.style.display = 'none';
@@ -3489,82 +3777,111 @@
             documentsListPage.style.display = 'block';
         });
 
-        // Enhanced Global Search Functionality
-        const searchInputs = document.querySelectorAll('#globalSearch, #globalSearch2, #globalSearch3');
-        const searchButtons = document.querySelectorAll('#searchBtn, #searchBtn2, #searchBtn3');
-        
-        function handleSearch(input, inForm = false) {
-            const searchTerm = input.value.trim();
-            
+        // GLOBAL SEARCH
+const searchInputs = document.querySelectorAll('#globalSearch, #globalSearch2, #globalSearch3');
+const searchButtons = document.querySelectorAll('#searchBtn, #searchBtn2, #searchBtn3');
+
+let searchTimeout;
+
+function handleSearch(input, inForm = false) {
+    const searchTerm = input.value.trim();
+    
+    if (searchTimeout) {
+        clearTimeout(searchTimeout);
+    }
+    
+    // Só fazer busca se tiver pelo menos 2 caracteres
+    if (searchTerm.length >= 2) {
+        searchTimeout = setTimeout(() => {
+            performSearch(searchTerm, inForm);
+        }, 500); // Aumentei o timeout para 500ms
+    }
+    // Removido a mensagem de erro que estava aparecendo desnecessariamente
+}
+
+searchInputs.forEach(input => {
+    input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const searchTerm = this.value.trim();
             if (searchTerm.length >= 2) {
-                performSearch(searchTerm, inForm);
-            } else if (searchTerm.length > 0) {
+                if (searchTimeout) clearTimeout(searchTimeout);
+                performSearch(searchTerm);
+            } else {
                 showError('Por favor, digite pelo menos 2 caracteres para buscar.');
             }
         }
-        
-        searchInputs.forEach(input => {
-            input.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    handleSearch(this);
-                }
-            });
-        });
-        
-        searchButtons.forEach((button, index) => {
-            button.addEventListener('click', function() {
-                const input = searchInputs[index];
-                if (input) {
-                    handleSearch(input);
-                }
-            });
-        });
+    });
+    
+    input.addEventListener('input', function() {
+        handleSearch(this);
+    });
+});
 
-        async function performSearch(term, inForm = false) {
-            console.log('Executando busca por:', term);
-            const results = await searchDocuments(term);
-            
-            const searchTermElement = document.getElementById(inForm ? 'searchTermForm' : 'searchTerm');
-            const resultsTable = document.getElementById(inForm ? 'searchResultsFormTable' : 'searchResultsTable');
-            const noResultsElement = document.getElementById(inForm ? 'noResultsForm' : 'noResults');
-            const searchSection = inForm ? searchResultsFormSection : searchResultsSection;
-            
-            searchTermElement.textContent = term;
-            resultsTable.innerHTML = '';
-            
-            if (results.length > 0) {
-                results.forEach(doc => {
-                    const row = document.createElement('tr');
-                    row.setAttribute('data-id', doc.id);
-                    row.setAttribute('data-year', doc.year);
-                    row.setAttribute('data-type-id', doc.type_id);
-                    
-                    const birthDate = new Date(doc.birth_date).toLocaleDateString('pt-BR');
-                    const regDate = new Date(doc.registration_date).toLocaleDateString('pt-BR');
-                    
-                    row.innerHTML = `
-                        <td>${doc.name}</td>
-                        <td>${doc.document_types.name}</td>
-                        <td>${birthDate}</td>
-                        <td>${regDate}</td>
-                        <td>${doc.year}</td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="btn btn-sm btn-info search-view-btn">Ver</button>
-                            </div>
-                        </td>
-                    `;
-                    resultsTable.appendChild(row);
-                });
-                
-                noResultsElement.style.display = 'none';
+searchButtons.forEach((button, index) => {
+    button.addEventListener('click', function() {
+        const input = searchInputs[index];
+        if (input) {
+            const searchTerm = input.value.trim();
+            if (searchTerm.length >= 2) {
+                if (searchTimeout) clearTimeout(searchTimeout);
+                performSearch(searchTerm);
             } else {
-                noResultsElement.style.display = 'block';
+                showError('Por favor, digite pelo menos 2 caracteres para buscar.');
             }
-            
-            searchSection.style.display = 'block';
-            searchInputs.forEach(input => input.value = '');
         }
+    });
+});
+
+async function performSearch(term, inForm = false) {
+    console.log('Executando busca por:', term);
+    const results = await searchDocuments(term);
+    
+    const searchTermElement = document.getElementById(inForm ? 'searchTermForm' : 'searchTerm');
+    const resultsTable = document.getElementById(inForm ? 'searchResultsFormTable' : 'searchResultsTable');
+    const noResultsElement = document.getElementById(inForm ? 'noResultsForm' : 'noResults');
+    const searchSection = inForm ? searchResultsFormSection : searchResultsSection;
+    
+    searchTermElement.textContent = term;
+    resultsTable.innerHTML = '';
+    
+    if (results.length > 0) {
+        const fragment = document.createDocumentFragment();
+        
+        results.forEach(doc => {
+            const row = document.createElement('tr');
+            row.setAttribute('data-id', doc.id);
+            row.setAttribute('data-year', doc.year);
+            row.setAttribute('data-type-id', doc.type_id);
+            
+            const birthDate = new Date(doc.birth_date).toLocaleDateString('pt-BR');
+            const regDate = new Date(doc.registration_date).toLocaleDateString('pt-BR');
+            
+            row.innerHTML = `
+                <td>${doc.name}</td>
+                <td>${doc.document_types.name}</td>
+                <td>${birthDate}</td>
+                <td>${regDate}</td>
+                <td>${doc.year}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn btn-sm btn-info search-view-btn">Ver</button>
+                    </div>
+                </td>
+            `;
+            fragment.appendChild(row);
+        });
+        
+        resultsTable.appendChild(fragment);
+        noResultsElement.style.display = 'none';
+    } else {
+        noResultsElement.style.display = 'block';
+    }
+    
+    searchSection.style.display = 'block';
+    // Removido: searchInputs.forEach(input => input.value = ''); 
+    // Isso estava limpando os campos automaticamente
+}
 
         function handleSearchViewBtn(e) {
             if (e.target.classList.contains('search-view-btn')) {
@@ -3594,11 +3911,7 @@
             selectedDocument = docId;
             isEditMode = false;
             
-            document.getElementById('fullName').value = doc.name;
-            document.getElementById('birthDate').value = doc.birth_date;
-            document.getElementById('observations').value = doc.observations || '';
-            
-            fillDocumentSpecificFields(doc);
+            populateForm(doc);
             
             const fileList = document.getElementById('fileList');
             fileList.innerHTML = '';
@@ -3607,18 +3920,14 @@
                 doc.files.forEach(file => {
                     const fileItem = document.createElement('div');
                     fileItem.className = 'file-item';
-                    const statusClass = file.upload_success ? 'available' : 'unavailable';
-                    const statusText = file.upload_success ? 'Disponível' : 'Indisponível';
                     
                     fileItem.innerHTML = `
                         <span class="file-name">
-                            ${file.name} 
-                            <span class="file-status ${statusClass}">${statusText}</span>
-                            (${file.file_size ? Math.round(file.file_size / 1024) + ' KB' : 'N/A'})
+                            ${file.name}
                         </span>
                         <div class="file-actions">
                             <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
-                            <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}" ${!file.upload_success ? 'disabled' : ''}>Download</button>
+                            <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
                         </div>
                     `;
                     fileList.appendChild(fileItem);
@@ -3634,6 +3943,7 @@
             });
             
             const submitBtn = document.getElementById('submitFormBtn');
+            // Esconder o botão salvar no modo visualização
             submitBtn.style.display = 'none';
             
             document.getElementById('backToDocTypes2').textContent = doc.year;
@@ -3657,33 +3967,37 @@
         document.getElementById('searchResultsTable').addEventListener('click', handleSearchViewBtn);
         document.getElementById('searchResultsFormTable').addEventListener('click', handleSearchViewBtn);
 
-        // File Upload Enhanced Functionality
+        // FILE UPLOAD
         document.getElementById('fileUpload').addEventListener('change', function(e) {
             console.log('Arquivos selecionados:', this.files.length);
             
             if (this.files.length > 0) {
-                for (let i = 0; i < this.files.length; i++) {
-                    const file = this.files[i];
+                const filesToProcess = Array.from(this.files);
+                
+                filesToProcess.forEach((file, i) => {
                     console.log('Adicionando arquivo:', file.name, file.size, 'bytes');
                     
-                    if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                    if (file.size > 10 * 1024 * 1024) {
                         showError(`Arquivo ${file.name} é muito grande (máximo 10MB)`);
-                        continue;
+                        return;
                     }
                     
-                    const uploadedFile = {
-                        id: Date.now() + i,
-                        name: file.name,
-                        type: file.type,
-                        size: file.size,
-                        file: file
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const uploadedFile = {
+                            id: Date.now() + i,
+                            name: file.name,
+                            type: file.type,
+                            size: file.size,
+                            file: file,
+                            dataUrl: e.target.result
+                        };
+                        
+                        uploadedFiles.push(uploadedFile);
+                        refreshUploadedFilesList();
                     };
-                    
-                    uploadedFiles.push(uploadedFile);
-                }
-                
-                refreshUploadedFilesList();
-                console.log('Total de arquivos na lista:', uploadedFiles.length);
+                    reader.readAsDataURL(file);
+                });
             }
             
             this.value = '';
@@ -3695,7 +4009,7 @@
             }
         });
 
-        // Drag and drop functionality
+        // DRAG AND DROP
         const fileUploadArea = document.getElementById('fileUploadArea');
         
         fileUploadArea.addEventListener('dragover', function(e) {
@@ -3729,7 +4043,34 @@
             }
         });
 
-        // Modal event listeners
+        // FILE LIST EVENTS
+        document.getElementById('fileList').addEventListener('click', function(e) {
+            if (e.target.classList.contains('view-file-btn')) {
+                const fileId = parseInt(e.target.getAttribute('data-file-id'));
+                console.log('Visualizando arquivo ID:', fileId);
+                viewSavedFile(fileId);
+            } else if (e.target.classList.contains('download-file-btn')) {
+                const fileId = parseInt(e.target.getAttribute('data-file-id'));
+                console.log('Fazendo download do arquivo ID:', fileId);
+                downloadSavedFile(fileId);
+            } else if (e.target.classList.contains('remove-file-btn')) {
+                const fileId = parseInt(e.target.getAttribute('data-file-id'));
+                console.log('Removendo arquivo ID:', fileId);
+                removeSavedFile(fileId);
+            } else if (e.target.classList.contains('remove-file')) {
+                const index = parseInt(e.target.getAttribute('data-index'));
+                uploadedFiles.splice(index, 1);
+                refreshUploadedFilesList();
+            } else if (e.target.classList.contains('view-uploaded-file')) {
+                const index = parseInt(e.target.getAttribute('data-index'));
+                const file = uploadedFiles[index];
+                if (file) {
+                    viewUploadedFile(file);
+                }
+            }
+        });
+
+        // MODAL EVENT LISTENERS
         ['addYearModal', 'addDocTypeModal', 'deleteConfirmModal', 'fileViewModal', 'removeYearModal', 'removeDocTypeModal'].forEach(modalId => {
             const modal = document.getElementById(modalId);
             const closeBtn = modal.querySelector('.modal-close');
@@ -3747,7 +4088,7 @@
             });
         });
 
-        // File view modal specific controls
+        // FILE VIEW MODAL CONTROLS
         document.getElementById('closeFileViewBtn').addEventListener('click', function() {
             document.getElementById('fileViewModal').style.display = 'none';
         });
@@ -3758,10 +4099,11 @@
             }
         });
 
+        // SAVE BUTTONS
         document.getElementById('saveYearBtn').addEventListener('click', async function() {
             const newYear = parseInt(document.getElementById('newYear').value);
             
-            if (newYear && !yearsCache.includes(newYear)) {
+            if (newYear && !yearsCache.find(y => y.year === newYear)) {
                 try {
                     await addYear(newYear);
                     await initializeYearsGrid();
@@ -3805,7 +4147,7 @@
             }
         });
 
-        // Delete confirmation
+        // DELETE CONFIRMATION
         document.getElementById('confirmDeleteBtn').addEventListener('click', async function() {
             if (selectedDocument) {
                 const success = await deleteDocument(selectedDocument);
@@ -3822,7 +4164,7 @@
             document.getElementById('deleteConfirmModal').style.display = 'none';
         });
 
-        // Cancel buttons for modals
+        // CANCEL BUTTONS
         document.getElementById('cancelYearBtn').addEventListener('click', function() {
             document.getElementById('addYearModal').style.display = 'none';
         });
@@ -3839,7 +4181,7 @@
             document.getElementById('removeDocTypeModal').style.display = 'none';
         });
 
-        // Clear search results
+        // CLEAR SEARCH
         document.getElementById('clearSearchBtn').addEventListener('click', function() {
             searchResultsSection.style.display = 'none';
             searchInputs.forEach(input => input.value = '');
@@ -3849,7 +4191,7 @@
             searchResultsFormSection.style.display = 'none';
         });
 
-        // Initialize on page load
+        // INITIALIZE ON PAGE LOAD
         document.addEventListener('DOMContentLoaded', function() {
             const currentYear = new Date().getFullYear();
             document.getElementById('newYear').value = currentYear;
