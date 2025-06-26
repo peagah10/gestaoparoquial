@@ -9,15 +9,15 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <!-- Open Graph para Instagram, WhatsApp e Facebook -->
-<meta property="og:title" content="Gerenciamento Paroquial - Paróquia São Cristóvão">
-<meta property="og:description" content="Sistema moderno para gestão de sacramentos, eventos e membros da Paróquia São Cristóvão. Acesse agora!">
-<meta property="og:image" content="https://gestaoparoquial.netlify.app/images/logo.png">
-<meta property="og:url" content="https://gestaoparoquial.netlify.app"> 
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Paróquia São Cristóvão">
+    <meta property="og:title" content="Gerenciamento Paroquial - Paróquia São Cristóvão">
+    <meta property="og:description" content="Sistema moderno para gestão de sacramentos, eventos e membros da Paróquia São Cristóvão. Acesse agora!">
+    <meta property="og:image" content="https://gestaoparoquial.netlify.app/images/logo.png">
+    <meta property="og:url" content="https://gestaoparoquial.netlify.app"> 
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Paróquia São Cristóvão">
 
-<!-- Meta para WhatsApp -->
-<meta name="description" content="Acesse o sistema de gerenciamento paroquial.">
+    <!-- Meta para WhatsApp -->
+    <meta name="description" content="Acesse o sistema de gerenciamento paroquial.">
     
     <style>
         :root {
@@ -146,12 +146,15 @@
         .login-header .church-logo {
             width: 140px;
             height: 140px;
-            margin-bottom: 25px;
+            margin: 0 auto 25px;
             border-radius: 50%;
             object-fit: cover;
             box-shadow: 0 10px 30px rgba(139, 0, 0, 0.4);
             border: 4px solid var(--gold);
             background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .login-header h1 {
@@ -326,6 +329,9 @@
             box-shadow: 0 6px 18px rgba(0,0,0,0.4);
             border: 3px solid var(--gold);
             background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .logo h1 {
@@ -402,6 +408,9 @@
             box-shadow: 0 6px 18px rgba(255, 215, 0, 0.4);
             border: 2px solid var(--gold);
             background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .user-menu .user-name {
@@ -504,11 +513,22 @@
             height: 70px;
             margin: 0 auto 25px;
             border-radius: 15px;
-            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             box-shadow: 0 6px 20px rgba(0,0,0,0.25);
             transition: transform 0.3s ease;
             border: 2px solid rgba(139, 0, 0, 0.1);
             background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            overflow: hidden;
+        }
+
+        .folder-icon img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
         }
 
         .folder-card:hover .folder-icon {
@@ -846,6 +866,8 @@
             backdrop-filter: blur(20px);
             border: 3px solid rgba(139, 0, 0, 0.1);
             animation: modalSlideIn 0.5s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         @keyframes modalSlideIn {
@@ -965,6 +987,178 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
+        /* File View Modal Styles */
+        .file-view-modal {
+            max-width: 90vw;
+            max-height: 95vh;
+        }
+
+        .file-view-content {
+            max-height: 70vh;
+            overflow: auto;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .file-view-image {
+            max-width: 100%;
+            max-height: 65vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .file-view-iframe {
+            width: 100%;
+            height: 65vh;
+            border: none;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .file-view-text {
+            text-align: left;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            max-height: 50vh;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+        }
+
+        .file-view-text pre {
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .file-view-error {
+            padding: 40px;
+            text-align: center;
+            color: #64748b;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .file-view-error h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .file-view-error p {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .file-view-error .file-info {
+            background: rgba(139, 0, 0, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        .retry-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            background: #c82333;
+            transform: translateY(-1px);
+        }
+
+        /* Document availability status */
+        .file-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .file-status.available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .file-status.unavailable {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Loading state for file operations */
+        .file-loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        /* Upload progress indicator */
+        .upload-progress {
+            background: rgba(139, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        .upload-progress h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .upload-progress-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(139, 0, 0, 0.1);
+        }
+
+        .upload-progress-item:last-child {
+            border-bottom: none;
+        }
+
+        .upload-status {
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .upload-status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .upload-status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .upload-status.uploading {
+            background: #fff3cd;
+            color: #856404;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .header-content {
@@ -1022,6 +1216,19 @@
                 width: 100%;
                 justify-content: center;
             }
+
+            .file-view-modal {
+                max-width: 95vw;
+                padding: 20px;
+            }
+
+            .file-view-content {
+                max-height: 60vh;
+            }
+
+            .file-view-iframe {
+                height: 50vh;
+            }
         }
     </style>
 </head>
@@ -1035,7 +1242,9 @@
     <div class="login-container" id="loginPage">
         <div class="login-card">
             <div class="login-header">
-                <div class="church-logo"></div>
+                <div class="church-logo">
+                    <img src="https://img.icons8.com/fluency/96/church.png" alt="Igreja" />
+                </div>
                 <h1>Gerenciamento Paroquial</h1>
                 <p>Sistema Profissional de Gestão</p>
             </div>
@@ -1062,15 +1271,21 @@
             <div class="container">
                 <div class="header-content">
                     <div class="logo">
-                        <div class="church-logo"></div>
+                        <div class="church-logo">
+                            <img src="https://img.icons8.com/fluency/96/church.png" alt="Igreja" />
+                        </div>
                         <h1>Gerenciamento Paroquial</h1>
                     </div>
                     <div class="search-bar">
                         <input type="text" id="globalSearch" placeholder="Buscar por nome ou data de nascimento...">
-                        <button type="button" class="search-btn" id="searchBtn">🔍</button>
+                        <button type="button" class="search-btn" id="searchBtn">
+                            <img src="https://img.icons8.com/fluency/24/search.png" alt="Buscar" style="filter: brightness(0) invert(1);" />
+                        </button>
                     </div>
                     <div class="user-menu">
-                        <div class="avatar" id="userAvatar"></div>
+                        <div class="avatar" id="userAvatar">
+                            <img src="https://img.icons8.com/fluency/48/user.png" alt="Usuário" />
+                        </div>
                         <span class="user-name" id="userName">Administrador</span>
                         <button class="logout-btn" id="logoutBtn">Sair</button>
                     </div>
@@ -1138,15 +1353,21 @@
             <div class="container">
                 <div class="header-content">
                     <div class="logo">
-                        <div class="church-logo"></div>
+                        <div class="church-logo">
+                            <img src="https://img.icons8.com/fluency/96/church.png" alt="Igreja" />
+                        </div>
                         <h1>Gerenciamento Paroquial</h1>
                     </div>
                     <div class="search-bar">
                         <input type="text" id="globalSearch2" placeholder="Buscar por nome ou data de nascimento...">
-                        <button type="button" class="search-btn" id="searchBtn2">🔍</button>
+                        <button type="button" class="search-btn" id="searchBtn2">
+                            <img src="https://img.icons8.com/fluency/24/search.png" alt="Buscar" style="filter: brightness(0) invert(1);" />
+                        </button>
                     </div>
                     <div class="user-menu">
-                        <div class="avatar" id="userAvatar2"></div>
+                        <div class="avatar" id="userAvatar2">
+                            <img src="https://img.icons8.com/fluency/48/user.png" alt="Usuário" />
+                        </div>
                         <span class="user-name" id="userName2">Administrador</span>
                         <button class="logout-btn" id="logoutBtn2">Sair</button>
                     </div>
@@ -1182,15 +1403,21 @@
             <div class="container">
                 <div class="header-content">
                     <div class="logo">
-                        <div class="church-logo"></div>
+                        <div class="church-logo">
+                            <img src="https://img.icons8.com/fluency/96/church.png" alt="Igreja" />
+                        </div>
                         <h1>Gerenciamento Paroquial</h1>
                     </div>
                     <div class="search-bar">
                         <input type="text" id="globalSearch3" placeholder="Buscar por nome ou data de nascimento...">
-                        <button type="button" class="search-btn" id="searchBtn3">🔍</button>
+                        <button type="button" class="search-btn" id="searchBtn3">
+                            <img src="https://img.icons8.com/fluency/24/search.png" alt="Buscar" style="filter: brightness(0) invert(1);" />
+                        </button>
                     </div>
                     <div class="user-menu">
-                        <div class="avatar" id="userAvatar3"></div>
+                        <div class="avatar" id="userAvatar3">
+                            <img src="https://img.icons8.com/fluency/48/user.png" alt="Usuário" />
+                        </div>
                         <span class="user-name" id="userName3">Administrador</span>
                         <button class="logout-btn" id="logoutBtn3">Sair</button>
                     </div>
@@ -1662,12 +1889,12 @@
 
     <!-- Modal para visualizar arquivo -->
     <div class="modal-overlay" id="fileViewModal">
-        <div class="modal">
+        <div class="modal file-view-modal">
             <div class="modal-header">
                 <h2 id="fileViewTitle">Visualizar Arquivo</h2>
                 <button class="modal-close" id="closeFileViewModal">&times;</button>
             </div>
-            <div class="modal-body" id="fileViewContent">
+            <div class="modal-body file-view-content" id="fileViewContent">
                 <!-- Conteúdo do arquivo será exibido aqui -->
             </div>
             <div class="modal-footer">
@@ -1678,7 +1905,7 @@
     </div>
 
     <script>
-        // Initialize Supabase
+        // Initialize Supabase - SUAS CREDENCIAIS
         const SUPABASE_URL = 'https://objhnypjkrocgixsyejf.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9iamhueXBqa3JvY2dpeHN5ZWpmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3NzU2MDIsImV4cCI6MjA2NjM1MTYwMn0.tOg52_qdTVwy5N09abTBxmKmFb4h0yJaSutPxKflZKY';
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -1699,6 +1926,17 @@
         let yearsCache = [];
         let documentTypesCache = [];
         let documentsCache = [];
+
+        // Mapa de ícones para tipos de documento
+        const documentTypeIcons = {
+            'batismo': 'https://img.icons8.com/fluency/96/church.png',
+            'crisma': 'https://img.icons8.com/fluency/96/christian-cross.png',
+            'comunhao': 'https://img.icons8.com/fluency/96/bread.png',
+            'casamento': 'https://img.icons8.com/fluency/96/wedding-rings.png',
+            'obito': 'https://img.icons8.com/fluency/96/dove.png',
+            'admissao': 'https://img.icons8.com/fluency/96/group.png',
+            'default': 'https://img.icons8.com/fluency/96/document.png'
+        };
 
         // DOM Elements
         const loginPage = document.getElementById('loginPage');
@@ -1721,21 +1959,24 @@
 
         function showError(message) {
             const errorDiv = document.getElementById('loginError');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            setTimeout(() => {
-                errorDiv.style.display = 'none';
-            }, 5000);
+            if (errorDiv) {
+                errorDiv.textContent = message;
+                errorDiv.style.display = 'block';
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 5000);
+            } else {
+                alert(message);
+            }
+            console.error('Error:', message);
         }
 
         function showSuccess(message) {
-            // Create success message element
             const successDiv = document.createElement('div');
             successDiv.className = 'success-message';
             successDiv.textContent = message;
             document.body.appendChild(successDiv);
             
-            // Remove after 3 seconds
             setTimeout(() => {
                 if (successDiv.parentNode) {
                     successDiv.parentNode.removeChild(successDiv);
@@ -1743,46 +1984,61 @@
             }, 3000);
         }
 
-        // Database functions
+        // FUNÇÕES CORRIGIDAS DE BANCO DE DADOS
+
+        // Carregar anos
         async function loadYears() {
             try {
+                console.log('Carregando anos...');
                 const { data, error } = await supabase
                     .from('years')
                     .select('*')
                     .order('year', { ascending: false });
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('Erro ao carregar anos:', error);
+                    throw error;
+                }
                 
-                yearsCache = data.map(y => y.year);
+                console.log('Anos carregados:', data);
+                yearsCache = data ? data.map(y => y.year) : [];
                 return yearsCache;
             } catch (error) {
                 console.error('Error loading years:', error);
-                showError('Erro ao carregar anos do banco de dados');
+                showError('Erro ao carregar anos: ' + error.message);
                 return [];
             }
         }
 
+        // Carregar tipos de documento
         async function loadDocumentTypes() {
             try {
+                console.log('Carregando tipos de documento...');
                 const { data, error } = await supabase
                     .from('document_types')
                     .select('*')
                     .order('name');
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('Erro ao carregar tipos:', error);
+                    throw error;
+                }
                 
-                documentTypesCache = data;
+                console.log('Tipos carregados:', data);
+                documentTypesCache = data || [];
                 return documentTypesCache;
             } catch (error) {
                 console.error('Error loading document types:', error);
-                showError('Erro ao carregar tipos de documento');
+                showError('Erro ao carregar tipos de documento: ' + error.message);
                 return [];
             }
         }
 
+        // Carregar documentos
         async function loadDocuments(year, typeId) {
             try {
                 showLoading();
+                console.log('Carregando documentos para ano:', year, 'tipo:', typeId);
                 
                 const { data, error } = await supabase
                     .from('documents')
@@ -1795,23 +2051,28 @@
                     .eq('type_id', typeId)
                     .order('name');
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('Erro ao carregar documentos:', error);
+                    throw error;
+                }
                 
+                console.log('Documentos carregados:', data);
                 hideLoading();
-                return data;
+                return data || [];
             } catch (error) {
                 console.error('Error loading documents:', error);
                 hideLoading();
-                showError('Erro ao carregar documentos');
+                showError('Erro ao carregar documentos: ' + error.message);
                 return [];
             }
         }
 
+        // Buscar documentos
         async function searchDocuments(searchTerm) {
             try {
                 showLoading();
+                console.log('Buscando por:', searchTerm);
                 
-                // Tentar detectar se o termo de busca contém uma data
                 const dateRegex = /(\d{1,2}\/\d{1,2}\/\d{4}|\d{4}-\d{1,2}-\d{1,2})/;
                 const hasDate = dateRegex.test(searchTerm);
                 
@@ -1824,13 +2085,11 @@
                     `);
                 
                 if (hasDate) {
-                    // Se contém data, separar nome e data
                     const parts = searchTerm.split(/\s+/);
                     const datePart = parts.find(part => dateRegex.test(part));
                     const nameParts = parts.filter(part => !dateRegex.test(part));
                     const nameTerm = nameParts.join(' ');
                     
-                    // Converter data para formato ISO se necessário
                     let isoDate = datePart;
                     if (datePart.includes('/')) {
                         const [day, month, year] = datePart.split('/');
@@ -1838,42 +2097,44 @@
                     }
                     
                     if (nameTerm.trim()) {
-                        // Buscar por nome E data
                         query = query
                             .ilike('name', `%${nameTerm.trim()}%`)
                             .eq('birth_date', isoDate);
                     } else {
-                        // Buscar só por data
                         query = query.eq('birth_date', isoDate);
                     }
                 } else {
-                    // Buscar só por nome (sem data)
                     query = query.ilike('name', `%${searchTerm}%`);
                 }
                 
                 const { data, error } = await query.order('name');
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('Erro na busca:', error);
+                    throw error;
+                }
                 
+                console.log('Resultados da busca:', data);
                 hideLoading();
                 return data || [];
             } catch (error) {
                 console.error('Error searching documents:', error);
                 hideLoading();
-                showError('Erro ao buscar documentos');
+                showError('Erro ao buscar documentos: ' + error.message);
                 return [];
             }
         }
 
+        // FUNÇÃO CORRIGIDA PARA SALVAR DOCUMENTO
         async function saveDocument(documentData) {
             try {
                 showLoading();
+                console.log('Salvando documento:', documentData);
                 
                 let savedDoc;
                 
                 if (isEditMode && selectedDocument) {
-                    // Update existing document
-                    console.log('Updating document with ID:', selectedDocument);
+                    console.log('Atualizando documento ID:', selectedDocument);
                     const { data, error } = await supabase
                         .from('documents')
                         .update(documentData)
@@ -1881,26 +2142,31 @@
                         .select()
                         .single();
                     
-                    if (error) throw error;
+                    if (error) {
+                        console.error('Erro ao atualizar:', error);
+                        throw error;
+                    }
                     savedDoc = data;
-                    console.log('Document updated successfully:', savedDoc);
                 } else {
-                    // Create new document
-                    console.log('Creating new document:', documentData);
+                    console.log('Criando novo documento');
                     const { data, error } = await supabase
                         .from('documents')
                         .insert([documentData])
                         .select()
                         .single();
                     
-                    if (error) throw error;
+                    if (error) {
+                        console.error('Erro ao inserir:', error);
+                        throw error;
+                    }
                     savedDoc = data;
-                    console.log('New document created successfully:', savedDoc);
                 }
                 
-                // Save uploaded files if any
+                console.log('Documento salvo:', savedDoc);
+                
+                // Upload de arquivos apenas se existirem
                 if (uploadedFiles.length > 0) {
-                    console.log('Saving files for document ID:', savedDoc.id);
+                    console.log('Fazendo upload de arquivos...');
                     await saveDocumentFiles(savedDoc.id, uploadedFiles);
                 }
                 
@@ -1909,66 +2175,48 @@
             } catch (error) {
                 console.error('Error saving document:', error);
                 hideLoading();
-                showError('Erro ao salvar documento: ' + error.message);
                 throw error;
             }
         }
 
+        // FUNÇÃO CORRIGIDA PARA SALVAR ARQUIVOS DIRETAMENTE NO BANCO
         async function saveDocumentFiles(documentId, files) {
             try {
+                console.log('Salvando arquivos para documento:', documentId);
                 const savedFiles = [];
-                console.log(`Starting to save ${files.length} files for document ${documentId}`);
+                let uploadErrors = [];
                 
                 for (const fileData of files) {
                     try {
-                        // Create a unique filename
-                        const timestamp = Date.now();
-                        const randomSuffix = Math.random().toString(36).substring(2, 8);
-                        const cleanFileName = fileData.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-                        const fileName = `${documentId}_${timestamp}_${randomSuffix}_${cleanFileName}`;
+                        console.log('Processando arquivo:', fileData.name);
                         
-                        let fileUrl = null;
-                        let uploadSuccess = false;
-                        
-                        // Try to upload file to Supabase Storage
-                        try {
-                            console.log('Uploading file to storage:', fileName);
-                            const { data: uploadData, error: uploadError } = await supabase.storage
-                                .from('document-files')
-                                .upload(fileName, fileData.file, {
-                                    cacheControl: '3600',
-                                    upsert: false
-                                });
-                            
-                            if (!uploadError && uploadData) {
-                                // Get public URL if upload successful
-                                const { data: { publicUrl } } = supabase.storage
-                                    .from('document-files')
-                                    .getPublicUrl(fileName);
-                                
-                                fileUrl = publicUrl;
-                                uploadSuccess = true;
-                                console.log('File uploaded to storage successfully:', fileName);
-                            } else {
-                                console.warn('File upload to storage failed:', uploadError);
-                            }
-                        } catch (storageError) {
-                            console.warn('Storage upload error:', storageError);
+                        // Validação básica
+                        if (!fileData.file || fileData.file.size === 0) {
+                            throw new Error('Arquivo inválido ou vazio');
                         }
                         
-                        // Save file reference in database regardless of upload status
+                        if (fileData.file.size > 10 * 1024 * 1024) { // 10MB limit
+                            throw new Error('Arquivo muito grande (máximo 10MB)');
+                        }
+                        
+                        // Converter arquivo para ArrayBuffer e depois para bytes
+                        const arrayBuffer = await fileData.file.arrayBuffer();
+                        const uint8Array = new Uint8Array(arrayBuffer);
+                        
+                        // Criar registro no banco com o arquivo
                         const fileRecord = {
                             document_id: documentId,
                             name: fileData.name,
-                            file_path: fileName,
-                            file_url: fileUrl,
                             file_type: fileData.file.type || 'application/octet-stream',
                             file_size: fileData.file.size,
+                            file_data: Array.from(uint8Array), // Converter para array para inserção
                             uploaded_at: new Date().toISOString(),
-                            upload_success: uploadSuccess
+                            upload_success: true,
+                            upload_error: null
                         };
                         
-                        console.log('Saving file record to database:', fileRecord);
+                        console.log('Salvando arquivo no banco:', fileRecord.name);
+                        
                         const { data: dbData, error: dbError } = await supabase
                             .from('files')
                             .insert([fileRecord])
@@ -1976,42 +2224,71 @@
                             .single();
                         
                         if (dbError) {
-                            console.error('Error saving file reference to database:', dbError);
-                            throw dbError;
-                        } else {
-                            savedFiles.push(dbData);
-                            console.log('File reference saved to database successfully:', dbData);
+                            console.error('Erro no banco:', dbError);
+                            throw new Error(`Erro no banco de dados: ${dbError.message}`);
                         }
                         
+                        savedFiles.push(dbData);
+                        console.log('Arquivo salvo com sucesso:', fileData.name);
+                        
                     } catch (fileError) {
-                        console.error('Error processing file:', fileData.name, fileError);
-                        showError(`Erro ao processar arquivo ${fileData.name}: ${fileError.message}`);
-                        // Continue with other files even if one fails
-                        continue;
+                        console.error('Erro ao processar arquivo:', fileData.name, fileError);
+                        uploadErrors.push(`${fileData.name}: ${fileError.message}`);
+                        
+                        // Salvar registro de erro
+                        try {
+                            const errorRecord = {
+                                document_id: documentId,
+                                name: fileData.name,
+                                file_type: fileData.file ? fileData.file.type : 'unknown',
+                                file_size: fileData.file ? fileData.file.size : 0,
+                                uploaded_at: new Date().toISOString(),
+                                upload_success: false,
+                                upload_error: fileError.message
+                            };
+                            
+                            const { data: errorDbData } = await supabase
+                                .from('files')
+                                .insert([errorRecord])
+                                .select()
+                                .single();
+                            
+                            if (errorDbData) {
+                                savedFiles.push(errorDbData);
+                            }
+                        } catch (dbError) {
+                            console.error('Erro ao salvar registro de erro:', dbError);
+                        }
                     }
                 }
                 
-                console.log(`Successfully processed ${savedFiles.length} of ${files.length} files`);
+                // Mostrar resultados
+                const successCount = savedFiles.filter(f => f.upload_success).length;
+                const errorCount = uploadErrors.length;
                 
-                if (savedFiles.length === 0 && files.length > 0) {
-                    throw new Error('Nenhum arquivo foi salvo com sucesso');
+                if (successCount > 0) {
+                    showSuccess(`${successCount} arquivo(s) carregado(s) com sucesso!`);
+                }
+                
+                if (errorCount > 0) {
+                    showError(`${errorCount} arquivo(s) falharam no upload: ${uploadErrors.join(', ')}`);
                 }
                 
                 return savedFiles;
                 
             } catch (error) {
-                console.error('Error saving files:', error);
-                showError('Erro ao salvar arquivos: ' + error.message);
+                console.error('Erro geral no upload:', error);
+                showError('Erro geral ao processar arquivos: ' + error.message);
                 throw error;
             }
         }
 
-        // Função para visualizar arquivo salvo
+        // FUNÇÃO CORRIGIDA PARA VISUALIZAR ARQUIVO
         async function viewSavedFile(fileId) {
             try {
                 showLoading();
+                console.log('Carregando arquivo ID:', fileId);
                 
-                // Buscar informações do arquivo no banco de dados
                 const { data: fileData, error } = await supabase
                     .from('files')
                     .select('*')
@@ -2021,40 +2298,166 @@
                 hideLoading();
                 
                 if (error) {
-                    console.error('Error loading file data:', error);
-                    showError('Erro ao carregar dados do arquivo');
+                    console.error('Error loading file:', error);
+                    showError('Erro ao carregar dados do arquivo: ' + error.message);
                     return;
                 }
                 
-                if (!fileData.file_url || !fileData.upload_success) {
-                    showError('Arquivo não está disponível para visualização');
+                if (!fileData) {
+                    showError('Arquivo não encontrado');
                     return;
                 }
                 
-                // Preparar arquivo para visualização
-                const fileForView = {
+                console.log('Dados do arquivo:', fileData);
+                
+                selectedFileForView = {
                     id: fileData.id,
                     name: fileData.name,
                     type: fileData.file_type,
                     size: fileData.file_size,
-                    url: fileData.file_url
+                    data: fileData.file_data,
+                    uploadSuccess: fileData.upload_success,
+                    uploadError: fileData.upload_error
                 };
                 
-                viewFile(fileForView);
+                showFileViewModal();
                 
             } catch (error) {
                 hideLoading();
-                console.error('Error viewing saved file:', error);
-                showError('Erro ao visualizar arquivo');
+                console.error('Error viewing file:', error);
+                showError('Erro ao visualizar arquivo: ' + error.message);
             }
         }
 
-        // Função para baixar arquivo salvo
+        // FUNÇÃO CORRIGIDA PARA MOSTRAR MODAL DE VISUALIZAÇÃO
+        function showFileViewModal() {
+            const modal = document.getElementById('fileViewModal');
+            const title = document.getElementById('fileViewTitle');
+            const content = document.getElementById('fileViewContent');
+            
+            if (!selectedFileForView) {
+                showError('Nenhum arquivo selecionado');
+                return;
+            }
+            
+            title.textContent = `Visualizar: ${selectedFileForView.name}`;
+            content.innerHTML = '';
+            
+            // Verificar se arquivo foi carregado com sucesso
+            if (!selectedFileForView.uploadSuccess || !selectedFileForView.data) {
+                const errorMsg = selectedFileForView.uploadError || 'Arquivo não disponível';
+                content.innerHTML = `
+                    <div class="file-view-error">
+                        <h3>⚠️ Arquivo Não Disponível</h3>
+                        <div class="file-info">
+                            <p><strong>Nome:</strong> ${selectedFileForView.name}</p>
+                            <p><strong>Tipo:</strong> ${selectedFileForView.type || 'N/A'}</p>
+                            <p><strong>Tamanho:</strong> ${selectedFileForView.size ? Math.round(selectedFileForView.size / 1024) + ' KB' : 'N/A'}</p>
+                            <p><strong>Erro:</strong> ${errorMsg}</p>
+                        </div>
+                        <p style="margin: 20px 0; color: #dc3545;">
+                            O arquivo não foi carregado corretamente no sistema.
+                        </p>
+                    </div>
+                `;
+                modal.style.display = 'flex';
+                return;
+            }
+            
+            try {
+                // Criar blob do arquivo a partir dos dados binários
+                const uint8Array = new Uint8Array(selectedFileForView.data);
+                const blob = new Blob([uint8Array], { type: selectedFileForView.type });
+                const url = URL.createObjectURL(blob);
+                
+                // Exibir arquivo baseado no tipo
+                if (selectedFileForView.type && selectedFileForView.type.startsWith('image/')) {
+                    // Imagem
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.className = 'file-view-image';
+                    img.alt = selectedFileForView.name;
+                    img.onload = () => console.log('Imagem carregada');
+                    img.onerror = () => {
+                        content.innerHTML = createErrorHTML('Erro ao carregar imagem');
+                    };
+                    content.appendChild(img);
+                    
+                } else if (selectedFileForView.type === 'application/pdf') {
+                    // PDF
+                    const iframe = document.createElement('iframe');
+                    iframe.src = url;
+                    iframe.className = 'file-view-iframe';
+                    iframe.onload = () => console.log('PDF carregado');
+                    iframe.onerror = () => {
+                        content.innerHTML = createErrorHTML('Erro ao carregar PDF');
+                    };
+                    content.appendChild(iframe);
+                    
+                } else if (selectedFileForView.type && selectedFileForView.type.startsWith('text/')) {
+                    // Arquivo de texto
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        content.innerHTML = `
+                            <div class="file-view-text">
+                                <h4 style="margin-bottom: 15px; color: var(--primary);">${selectedFileForView.name}</h4>
+                                <pre>${e.target.result}</pre>
+                            </div>
+                        `;
+                    };
+                    reader.onerror = function() {
+                        content.innerHTML = createErrorHTML('Erro ao carregar arquivo de texto');
+                    };
+                    reader.readAsText(blob);
+                    
+                } else {
+                    // Tipo não suportado para visualização
+                    content.innerHTML = `
+                        <div class="file-view-error">
+                            <h3>📄 ${selectedFileForView.name}</h3>
+                            <div class="file-info">
+                                <p><strong>Tipo:</strong> ${selectedFileForView.type || 'Desconhecido'}</p>
+                                <p><strong>Tamanho:</strong> ${selectedFileForView.size ? Math.round(selectedFileForView.size / 1024) + ' KB' : 'N/A'}</p>
+                            </div>
+                            <p style="margin: 20px 0;">
+                                Este tipo de arquivo não pode ser visualizado no navegador.
+                            </p>
+                            <p style="color: #6c757d;">
+                                Use o botão "Download" para baixar e abrir o arquivo.
+                            </p>
+                        </div>
+                    `;
+                }
+                
+                // Armazenar URL para download
+                selectedFileForView.blobUrl = url;
+                
+            } catch (error) {
+                console.error('Erro ao processar arquivo:', error);
+                content.innerHTML = createErrorHTML('Erro ao processar dados do arquivo');
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        function createErrorHTML(message) {
+            return `
+                <div class="file-view-error">
+                    <h3>❌ Erro</h3>
+                    <p style="margin: 20px 0; color: #dc3545;">${message}</p>
+                    <p style="color: #6c757d;">
+                        Tente fazer o download do arquivo ou entre em contato com o administrador.
+                    </p>
+                </div>
+            `;
+        }
+
+        // FUNÇÃO CORRIGIDA PARA DOWNLOAD
         async function downloadSavedFile(fileId) {
             try {
                 showLoading();
+                console.log('Fazendo download do arquivo ID:', fileId);
                 
-                // Buscar informações do arquivo no banco de dados
                 const { data: fileData, error } = await supabase
                     .from('files')
                     .select('*')
@@ -2064,75 +2467,58 @@
                 hideLoading();
                 
                 if (error) {
-                    console.error('Error loading file data:', error);
-                    showError('Erro ao carregar dados do arquivo');
+                    console.error('Error loading file for download:', error);
+                    showError('Erro ao carregar arquivo para download: ' + error.message);
                     return;
                 }
                 
-                if (!fileData.file_url || !fileData.upload_success) {
-                    showError('Arquivo não está disponível para download');
+                if (!fileData.upload_success || !fileData.file_data) {
+                    showError('Arquivo não está disponível para download - ' + (fileData.upload_error || 'Dados não encontrados'));
                     return;
                 }
                 
-                // Fazer download do arquivo
-                const link = document.createElement('a');
-                link.href = fileData.file_url;
-                link.download = fileData.name;
-                link.target = '_blank';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                showSuccess('Download iniciado com sucesso!');
+                // Criar download
+                try {
+                    console.log('Criando download para:', fileData.name);
+                    const uint8Array = new Uint8Array(fileData.file_data);
+                    const blob = new Blob([uint8Array], { type: fileData.file_type });
+                    const url = URL.createObjectURL(blob);
+                    
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = fileData.name;
+                    
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // Limpar URL após download
+                    setTimeout(() => URL.revokeObjectURL(url), 100);
+                    
+                    showSuccess('Download iniciado!');
+                } catch (downloadError) {
+                    console.error('Download error:', downloadError);
+                    showError('Erro ao iniciar download: ' + downloadError.message);
+                }
                 
             } catch (error) {
                 hideLoading();
-                console.error('Error downloading saved file:', error);
-                showError('Erro ao baixar arquivo');
+                console.error('Error downloading file:', error);
+                showError('Erro ao fazer download: ' + error.message);
             }
         }
 
-        // Função para remover arquivo salvo
+        // FUNÇÃO CORRIGIDA PARA REMOVER ARQUIVO
         async function removeSavedFile(fileId) {
+            if (!confirm('Tem certeza que deseja remover este arquivo? Esta ação não pode ser desfeita.')) {
+                return;
+            }
+            
             try {
-                const confirmRemove = confirm('Tem certeza que deseja remover este arquivo? Esta ação não pode ser desfeita.');
-                
-                if (!confirmRemove) return;
-                
                 showLoading();
+                console.log('Removendo arquivo ID:', fileId);
                 
-                // Buscar informações do arquivo primeiro
-                const { data: fileData, error: fileError } = await supabase
-                    .from('files')
-                    .select('*')
-                    .eq('id', fileId)
-                    .single();
-                
-                if (fileError) {
-                    console.error('Error loading file data:', fileError);
-                    hideLoading();
-                    showError('Erro ao carregar dados do arquivo');
-                    return;
-                }
-                
-                // Tentar remover do storage (se existir)
-                if (fileData.file_path && fileData.upload_success) {
-                    try {
-                        const { error: storageError } = await supabase.storage
-                            .from('document-files')
-                            .remove([fileData.file_path]);
-                        
-                        if (storageError) {
-                            console.warn('Error removing file from storage:', storageError);
-                        } else {
-                            console.log('File removed from storage successfully');
-                        }
-                    } catch (storageError) {
-                        console.warn('Storage removal error:', storageError);
-                    }
-                }
-                
-                // Remover registro do banco de dados
+                // Remover registro do banco
                 const { error: dbError } = await supabase
                     .from('files')
                     .delete()
@@ -2141,72 +2527,47 @@
                 hideLoading();
                 
                 if (dbError) {
-                    console.error('Error removing file from database:', dbError);
-                    showError('Erro ao remover arquivo do banco de dados');
+                    console.error('Erro ao remover:', dbError);
+                    showError('Erro ao remover registro do arquivo: ' + dbError.message);
                     return;
                 }
                 
                 showSuccess('Arquivo removido com sucesso!');
                 
-                // Recarregar o documento para atualizar a lista de arquivos
+                // Recarregar lista de arquivos se estiver editando
                 if (selectedDocument) {
-                    const { data: doc, error } = await supabase
-                        .from('documents')
-                        .select(`
-                            *,
-                            document_types(name),
-                            files(*)
-                        `)
-                        .eq('id', selectedDocument)
-                        .single();
-                    
-                    if (!error && doc) {
-                        // Atualizar lista de arquivos na tela
-                        const fileList = document.getElementById('fileList');
-                        fileList.innerHTML = '';
-                        
-                        if (doc.files && doc.files.length > 0) {
-                            doc.files.forEach(file => {
-                                const fileItem = document.createElement('div');
-                                fileItem.className = 'file-item';
-                                fileItem.innerHTML = `
-                                    <span class="file-name">${file.name} (${file.file_size ? Math.round(file.file_size / 1024) + ' KB' : 'N/A'})</span>
-                                    <div class="file-actions">
-                                        <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
-                                        <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
-                                        ${isEditMode ? `<button type="button" class="btn btn-sm btn-danger remove-file-btn" data-file-id="${file.id}">Remover</button>` : ''}
-                                    </div>
-                                `;
-                                fileList.appendChild(fileItem);
-                            });
-                        }
-                    }
+                    loadDocumentForEdit(selectedDocument);
                 }
                 
             } catch (error) {
                 hideLoading();
-                console.error('Error removing saved file:', error);
-                showError('Erro ao remover arquivo');
+                console.error('Error removing file:', error);
+                showError('Erro ao remover arquivo: ' + error.message);
             }
         }
 
+        // Outras funções de banco continuam iguais...
         async function deleteDocument(documentId) {
             try {
                 showLoading();
+                console.log('Deletando documento ID:', documentId);
                 
                 const { error } = await supabase
                     .from('documents')
                     .delete()
                     .eq('id', documentId);
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('Erro ao deletar:', error);
+                    throw error;
+                }
                 
                 hideLoading();
                 return true;
             } catch (error) {
                 console.error('Error deleting document:', error);
                 hideLoading();
-                showError('Erro ao excluir documento');
+                showError('Erro ao excluir documento: ' + error.message);
                 return false;
             }
         }
@@ -2214,6 +2575,7 @@
         async function addYear(year) {
             try {
                 showLoading();
+                console.log('Adicionando ano:', year);
                 
                 const { data, error } = await supabase
                     .from('years')
@@ -2221,14 +2583,18 @@
                     .select()
                     .single();
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('Erro ao adicionar ano:', error);
+                    throw error;
+                }
                 
+                console.log('Ano adicionado:', data);
                 hideLoading();
                 return data;
             } catch (error) {
                 console.error('Error adding year:', error);
                 hideLoading();
-                showError('Erro ao adicionar ano');
+                showError('Erro ao adicionar ano: ' + error.message);
                 throw error;
             }
         }
@@ -2236,20 +2602,24 @@
         async function removeYears(years) {
             try {
                 showLoading();
+                console.log('Removendo anos:', years);
                 
                 const { error } = await supabase
                     .from('years')
                     .delete()
                     .in('year', years);
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('Erro ao remover anos:', error);
+                    throw error;
+                }
                 
                 hideLoading();
                 return true;
             } catch (error) {
                 console.error('Error removing years:', error);
                 hideLoading();
-                showError('Erro ao remover anos');
+                showError('Erro ao remover anos: ' + error.message);
                 return false;
             }
         }
@@ -2257,6 +2627,7 @@
         async function addDocumentType(docTypeData) {
             try {
                 showLoading();
+                console.log('Adicionando tipo de documento:', docTypeData);
                 
                 const { data, error } = await supabase
                     .from('document_types')
@@ -2264,14 +2635,18 @@
                     .select()
                     .single();
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('Erro ao adicionar tipo:', error);
+                    throw error;
+                }
                 
+                console.log('Tipo adicionado:', data);
                 hideLoading();
                 return data;
             } catch (error) {
                 console.error('Error adding document type:', error);
                 hideLoading();
-                showError('Erro ao adicionar tipo de documento');
+                showError('Erro ao adicionar tipo de documento: ' + error.message);
                 throw error;
             }
         }
@@ -2279,37 +2654,49 @@
         async function removeDocumentTypes(typeIds) {
             try {
                 showLoading();
+                console.log('Removendo tipos:', typeIds);
                 
                 const { error } = await supabase
                     .from('document_types')
                     .delete()
                     .in('id', typeIds);
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('Erro ao remover tipos:', error);
+                    throw error;
+                }
                 
                 hideLoading();
                 return true;
             } catch (error) {
                 console.error('Error removing document types:', error);
                 hideLoading();
-                showError('Erro ao remover tipos de documento');
+                showError('Erro ao remover tipos de documento: ' + error.message);
                 return false;
             }
         }
 
         // Initialize years grid
         async function initializeYearsGrid() {
+            console.log('Inicializando grid de anos...');
             const yearsGrid = document.getElementById('yearsGrid');
             yearsGrid.innerHTML = '';
             
             const years = await loadYears();
+            
+            if (years.length === 0) {
+                yearsGrid.innerHTML = '<p style="text-align: center; color: #6c757d; grid-column: 1/-1;">Nenhum ano cadastrado. Use o botão "Adicionar" para criar o primeiro ano.</p>';
+                return;
+            }
             
             years.forEach(year => {
                 const card = document.createElement('div');
                 card.className = 'folder-card';
                 card.setAttribute('data-year', year);
                 card.innerHTML = `
-                    <div class="folder-icon"></div>
+                    <div class="folder-icon">
+                        <img src="https://img.icons8.com/fluency/96/calendar.png" alt="Calendário" />
+                    </div>
                     <h3>${year}</h3>
                     <p>Registros do ano</p>
                 `;
@@ -2319,18 +2706,27 @@
 
         // Initialize document types grid
         async function initializeDocumentTypesGrid() {
+            console.log('Inicializando grid de tipos de documento...');
             const docTypesGrid = document.getElementById('documentTypesGrid');
             docTypesGrid.innerHTML = '';
             
             const docTypes = await loadDocumentTypes();
             
+            if (docTypes.length === 0) {
+                docTypesGrid.innerHTML = '<p style="text-align: center; color: #6c757d; grid-column: 1/-1;">Nenhum tipo de documento cadastrado. Use o botão "Adicionar" para criar o primeiro tipo.</p>';
+                return;
+            }
+            
             docTypes.forEach(docType => {
+                const iconUrl = documentTypeIcons[docType.slug] || documentTypeIcons.default;
                 const card = document.createElement('div');
                 card.className = 'folder-card';
                 card.setAttribute('data-type', docType.slug);
                 card.setAttribute('data-type-id', docType.id);
                 card.innerHTML = `
-                    <div class="folder-icon"></div>
+                    <div class="folder-icon">
+                        <img src="${iconUrl}" alt="${docType.name}" />
+                    </div>
                     <h3>${docType.name}</h3>
                     <p>${docType.description}</p>
                 `;
@@ -2355,52 +2751,47 @@
             return URL.createObjectURL(file);
         }
 
-        // Função para visualizar arquivo
-        function viewFile(file) {
-            selectedFileForView = file;
-            const modal = document.getElementById('fileViewModal');
-            const title = document.getElementById('fileViewTitle');
-            const content = document.getElementById('fileViewContent');
-            
-            title.textContent = `Visualizar: ${file.name}`;
-            content.innerHTML = '';
-            
-            if (file.type && file.type.startsWith('image/')) {
-                const img = document.createElement('img');
-                img.src = file.url || file.localUrl;
-                img.className = 'file-preview';
-                img.style.maxWidth = '100%';
-                img.style.maxHeight = '400px';
-                content.appendChild(img);
-            } else if (file.type === 'application/pdf') {
-                const iframe = document.createElement('iframe');
-                iframe.src = file.url || file.localUrl;
-                iframe.style.width = '100%';
-                iframe.style.height = '400px';
-                iframe.style.border = 'none';
-                content.appendChild(iframe);
-            } else {
-                content.innerHTML = `
-                    <div style="text-align: center; padding: 40px;">
-                        <h3>Arquivo: ${file.name}</h3>
-                        <p>Tipo: ${file.type || 'N/A'}</p>
-                        <p>Tamanho: ${file.size || 'N/A'}</p>
-                        <p>Visualização não disponível para este tipo de arquivo.</p>
-                    </div>
-                `;
+        // Função para visualizar arquivo de upload
+        function viewUploadedFile(file) {
+            try {
+                const blob = new Blob([file.file], { type: file.type });
+                const url = URL.createObjectURL(blob);
+                
+                selectedFileForView = {
+                    name: file.name,
+                    type: file.type,
+                    size: file.size,
+                    blobUrl: url,
+                    uploadSuccess: true
+                };
+                
+                showFileViewModal();
+            } catch (error) {
+                console.error('Erro ao visualizar arquivo:', error);
+                showError('Erro ao visualizar arquivo: ' + error.message);
             }
-            
-            modal.style.display = 'flex';
         }
 
         // Função para download de arquivo
         function downloadFile(file) {
-            const link = document.createElement('a');
-            link.href = file.url || file.localUrl;
-            link.download = file.name;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            try {
+                if (file.blobUrl) {
+                    const link = document.createElement('a');
+                    link.href = file.blobUrl;
+                    link.download = file.name;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    showSuccess('Download iniciado!');
+                } else if (file.id) {
+                    downloadSavedFile(file.id);
+                } else {
+                    showError('Arquivo não disponível para download');
+                }
+            } catch (error) {
+                console.error('Error downloading file:', error);
+                showError('Erro ao fazer download do arquivo: ' + error.message);
+            }
         }
 
         // Login Functionality
@@ -2410,32 +2801,15 @@
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value.trim();
             
-            console.log('Tentando login com:', { email, password });
+            if (!email || !password) {
+                showError('Por favor, preencha todos os campos');
+                return;
+            }
             
             try {
                 showLoading();
+                console.log('Tentando login com:', email);
                 
-                // Primeiro, vamos verificar se existem usuários na tabela
-                const { data: allUsers, error: checkError } = await supabase
-                    .from('users')
-                    .select('*');
-                
-                console.log('Usuários encontrados:', allUsers);
-                
-                if (checkError) {
-                    console.error('Erro ao verificar usuários:', checkError);
-                    hideLoading();
-                    showError('Erro ao conectar com banco de dados: ' + checkError.message);
-                    return;
-                }
-                
-                if (!allUsers || allUsers.length === 0) {
-                    hideLoading();
-                    showError('Nenhum usuário encontrado. Execute o SQL de inicialização primeiro.');
-                    return;
-                }
-                
-                // Agora tentar o login
                 const { data, error } = await supabase
                     .from('users')
                     .select('*')
@@ -2443,46 +2817,33 @@
                     .eq('password', password)
                     .single();
                 
-                console.log('Resultado do login:', { data, error });
-                
                 hideLoading();
                 
-                if (error) {
+                if (error || !data) {
                     console.error('Erro de login:', error);
-                    if (error.code === 'PGRST116') {
-                        showError('Email ou senha incorretos.');
-                    } else {
-                        showError('Erro ao fazer login: ' + error.message);
-                    }
-                    return;
-                }
-                
-                if (!data) {
                     showError('Email ou senha incorretos.');
                     return;
                 }
                 
+                console.log('Login bem-sucedido:', data);
                 currentUser = data;
                 document.getElementById('loginError').style.display = 'none';
                 
-                // Update user info in all headers
                 ['userName', 'userName2', 'userName3', 'welcomeUserName'].forEach(id => {
                     const element = document.getElementById(id);
                     if (element) element.textContent = data.name;
                 });
                 
-                // Show dashboard
                 loginPage.style.display = 'none';
                 dashboardPage.style.display = 'block';
                 dashboardPage.classList.add('active');
                 
-                // Initialize grids
                 await initializeYearsGrid();
                 await initializeDocumentTypesGrid();
                 
             } catch (error) {
                 hideLoading();
-                console.error('Erro geral de login:', error);
+                console.error('Login error:', error);
                 showError('Erro ao fazer login: ' + error.message);
             }
         });
@@ -2511,7 +2872,6 @@
                 document.getElementById('yearTitle').textContent = selectedYear;
                 document.getElementById('yearHeaderTitle').textContent = selectedYear;
                 
-                // Show document types page
                 dashboardPage.style.display = 'none';
                 searchResultsSection.style.display = 'none';
                 documentTypesPage.style.display = 'block';
@@ -2533,13 +2893,10 @@
                     document.getElementById('docTypeHeaderTitle').textContent = selectedDocType;
                     document.getElementById('yearHeaderTitle2').textContent = selectedYear;
                     
-                    // Set up breadcrumb navigation
                     document.getElementById('backToDocTypes').textContent = selectedYear;
                     
-                    // Load documents for this type and year
                     await loadDocumentsTable(selectedYear, selectedDocTypeId);
                     
-                    // Show documents list page
                     documentTypesPage.style.display = 'none';
                     documentsListPage.style.display = 'block';
                 }
@@ -2548,9 +2905,17 @@
 
         // Load Documents Function
         async function loadDocumentsTable(year, typeId) {
+            console.log('Carregando tabela de documentos...');
             const docs = await loadDocuments(year, typeId);
             const tableBody = document.getElementById('documentsTable');
             tableBody.innerHTML = '';
+            
+            if (docs.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="5" style="text-align: center; color: #6c757d;">Nenhum documento cadastrado para este tipo e ano.</td>';
+                tableBody.appendChild(row);
+                return;
+            }
             
             docs.forEach(doc => {
                 const row = document.createElement('tr');
@@ -2559,12 +2924,16 @@
                 const birthDate = new Date(doc.birth_date).toLocaleDateString('pt-BR');
                 const regDate = new Date(doc.registration_date).toLocaleDateString('pt-BR');
                 const filesCount = doc.files ? doc.files.length : 0;
+                const availableFiles = doc.files ? doc.files.filter(f => f.upload_success).length : 0;
+                const filesText = filesCount > 0 ? 
+                    `${availableFiles}/${filesCount} ${filesCount === 1 ? 'arquivo' : 'arquivos'}` :
+                    'Nenhum arquivo';
                 
                 row.innerHTML = `
                     <td>${doc.name}</td>
                     <td>${birthDate}</td>
                     <td>${regDate}</td>
-                    <td>${filesCount} ${filesCount === 1 ? 'arquivo' : 'arquivos'}</td>
+                    <td>${filesText}</td>
                     <td>
                         <div class="action-buttons">
                             <button class="btn btn-sm btn-info view-btn">Ver</button>
@@ -2587,17 +2956,14 @@
             document.getElementById('addDocTypeModal').style.display = 'flex';
         });
 
-        // Botão de remover anos
         document.getElementById('removeYearBtnHeader').addEventListener('click', function() {
             showRemoveYearModal();
         });
 
-        // Botão de remover tipos de documento
         document.getElementById('removeDocTypeBtnHeader').addEventListener('click', function() {
             showRemoveDocTypeModal();
         });
 
-        // Função para mostrar modal de remoção de anos
         function showRemoveYearModal() {
             const removeList = document.getElementById('removeYearList');
             removeList.innerHTML = '';
@@ -2615,7 +2981,6 @@
             document.getElementById('removeYearModal').style.display = 'flex';
         }
 
-        // Função para mostrar modal de remoção de tipos de documento
         function showRemoveDocTypeModal() {
             const removeList = document.getElementById('removeDocTypeList');
             removeList.innerHTML = '';
@@ -2633,7 +2998,6 @@
             document.getElementById('removeDocTypeModal').style.display = 'flex';
         }
 
-        // Confirmação de remoção de anos
         document.getElementById('confirmRemoveYearBtn').addEventListener('click', async function() {
             const checkedYears = document.querySelectorAll('#removeYearList input[type="checkbox"]:checked');
             const yearsToRemove = Array.from(checkedYears).map(cb => parseInt(cb.value));
@@ -2647,7 +3011,6 @@
             }
         });
 
-        // Confirmação de remoção de tipos de documento
         document.getElementById('confirmRemoveDocTypeBtn').addEventListener('click', async function() {
             const checkedDocTypes = document.querySelectorAll('#removeDocTypeList input[type="checkbox"]:checked');
             const docTypesToRemove = Array.from(checkedDocTypes).map(cb => parseInt(cb.value));
@@ -2663,61 +3026,81 @@
 
         // Add Person Function
         function addNewPerson() {
-            console.log('Adding new person');
-            
-            // Reset all states
             isEditMode = false;
             selectedDocument = null;
             uploadedFiles = [];
             isSubmitting = false;
             
-            // Reset form completely
             document.getElementById('personForm').reset();
             document.getElementById('fileList').innerHTML = '';
             
-            // Set titles
             document.getElementById('formTitle').textContent = 'Novo Registro';
             document.getElementById('formHeaderTitle').textContent = `Adicionar Registro de ${selectedDocType}`;
             
-            // Set up breadcrumb navigation
             document.getElementById('backToDocTypes2').textContent = selectedYear;
             document.getElementById('backToDocList').textContent = selectedDocType;
             
-            // Show correct document fields
             const docType = documentTypesCache.find(t => t.id === selectedDocTypeId);
             if (docType) {
                 showDocumentFields(docType.slug);
             }
             
-            // Make form editable
             const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
             formInputs.forEach(input => {
                 input.readOnly = false;
             });
             
-            // Re-enable submit button
             const submitBtn = document.getElementById('submitFormBtn');
             submitBtn.disabled = false;
             submitBtn.textContent = 'Salvar Registro';
             
-            // Show the person form
             documentsListPage.style.display = 'none';
             searchResultsFormSection.style.display = 'none';
             personFormContainer.style.display = 'block';
-            
-            console.log('New person form initialized');
         }
 
-        // Add Person Button (alternative)
         document.getElementById('addPersonBtn').addEventListener('click', addNewPerson);
 
-        // Person Form Submit - CORRIGIDO
+        // FUNÇÃO CORRIGIDA PARA CARREGAR DOCUMENTO PARA EDIÇÃO
+        async function loadDocumentForEdit(docId) {
+            try {
+                showLoading();
+                console.log('Carregando documento para edição:', docId);
+                
+                const { data: doc, error } = await supabase
+                    .from('documents')
+                    .select(`
+                        *,
+                        document_types(name),
+                        files(*)
+                    `)
+                    .eq('id', docId)
+                    .single();
+                
+                hideLoading();
+                
+                if (error) {
+                    console.error('Erro ao carregar documento:', error);
+                    throw error;
+                }
+                
+                console.log('Documento carregado:', doc);
+                return doc;
+                
+            } catch (error) {
+                hideLoading();
+                console.error('Error loading document:', error);
+                showError('Erro ao carregar documento: ' + error.message);
+                return null;
+            }
+        }
+
+        // Person Form Submit
         document.getElementById('personForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Prevenir múltiplas submissões
             if (isSubmitting) {
-                console.log('Submit already in progress, ignoring...');
+                console.log('Já está enviando, ignorando...');
                 return;
             }
             
@@ -2731,16 +3114,11 @@
             }
             
             try {
-                // Marcar que a submissão está em progresso
                 isSubmitting = true;
-                
-                // Desabilitar botão de submit
                 submitBtn.disabled = true;
                 submitBtn.textContent = 'Salvando...';
                 
-                console.log('Starting form submission...');
-                console.log('Is edit mode:', isEditMode);
-                console.log('Selected document ID:', selectedDocument);
+                console.log('Preparando dados do documento...');
                 
                 const documentData = {
                     year: parseInt(selectedYear),
@@ -2750,49 +3128,42 @@
                     observations: document.getElementById('observations').value || null
                 };
                 
-                // Só adicionar registration_date se for um novo documento
                 if (!isEditMode || !selectedDocument) {
                     documentData.registration_date = new Date().toISOString().split('T')[0];
                 }
                 
-                // Add specific fields based on document type
                 updateDocumentSpecificFields(documentData);
                 
-                console.log('Document data to save:', documentData);
-                console.log('Uploaded files count:', uploadedFiles.length);
+                console.log('Dados preparados:', documentData);
                 
                 const savedDoc = await saveDocument(documentData);
                 
-                console.log('Document saved successfully:', savedDoc);
+                console.log('Documento salvo com sucesso:', savedDoc);
                 
-                // Show success message
                 const action = isEditMode ? 'atualizado' : 'criado';
                 showSuccess(`Documento ${action} com sucesso!`);
                 
-                // Reset form state apenas após sucesso
+                // Limpar estado
                 uploadedFiles = [];
                 isEditMode = false;
                 selectedDocument = null;
                 
-                // Reload documents list
+                // Recarregar lista de documentos
                 await loadDocumentsTable(selectedYear, selectedDocTypeId);
                 
-                // Return to documents list
+                // Voltar para lista
                 personFormContainer.style.display = 'none';
                 searchResultsFormSection.style.display = 'none';
                 documentsListPage.style.display = 'block';
                 
-                // Reset form
+                // Limpar formulário
                 document.getElementById('personForm').reset();
                 document.getElementById('fileList').innerHTML = '';
-                
-                console.log('Form submitted and reset successfully');
                 
             } catch (error) {
                 console.error('Error saving document:', error);
                 showError('Erro ao salvar documento: ' + error.message);
             } finally {
-                // Re-habilitar botão de submit e marcar submissão como concluída
                 isSubmitting = false;
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Salvar Registro';
@@ -2865,7 +3236,6 @@
             const docType = documentTypesCache.find(t => t.id === doc.type_id);
             if (!docType) return;
 
-            // Show correct fields
             showDocumentFields(docType.slug);
 
             switch (docType.slug) {
@@ -2930,124 +3300,107 @@
                 const row = e.target.closest('tr');
                 const docId = parseInt(row.getAttribute('data-id'));
                 
-                try {
-                    showLoading();
-                    
-                    const { data: doc, error } = await supabase
-                        .from('documents')
-                        .select(`
-                            *,
-                            document_types(name),
-                            files(*)
-                        `)
-                        .eq('id', docId)
-                        .single();
-                    
-                    hideLoading();
-                    
-                    if (error) throw error;
-                    
-                    // Reset all form states
-                    uploadedFiles = [];
-                    isSubmitting = false;
-                    
-                    selectedDocument = docId;
-                    isEditMode = e.target.classList.contains('edit-btn');
-                    
-                    console.log('Loading document for', isEditMode ? 'edit' : 'view', ':', doc);
-                    
-                    // Fill form with document data
-                    document.getElementById('fullName').value = doc.name;
-                    document.getElementById('birthDate').value = doc.birth_date;
-                    document.getElementById('observations').value = doc.observations || '';
-                    
-                    // Fill document-specific fields
-                    fillDocumentSpecificFields(doc);
-                    
-                    // Display attached files
-                    const fileList = document.getElementById('fileList');
-                    fileList.innerHTML = '';
-                    
-                    if (doc.files && doc.files.length > 0) {
-                        doc.files.forEach(file => {
-                            const fileItem = document.createElement('div');
-                            fileItem.className = 'file-item';
-                            fileItem.innerHTML = `
-                                <span class="file-name">${file.name} (${file.file_size ? Math.round(file.file_size / 1024) + ' KB' : 'N/A'})</span>
-                                <div class="file-actions">
-                                    <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
-                                    <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
-                                    ${isEditMode ? `<button type="button" class="btn btn-sm btn-danger remove-file-btn" data-file-id="${file.id}">Remover</button>` : ''}
-                                </div>
-                            `;
-                            fileList.appendChild(fileItem);
-                        });
-                    }
-                    
-                    // Set up form mode
-                    document.getElementById('formTitle').textContent = isEditMode ? 'Editar Registro' : 'Visualizar Registro';
-                    document.getElementById('formHeaderTitle').textContent = `${isEditMode ? 'Editar' : 'Visualizar'} Registro de ${doc.document_types.name}`;
-                    
-                    // Make fields readonly in view mode
-                    const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
-                    formInputs.forEach(input => {
-                        input.readOnly = !isEditMode;
+                console.log('Ação em documento ID:', docId);
+                
+                const doc = await loadDocumentForEdit(docId);
+                if (!doc) return;
+                
+                uploadedFiles = [];
+                isSubmitting = false;
+                
+                selectedDocument = docId;
+                isEditMode = e.target.classList.contains('edit-btn');
+                
+                console.log('Modo edição:', isEditMode);
+                
+                document.getElementById('fullName').value = doc.name;
+                document.getElementById('birthDate').value = doc.birth_date;
+                document.getElementById('observations').value = doc.observations || '';
+                
+                fillDocumentSpecificFields(doc);
+                
+                const fileList = document.getElementById('fileList');
+                fileList.innerHTML = '';
+                
+                if (doc.files && doc.files.length > 0) {
+                    doc.files.forEach(file => {
+                        const fileItem = document.createElement('div');
+                        fileItem.className = 'file-item';
+                        const statusClass = file.upload_success ? 'available' : 'unavailable';
+                        const statusText = file.upload_success ? 'Disponível' : 'Indisponível';
+                        
+                        fileItem.innerHTML = `
+                            <span class="file-name">
+                                ${file.name} 
+                                <span class="file-status ${statusClass}">${statusText}</span>
+                                (${file.file_size ? Math.round(file.file_size / 1024) + ' KB' : 'N/A'})
+                            </span>
+                            <div class="file-actions">
+                                <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
+                                <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}" ${!file.upload_success ? 'disabled' : ''}>Download</button>
+                                ${isEditMode ? `<button type="button" class="btn btn-sm btn-danger remove-file-btn" data-file-id="${file.id}">Remover</button>` : ''}
+                            </div>
+                        `;
+                        fileList.appendChild(fileItem);
                     });
-                    
-                    // Control submit button
-                    const submitBtn = document.getElementById('submitFormBtn');
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = isEditMode ? 'Salvar Alterações' : 'Salvar Registro';
-                    submitBtn.style.display = isEditMode ? 'inline-block' : 'none';
-                    
-                    // Set up breadcrumb navigation
-                    document.getElementById('backToDocTypes2').textContent = doc.year;
-                    document.getElementById('backToDocList').textContent = doc.document_types.name;
-                    
-                    // Show the person form
-                    documentsListPage.style.display = 'none';
-                    searchResultsFormSection.style.display = 'none';
-                    personFormContainer.style.display = 'block';
-                    
-                    console.log('Document loaded successfully for', isEditMode ? 'editing' : 'viewing');
-                    
-                } catch (error) {
-                    hideLoading();
-                    console.error('Error loading document:', error);
-                    showError('Erro ao carregar documento');
                 }
+                
+                document.getElementById('formTitle').textContent = isEditMode ? 'Editar Registro' : 'Visualizar Registro';
+                document.getElementById('formHeaderTitle').textContent = `${isEditMode ? 'Editar' : 'Visualizar'} Registro de ${doc.document_types.name}`;
+                
+                const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
+                formInputs.forEach(input => {
+                    input.readOnly = !isEditMode;
+                });
+                
+                const submitBtn = document.getElementById('submitFormBtn');
+                submitBtn.disabled = false;
+                submitBtn.textContent = isEditMode ? 'Salvar Alterações' : 'Salvar Registro';
+                submitBtn.style.display = isEditMode ? 'inline-block' : 'none';
+                
+                document.getElementById('backToDocTypes2').textContent = doc.year;
+                document.getElementById('backToDocList').textContent = doc.document_types.name;
+                
+                documentsListPage.style.display = 'none';
+                searchResultsFormSection.style.display = 'none';
+                personFormContainer.style.display = 'block';
+                
             } else if (e.target.classList.contains('delete-btn')) {
                 const row = e.target.closest('tr');
                 const docId = parseInt(row.getAttribute('data-id'));
                 selectedDocument = docId;
                 
-                // Show delete confirmation modal
                 document.getElementById('deleteConfirmModal').style.display = 'flex';
             }
         });
 
-        // File actions in file list - ATUALIZADO COM AS NOVAS FUNÇÕES
-        document.getElementById('fileList').addEventListener('click', async function(e) {
+        // EVENTOS CORRIGIDOS PARA OS BOTÕES DE ARQUIVO
+        document.getElementById('fileList').addEventListener('click', function(e) {
             if (e.target.classList.contains('view-file-btn')) {
                 const fileId = parseInt(e.target.getAttribute('data-file-id'));
-                await viewSavedFile(fileId);
+                console.log('Visualizando arquivo ID:', fileId);
+                viewSavedFile(fileId);
             } else if (e.target.classList.contains('download-file-btn')) {
                 const fileId = parseInt(e.target.getAttribute('data-file-id'));
-                await downloadSavedFile(fileId);
+                if (!e.target.disabled) {
+                    console.log('Fazendo download do arquivo ID:', fileId);
+                    downloadSavedFile(fileId);
+                } else {
+                    showError('Este arquivo não está disponível para download');
+                }
             } else if (e.target.classList.contains('remove-file-btn')) {
                 const fileId = parseInt(e.target.getAttribute('data-file-id'));
-                await removeSavedFile(fileId);
+                console.log('Removendo arquivo ID:', fileId);
+                removeSavedFile(fileId);
             } else if (e.target.classList.contains('remove-file')) {
                 const index = parseInt(e.target.getAttribute('data-index'));
                 uploadedFiles.splice(index, 1);
-                
-                // Refresh file list display
                 refreshUploadedFilesList();
             } else if (e.target.classList.contains('view-uploaded-file')) {
                 const index = parseInt(e.target.getAttribute('data-index'));
                 const file = uploadedFiles[index];
                 if (file) {
-                    viewFile(file);
+                    viewUploadedFile(file);
                 }
             }
         });
@@ -3057,16 +3410,14 @@
             const fileList = document.getElementById('fileList');
             const existingFiles = fileList.querySelectorAll('.file-item[data-uploaded="true"]');
             
-            // Remove existing uploaded files display
             existingFiles.forEach(item => item.remove());
             
-            // Re-add current uploaded files
             uploadedFiles.forEach((file, index) => {
                 const fileItem = document.createElement('div');
                 fileItem.className = 'file-item';
                 fileItem.setAttribute('data-uploaded', 'true');
                 fileItem.innerHTML = `
-                    <span class="file-name">${file.name} (${file.size})</span>
+                    <span class="file-name">${file.name} (${Math.round(file.file.size / 1024)} KB)</span>
                     <div class="file-actions">
                         <button type="button" class="btn btn-sm btn-info view-uploaded-file" data-index="${index}">Visualizar</button>
                         <button type="button" class="btn btn-sm btn-danger remove-file" data-index="${index}">Remover</button>
@@ -3078,19 +3429,14 @@
 
         // Cancel Form Button
         document.getElementById('cancelFormBtn').addEventListener('click', function() {
-            console.log('Canceling form');
-            
-            // Reset form state
             uploadedFiles = [];
             isEditMode = false;
             selectedDocument = null;
             isSubmitting = false;
             
-            // Reset form
             document.getElementById('personForm').reset();
             document.getElementById('fileList').innerHTML = '';
             
-            // Re-enable submit button
             const submitBtn = document.getElementById('submitFormBtn');
             submitBtn.disabled = false;
             submitBtn.textContent = 'Salvar Registro';
@@ -3098,8 +3444,6 @@
             personFormContainer.style.display = 'none';
             searchResultsFormSection.style.display = 'none';
             documentsListPage.style.display = 'block';
-            
-            console.log('Form canceled and reset');
         });
 
         // Breadcrumb Navigation
@@ -3149,7 +3493,6 @@
         const searchInputs = document.querySelectorAll('#globalSearch, #globalSearch2, #globalSearch3');
         const searchButtons = document.querySelectorAll('#searchBtn, #searchBtn2, #searchBtn3');
         
-        // Function to handle search
         function handleSearch(input, inForm = false) {
             const searchTerm = input.value.trim();
             
@@ -3160,7 +3503,6 @@
             }
         }
         
-        // Add event listeners for Enter key
         searchInputs.forEach(input => {
             input.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
@@ -3169,7 +3511,6 @@
             });
         });
         
-        // Add event listeners for search buttons
         searchButtons.forEach((button, index) => {
             button.addEventListener('click', function() {
                 const input = searchInputs[index];
@@ -3180,13 +3521,9 @@
         });
 
         async function performSearch(term, inForm = false) {
-            console.log('Searching for:', term);
-            
+            console.log('Executando busca por:', term);
             const results = await searchDocuments(term);
             
-            console.log('Search results:', results);
-            
-            // Show search results
             const searchTermElement = document.getElementById(inForm ? 'searchTermForm' : 'searchTerm');
             const resultsTable = document.getElementById(inForm ? 'searchResultsFormTable' : 'searchResultsTable');
             const noResultsElement = document.getElementById(inForm ? 'noResultsForm' : 'noResults');
@@ -3225,14 +3562,10 @@
                 noResultsElement.style.display = 'block';
             }
             
-            // Show search results section
             searchSection.style.display = 'block';
-            
-            // Clear search inputs
             searchInputs.forEach(input => input.value = '');
         }
 
-        // Search Results Actions (both in dashboard and form)
         function handleSearchViewBtn(e) {
             if (e.target.classList.contains('search-view-btn')) {
                 const row = e.target.closest('tr');
@@ -3240,147 +3573,122 @@
                 const year = row.getAttribute('data-year');
                 const typeId = parseInt(row.getAttribute('data-type-id'));
                 
+                console.log('Visualizando da busca - Doc:', docId, 'Year:', year, 'Type:', typeId);
+                
                 selectedYear = year;
                 selectedDocTypeId = typeId;
                 const docType = documentTypesCache.find(t => t.id === typeId);
                 selectedDocType = docType ? docType.name : 'Documento';
                 
-                // Load and show the document
                 loadAndShowDocument(docId);
             }
         }
 
         async function loadAndShowDocument(docId) {
-            try {
-                showLoading();
-                
-                const { data: doc, error } = await supabase
-                    .from('documents')
-                    .select(`
-                        *,
-                        document_types(name),
-                        files(*)
-                    `)
-                    .eq('id', docId)
-                    .single();
-                
-                hideLoading();
-                
-                if (error) throw error;
-                
-                // Reset form states
-                uploadedFiles = [];
-                isSubmitting = false;
-                
-                selectedDocument = docId;
-                isEditMode = false; // Always open in view mode from search
-                
-                // Fill form with document data
-                document.getElementById('fullName').value = doc.name;
-                document.getElementById('birthDate').value = doc.birth_date;
-                document.getElementById('observations').value = doc.observations || '';
-                
-                // Fill document-specific fields
-                fillDocumentSpecificFields(doc);
-                
-                // Display attached files
-                const fileList = document.getElementById('fileList');
-                fileList.innerHTML = '';
-                
-                if (doc.files && doc.files.length > 0) {
-                    doc.files.forEach(file => {
-                        const fileItem = document.createElement('div');
-                        fileItem.className = 'file-item';
-                        fileItem.innerHTML = `
-                            <span class="file-name">${file.name} (${file.file_size ? Math.round(file.file_size / 1024) + ' KB' : 'N/A'})</span>
-                            <div class="file-actions">
-                                <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
-                                <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}">Download</button>
-                            </div>
-                        `;
-                        fileList.appendChild(fileItem);
-                    });
-                }
-                
-                // Set up form mode
-                document.getElementById('formTitle').textContent = 'Visualizar Registro';
-                document.getElementById('formHeaderTitle').textContent = `Visualizar Registro de ${doc.document_types.name}`;
-                
-                // Make fields readonly in view mode
-                const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
-                formInputs.forEach(input => {
-                    input.readOnly = true;
+            const doc = await loadDocumentForEdit(docId);
+            if (!doc) return;
+            
+            uploadedFiles = [];
+            isSubmitting = false;
+            
+            selectedDocument = docId;
+            isEditMode = false;
+            
+            document.getElementById('fullName').value = doc.name;
+            document.getElementById('birthDate').value = doc.birth_date;
+            document.getElementById('observations').value = doc.observations || '';
+            
+            fillDocumentSpecificFields(doc);
+            
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            
+            if (doc.files && doc.files.length > 0) {
+                doc.files.forEach(file => {
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    const statusClass = file.upload_success ? 'available' : 'unavailable';
+                    const statusText = file.upload_success ? 'Disponível' : 'Indisponível';
+                    
+                    fileItem.innerHTML = `
+                        <span class="file-name">
+                            ${file.name} 
+                            <span class="file-status ${statusClass}">${statusText}</span>
+                            (${file.file_size ? Math.round(file.file_size / 1024) + ' KB' : 'N/A'})
+                        </span>
+                        <div class="file-actions">
+                            <button type="button" class="btn btn-sm btn-info view-file-btn" data-file-id="${file.id}">Visualizar</button>
+                            <button type="button" class="btn btn-sm btn-primary download-file-btn" data-file-id="${file.id}" ${!file.upload_success ? 'disabled' : ''}>Download</button>
+                        </div>
+                    `;
+                    fileList.appendChild(fileItem);
                 });
-                
-                // Hide submit button in view mode
-                const submitBtn = document.getElementById('submitFormBtn');
-                submitBtn.style.display = 'none';
-                
-                // Set up breadcrumb navigation
-                document.getElementById('backToDocTypes2').textContent = doc.year;
-                document.getElementById('backToDocList').textContent = doc.document_types.name;
-                
-                // Copy search results to form if coming from search
-                const searchTermDashboard = document.getElementById('searchTerm').textContent;
-                if (searchTermDashboard) {
-                    document.getElementById('searchTermForm').textContent = searchTermDashboard;
-                    const dashboardTable = document.getElementById('searchResultsTable').innerHTML;
-                    document.getElementById('searchResultsFormTable').innerHTML = dashboardTable;
-                    searchResultsFormSection.style.display = 'block';
-                }
-                
-                // Hide other sections and show form
-                dashboardPage.style.display = 'none';
-                documentsListPage.style.display = 'none';
-                documentTypesPage.style.display = 'none';
-                searchResultsSection.style.display = 'none';
-                personFormContainer.style.display = 'block';
-                
-            } catch (error) {
-                hideLoading();
-                console.error('Error loading document:', error);
-                showError('Erro ao carregar documento');
             }
+            
+            document.getElementById('formTitle').textContent = 'Visualizar Registro';
+            document.getElementById('formHeaderTitle').textContent = `Visualizar Registro de ${doc.document_types.name}`;
+            
+            const formInputs = document.querySelectorAll('#personForm input, #personForm textarea');
+            formInputs.forEach(input => {
+                input.readOnly = true;
+            });
+            
+            const submitBtn = document.getElementById('submitFormBtn');
+            submitBtn.style.display = 'none';
+            
+            document.getElementById('backToDocTypes2').textContent = doc.year;
+            document.getElementById('backToDocList').textContent = doc.document_types.name;
+            
+            const searchTermDashboard = document.getElementById('searchTerm').textContent;
+            if (searchTermDashboard) {
+                document.getElementById('searchTermForm').textContent = searchTermDashboard;
+                const dashboardTable = document.getElementById('searchResultsTable').innerHTML;
+                document.getElementById('searchResultsFormTable').innerHTML = dashboardTable;
+                searchResultsFormSection.style.display = 'block';
+            }
+            
+            dashboardPage.style.display = 'none';
+            documentsListPage.style.display = 'none';
+            documentTypesPage.style.display = 'none';
+            searchResultsSection.style.display = 'none';
+            personFormContainer.style.display = 'block';
         }
 
-        // Add event listeners to both search results tables
         document.getElementById('searchResultsTable').addEventListener('click', handleSearchViewBtn);
         document.getElementById('searchResultsFormTable').addEventListener('click', handleSearchViewBtn);
 
-        // File Upload Enhanced Functionality - CORRIGIDO
+        // File Upload Enhanced Functionality
         document.getElementById('fileUpload').addEventListener('change', function(e) {
-            console.log('File upload triggered, files selected:', this.files.length);
+            console.log('Arquivos selecionados:', this.files.length);
             
             if (this.files.length > 0) {
                 for (let i = 0; i < this.files.length; i++) {
                     const file = this.files[i];
-                    const size = Math.round(file.size / 1024) + ' KB';
-                    const localUrl = createFileURL(file);
+                    console.log('Adicionando arquivo:', file.name, file.size, 'bytes');
+                    
+                    if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                        showError(`Arquivo ${file.name} é muito grande (máximo 10MB)`);
+                        continue;
+                    }
                     
                     const uploadedFile = {
                         id: Date.now() + i,
                         name: file.name,
                         type: file.type,
-                        size: size,
-                        localUrl: localUrl,
+                        size: file.size,
                         file: file
                     };
                     
                     uploadedFiles.push(uploadedFile);
-                    console.log('File added to upload queue:', uploadedFile.name);
                 }
                 
-                // Refresh the file list display
                 refreshUploadedFilesList();
-                
-                console.log('Total files in upload queue:', uploadedFiles.length);
+                console.log('Total de arquivos na lista:', uploadedFiles.length);
             }
             
-            // Reset file input
             this.value = '';
         });
 
-        // File upload area click to trigger file input
         document.getElementById('fileUploadArea').addEventListener('click', function(e) {
             if (e.target.id === 'fileUploadArea' || e.target.tagName === 'P') {
                 document.getElementById('fileUpload').click();
@@ -3409,7 +3717,6 @@
             
             const files = e.dataTransfer.files;
             if (files.length > 0) {
-                // Simulate file input change event
                 const fileInput = document.getElementById('fileUpload');
                 const dt = new DataTransfer();
                 
@@ -3474,13 +3781,13 @@
             const newDocTypeDesc = document.getElementById('docTypeDescription').value.trim();
             
             if (newDocTypeName && !documentTypesCache.find(t => t.name.toLowerCase() === newDocTypeName.toLowerCase())) {
-                const newSlug = newDocTypeName.toLowerCase().replace(/\s+/g, '-');
+                const newSlug = newDocTypeName.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
                 
                 const docTypeData = {
                     name: newDocTypeName,
                     slug: newSlug,
                     description: newDocTypeDesc || `Registros de ${newDocTypeName.toLowerCase()}`,
-                    icon: 'images/outros.png'
+                    icon: 'document.png'
                 };
                 
                 try {
@@ -3535,7 +3842,6 @@
         // Clear search results
         document.getElementById('clearSearchBtn').addEventListener('click', function() {
             searchResultsSection.style.display = 'none';
-            // Clear all search inputs
             searchInputs.forEach(input => input.value = '');
         });
 
@@ -3545,9 +3851,10 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            // Set current year as default in add year modal
             const currentYear = new Date().getFullYear();
             document.getElementById('newYear').value = currentYear;
+            console.log('Sistema de gerenciamento paroquial inicializado!');
+            console.log('Conectando ao Supabase:', SUPABASE_URL);
         });
     </script>
 </body>
